@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">News Application</string>
+
+    <string name="menu_fav_clear">Clear All</string>
+
+    <string name="app_headline_title">Headlines</string>
+
+    <string name="app_favourite_subtitle">Favourites</string>
+    <string name="app_save_favourite_success">Article saved!</string>
+    <string name="app_save_favourite_failed">Something went wrong :(</string>
+    <string name="app_clear_fav_title">Are you sure?</string>
+    <string name="app_clear_fav_message">This operation will clear ALL favourites from your device and CANNOT be recovered!</string>
+    <string name="app_clear_fav_positive">Confirm</string>
+    <string name="app_clear_fav_negative">Let me consider</string>
+
+    <string name="article_pop_up_favourite">Favourite</string>
+    <string name="article_pop_up_watch_later">Watch Later</string>
+
+    <string name="app_watch_later_subtitle">Watch Later</string>
+    <string name="app_save_watch_later_success">Article saved in watch later!</string>
+
+    <string name="app_menu_favourites_text">Favourites</string>
+    <string name="app_menu_watcher_later_text">Watch Later</string>
+    <string name="app_menu_app_info">App Info</string>
+</resources>

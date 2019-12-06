@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/article_pop_up_favourite"
+        android:title="@string/article_pop_up_favourite"
+        android:icon="@drawable/ic_star" />
+    <item
+        android:id="@+id/article_pop_up_watch_later"
+        android:title="@string/article_pop_up_watch_later"
+        android:icon="@drawable/ic_access_time" />
+</menu>

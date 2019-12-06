@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="model"
+            type="xyz.do9core.newsapplication.data.model.Article" />
+        <variable
+            name="clickHandler"
+            type="xyz.do9core.newsapplication.ui.common.ArticleClickHandler" />
+        <variable
+            name="optionMenuButtonGone"
+            type="Boolean" />
+        <variable
+            name="showDropDownHandler"
+            type="android.view.View.OnClickListener" />
+    </data>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="4dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:onExclusiveClick="@{() -> clickHandler.onClick(model)}">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                tools:background="#AABBCC"
+                tools:src="@drawable/ic_placeholder"
+                tools:ignore="ContentDescription"
+                android:id="@+id/article_thumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                app:urlToImage="@{model.urlToImage}"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                tools:text="Check je telefoonrekening: voor je het weet betaal je voor één of ander spelletje - RTL Nieuws"
+                android:id="@+id/article_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{model.title}"
+                android:textSize="20sp"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:padding="8dp"
+                android:maxLines="2"
+                android:ellipsize="marquee"
+                app:layout_constraintTop_toBottomOf="@id/article_thumbnail"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/favourite_icon"
+                app:layout_constraintHorizontal_chainStyle="packed"/>
+
+            <ImageButton
+                android:src="@drawable/ic_more_vert"
+                android:id="@+id/favourite_icon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:tint="#000"
+                android:layout_marginEnd="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:isGone="@{optionMenuButtonGone}"
+                app:onExclusiveClick="@{showDropDownHandler}"
+                app:layout_constraintBottom_toBottomOf="@id/article_title"
+                app:layout_constraintTop_toTopOf="@id/article_title"
+                app:layout_constraintStart_toEndOf="@id/article_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                tools:ignore="ContentDescription" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
