@@ -6,4 +6,9 @@ import xyz.do9core.newsapplication.ui.base.BindLayout
 import xyz.do9core.newsapplication.ui.base.BindingActivity
 
 @BindLayout(R.layout.activity_app_info)
-class AppInfoActivity : BindingActivity<ActivityAppInfoBinding>()
+class AppInfoActivity : BindingActivity<ActivityAppInfoBinding>() {
+
+    override fun setupBinding(binding: ActivityAppInfoBinding) {
+
+    }
+}

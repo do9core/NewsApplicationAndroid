@@ -24,6 +24,7 @@
                 app:titleTextColor="#FFF"
                 app:subtitleTextColor="#FFF"
                 app:menu="@menu/favourite_menu"
+                app:navigationIcon="@drawable/ic_arrow_back"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize" />
         </com.google.android.material.appbar.AppBarLayout>
@@ -34,7 +35,6 @@
             android:layout_height="0dp"
             android:paddingBottom="8dp"
             android:clipToPadding="false"
-            app:favouriteList="@{viewModel.favArticles}"
             app:layout_constraintTop_toBottomOf="@id/app_bar"
             app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
