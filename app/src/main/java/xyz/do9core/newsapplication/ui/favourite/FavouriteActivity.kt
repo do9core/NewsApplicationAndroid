@@ -10,6 +10,7 @@ import xyz.do9core.newsapplication.databinding.ActivityFavouriteBinding
 import xyz.do9core.newsapplication.ui.article.ArticleActivity
 import xyz.do9core.newsapplication.ui.base.BindLayout
 import xyz.do9core.newsapplication.ui.base.BindingActivity
+import xyz.do9core.newsapplication.util.observe
 import xyz.do9core.newsapplication.util.observeEvent
 
 @BindLayout(R.layout.activity_favourite)
@@ -21,10 +22,11 @@ class FavouriteActivity : BindingActivity<ActivityFavouriteBinding>() {
 
     private val adapter by lazy { ArticleAdapter(viewModel) }
 
-    override fun setupBinding(binding: ActivityFavouriteBinding) = with(binding) {
-        favouriteList.layoutManager = LinearLayoutManager(this@FavouriteActivity)
-        favouriteList.adapter = adapter
-        toolbar.setOnMenuItemClickListener {
+    override fun setupBinding(binding: ActivityFavouriteBinding) {
+        binding.lifecycleOwner = this
+        binding.favouriteList.layoutManager = LinearLayoutManager(this)
+        binding.favouriteList.adapter = adapter
+        binding.toolbar.setOnMenuItemClickListener {
             when(it.itemId) {
                 R.id.fav_clear -> {
                     MaterialAlertDialogBuilder(this@FavouriteActivity)
@@ -40,14 +42,18 @@ class FavouriteActivity : BindingActivity<ActivityFavouriteBinding>() {
                 else -> super.onOptionsItemSelected(it)
             }
         }
+        binding.toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
     }
 
     override fun setupObservers() = with(viewModel) {
         observeEvent(showBrowserEvent) { showFavourite(it) }
+        observe(favArticles) { adapter.submitList(it) }
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
         viewModel.loadFavourites()
     }
 

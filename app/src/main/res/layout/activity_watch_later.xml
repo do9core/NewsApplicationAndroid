@@ -16,8 +16,9 @@
                 android:id="@+id/toolbar"
                 app:title="@string/app_name"
                 app:subtitle="@string/app_watch_later_subtitle"
-                app:titleTextColor="#FFF"
-                app:subtitleTextColor="#FFF"
+                app:titleTextColor="@color/primaryTextColor"
+                app:subtitleTextColor="@color/primaryTextColor"
+                app:navigationIcon="@drawable/ic_arrow_back"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize" />
         </com.google.android.material.appbar.AppBarLayout>

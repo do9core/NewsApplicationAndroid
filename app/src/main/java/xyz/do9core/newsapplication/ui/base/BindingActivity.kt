@@ -1,7 +1,6 @@
 package xyz.do9core.newsapplication.ui.base
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -18,8 +17,8 @@ abstract class BindingActivity<T: ViewDataBinding> : AppCompatActivity() {
         return bindAnnotation?.layoutRes ?: 0
     }
 
-    final override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    final override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, getLayoutResId())
         setupBinding(binding)
         setupObservers()

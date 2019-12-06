@@ -23,6 +23,9 @@ class WatchLaterActivity : BindingActivity<ActivityWatchLaterBinding>() {
     override fun setupBinding(binding: ActivityWatchLaterBinding) = with(binding) {
         watchLaterList.layoutManager = LinearLayoutManager(this@WatchLaterActivity)
         watchLaterList.adapter = adapter
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
     }
 
     override fun setupObservers() = with(viewModel) {

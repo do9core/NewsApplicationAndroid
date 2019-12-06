@@ -1,9 +1,7 @@
 package xyz.do9core.newsapplication.ui.favourite
 
 import android.view.ViewGroup
-import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.ui.common.ArticleViewHolder
 
@@ -20,10 +18,4 @@ class ArticleAdapter(
             favouriteHandler = null,
             watchLaterHandler = null
         )
-}
-
-@BindingAdapter("favouriteList")
-fun RecyclerView.bindFavouriteList(favouriteList: List<Article>) {
-    val adapter = this.adapter as ArticleAdapter
-    adapter.submitList(favouriteList)
 }
