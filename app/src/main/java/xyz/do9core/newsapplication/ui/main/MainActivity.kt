@@ -10,6 +10,7 @@ import xyz.do9core.newsapplication.ui.appinfo.AppInfoActivity
 import xyz.do9core.newsapplication.ui.base.BindLayout
 import xyz.do9core.newsapplication.ui.base.BindingActivity
 import xyz.do9core.newsapplication.ui.favourite.FavouriteActivity
+import xyz.do9core.newsapplication.ui.search.SearchActivity
 import xyz.do9core.newsapplication.ui.watchlater.WatchLaterActivity
 import xyz.do9core.newsapplication.util.start
 
@@ -25,7 +26,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
     }
 
     override fun setupBinding(binding: ActivityMainBinding) = with(binding) {
-        setShowFavouriteListener { start<FavouriteActivity>() }
+        setShowFavouriteListener { start<SearchActivity>() }
         viewPager.adapter = CategoryPagerAdapter(this@MainActivity)
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = Category.values()[position].title

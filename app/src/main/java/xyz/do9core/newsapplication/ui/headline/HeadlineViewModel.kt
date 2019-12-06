@@ -23,7 +23,7 @@ class HeadlineViewModel(
     private val loadTrigger = MutableLiveData<Boolean>()
     val itemClickHandler = object : ArticleClickHandler {
         override fun onClick(article: Article) {
-            showBrowserEvent.event(article.url)
+            showArticleEvent.event(article)
         }
     }
     val favouriteHandler = object : ArticleClickHandler {
@@ -75,7 +75,7 @@ class HeadlineViewModel(
     val isRefreshing = networkState.map { it.isLoading }
     val hasNetworkError = networkState.map { it.isError }
     val networkErrorMessage = networkState.map { (it as? LoadResult.Error)?.msg }
-    val showBrowserEvent = LiveEvent<String>()
+    val showArticleEvent = LiveEvent<Article>()
     val messageSnackbarEvent = LiveEvent<Int>()
     val errorSnackbarEvent = LiveEvent<String?>()
 

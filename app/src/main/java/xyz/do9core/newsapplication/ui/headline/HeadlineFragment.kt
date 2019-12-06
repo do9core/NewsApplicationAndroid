@@ -1,15 +1,15 @@
 package xyz.do9core.newsapplication.ui.headline
 
-import android.content.Intent
-import android.net.Uri
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import xyz.do9core.newsapplication.ui.main.MainActivity
 import xyz.do9core.newsapplication.NewsApplication
 import xyz.do9core.newsapplication.R
+import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.data.model.Category
 import xyz.do9core.newsapplication.databinding.FragmentHeadlineBinding
+import xyz.do9core.newsapplication.ui.article.ArticleActivity
 import xyz.do9core.newsapplication.ui.base.BindingFragment
 import xyz.do9core.newsapplication.ui.base.BindLayout
 import xyz.do9core.newsapplication.util.observe
@@ -34,7 +34,7 @@ class HeadlineFragment(
     override fun setupObservers() = with(viewModel) {
         viewLifecycleOwner.observe(articles) { adapter.submitList(it) }
         viewLifecycleOwner.observe(networkState) { adapter.setLoadState(it) }
-        viewLifecycleOwner.observeEvent(showBrowserEvent) { openSystemBrowser(it) }
+        viewLifecycleOwner.observeEvent(showArticleEvent) { showArticle(it) }
         viewLifecycleOwner.observeEvent(messageSnackbarEvent) {
             (requireActivity() as MainActivity).showSnackbar(it, Snackbar.LENGTH_SHORT)
         }
@@ -44,10 +44,8 @@ class HeadlineFragment(
         }
     }
 
-    private fun openSystemBrowser(url: String) {
-        val uri = Uri.parse(url)
-        val intent = Intent(Intent.ACTION_VIEW, uri)
-        startActivity(intent)
+    private fun showArticle(article: Article) {
+        ArticleActivity.start(requireContext(), article.url, article.title)
     }
 
     override fun onStart() {

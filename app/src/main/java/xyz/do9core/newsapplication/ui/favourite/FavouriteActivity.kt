@@ -30,7 +30,9 @@ class FavouriteActivity : BindingActivity<ActivityFavouriteBinding>() {
                     MaterialAlertDialogBuilder(this@FavouriteActivity)
                         .setTitle(R.string.app_clear_fav_title)
                         .setMessage(R.string.app_clear_fav_message)
-                        .setPositiveButton(R.string.app_clear_fav_positive) { _, _ -> viewModel.clearFavourites() }
+                        .setPositiveButton(R.string.app_clear_fav_positive) { _, _ ->
+                            this@FavouriteActivity.viewModel.clearFavourites()
+                        }
                         .setNegativeButton(R.string.app_clear_fav_negative) { _, _ -> }
                         .show()
                     true
