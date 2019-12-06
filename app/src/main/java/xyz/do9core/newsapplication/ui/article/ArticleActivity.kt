@@ -1,9 +1,10 @@
 package xyz.do9core.newsapplication.ui.article
 
 import android.content.Context
-import android.view.Menu
-import android.view.MenuItem
 import androidx.core.os.bundleOf
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.commit
 import xyz.do9core.newsapplication.R
 import xyz.do9core.newsapplication.databinding.ActivityArticleBinding
 import xyz.do9core.newsapplication.ui.article.webview.WebViewFragment
@@ -18,28 +19,17 @@ class ArticleActivity : BindingActivity<ActivityArticleBinding>() {
     private val articleUrl: String by extra(URL_KEY, EMPTY_URL)
     private val articleTitle: String by extra(TITLE_KEY, "")
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        // TODO
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // TODO
-        return super.onOptionsItemSelected(item)
-    }
-
     override fun setupBinding(binding: ActivityArticleBinding): Unit = with(binding) {
         binding.articleTitle = this@ArticleActivity.articleTitle
         setSupportActionBar(toolbar)
-        if(articleUrl != EMPTY_URL) {
+        if(articleUrl == EMPTY_URL) {
             return@with
         }
 
         val webView = WebViewFragment(articleUrl)
-        supportFragmentManager
-            .beginTransaction()
-            .add(webViewHost.id, webView)
-            .commit()
+        supportFragmentManager.commit {
+            add(webViewHost.id, webView)
+        }
     }
 
     companion object {

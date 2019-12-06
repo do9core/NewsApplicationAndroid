@@ -16,27 +16,27 @@ class WebViewFragment(
 
     override fun setupBinding(binding: FragmentWebviewBinding) {
         super.setupBinding(binding)
-        setupWebView(binding.webView)
+        binding.webView.setup()
+        binding.setRefreshWebView {
+            binding.webView.reload()
+        }
     }
 
-    private fun setupWebView(webView: WebView) {
-        webView.webChromeClient = object : WebChromeClient() {
+    private fun WebView.setup() {
+        webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView?, newProgress: Int) {
                 if(newProgress < 100) {
+                    binding.progressBar.visibility = View.VISIBLE
                     binding.progressBar.progress = newProgress
                 } else {
                     binding.progressBar.visibility = View.GONE
                 }
             }
         }
-        webView.webViewClient = object : WebViewClient() {
+        webViewClient = object : WebViewClient() {
             // TODO:
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        binding.webView.loadUrl(targetUrl)
+        loadUrl(targetUrl)
     }
 
     override fun onDestroy() {
