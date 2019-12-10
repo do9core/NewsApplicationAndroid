@@ -1,12 +1,12 @@
 package xyz.do9core.newsapplication.ui.watchlater
 
-import android.content.Intent
-import android.net.Uri
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import xyz.do9core.newsapplication.NewsApplication
 import xyz.do9core.newsapplication.R
+import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.databinding.ActivityWatchLaterBinding
+import xyz.do9core.newsapplication.ui.article.ArticleActivity
 import xyz.do9core.newsapplication.ui.base.BindLayout
 import xyz.do9core.newsapplication.ui.base.BindingActivity
 import xyz.do9core.newsapplication.util.observe
@@ -33,9 +33,7 @@ class WatchLaterActivity : BindingActivity<ActivityWatchLaterBinding>() {
         observeEvent(showBrowserEvent) { showWatchLater(it) }
     }
 
-    private fun showWatchLater(url: String) {
-        val uri = Uri.parse(url)
-        val intent = Intent(Intent.ACTION_VIEW, uri)
-        startActivity(intent)
+    private fun showWatchLater(article: Article) {
+        ArticleActivity.start(this, article.url, article.title)
     }
 }

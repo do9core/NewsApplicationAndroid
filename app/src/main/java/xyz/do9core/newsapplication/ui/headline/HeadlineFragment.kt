@@ -44,12 +44,11 @@ class HeadlineFragment(
         }
     }
 
-    private fun showArticle(article: Article) {
-        ArticleActivity.start(requireContext(), article.url, article.title)
+    override fun initData() {
+        viewModel.loadArticles()
     }
 
-    override fun onStart() {
-        super.onStart()
-        viewModel.loadArticles()
+    private fun showArticle(article: Article) {
+        ArticleActivity.start(requireContext(), article.url, article.title)
     }
 }

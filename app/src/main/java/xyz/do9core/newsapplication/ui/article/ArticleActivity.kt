@@ -21,7 +21,10 @@ class ArticleActivity : BindingActivity<ActivityArticleBinding>() {
 
     override fun setupBinding(binding: ActivityArticleBinding): Unit = with(binding) {
         binding.articleTitle = this@ArticleActivity.articleTitle
-        setSupportActionBar(toolbar)
+        binding.toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
+
         if(articleUrl == EMPTY_URL) {
             return@with
         }
@@ -34,7 +37,7 @@ class ArticleActivity : BindingActivity<ActivityArticleBinding>() {
 
     companion object {
 
-        private const val EMPTY_URL = "app://empty"
+        private const val EMPTY_URL = "app://blank"
 
         const val URL_KEY = "URL_KEY"
         const val TITLE_KEY = "TITLE_KEY"

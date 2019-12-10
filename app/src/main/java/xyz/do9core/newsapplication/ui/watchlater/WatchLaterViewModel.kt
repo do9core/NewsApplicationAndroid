@@ -11,15 +11,13 @@ class WatchLaterViewModel(
     private val app: NewsApplication
 ) : AndroidViewModel(app), ArticleClickHandler {
 
-    val showBrowserEvent = LiveEvent<String>()
+    val showBrowserEvent = LiveEvent<Article>()
     val watchLaterArticles = liveData {
         val articles = app.database.articleDao().getWatchLaterArticles()
         emit(articles)
     }
 
-    override fun onClick(article: Article) {
-        showBrowserEvent.event(article.url)
-    }
+    override fun onClick(article: Article) = showBrowserEvent.event(article)
 
     class Factory(
         private val application: NewsApplication

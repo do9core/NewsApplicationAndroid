@@ -14,6 +14,11 @@ abstract class BindingFragment<T: ViewDataBinding> : Fragment() {
     protected lateinit var binding: T
         private set
 
+    final override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        initData()
+    }
+
     final override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,4 +45,5 @@ abstract class BindingFragment<T: ViewDataBinding> : Fragment() {
 
     protected open fun setupBinding(binding: T) = Unit
     protected open fun setupObservers() = Unit
+    protected open fun initData() = Unit
 }
