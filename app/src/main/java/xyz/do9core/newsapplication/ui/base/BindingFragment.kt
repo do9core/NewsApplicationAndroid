@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 
-abstract class BindingFragment<T: ViewDataBinding> : Fragment() {
+abstract class BindingFragment<T : ViewDataBinding> : Fragment() {
 
     protected lateinit var binding: T
         private set
@@ -34,8 +34,8 @@ abstract class BindingFragment<T: ViewDataBinding> : Fragment() {
         setupObservers()
     }
 
-    private fun createBinding(inflater: LayoutInflater, container: ViewGroup?): T
-        = DataBindingUtil.inflate(inflater, getLayoutResId(), container, false)
+    private fun createBinding(inflater: LayoutInflater, container: ViewGroup?): T =
+        DataBindingUtil.inflate(inflater, getLayoutResId(), container, false)
 
     @LayoutRes
     private fun getLayoutResId(): Int {

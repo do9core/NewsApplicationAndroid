@@ -1,7 +1,10 @@
 package xyz.do9core.newsapplication.data.dao
 
 import androidx.room.*
-import xyz.do9core.newsapplication.data.model.*
+import xyz.do9core.newsapplication.data.model.Article
+import xyz.do9core.newsapplication.data.model.FavouriteArticle
+import xyz.do9core.newsapplication.data.model.FavouriteIds
+import xyz.do9core.newsapplication.data.model.WatchLaterIds
 
 @Dao
 interface ArticleDao {

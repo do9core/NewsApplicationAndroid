@@ -22,10 +22,10 @@ class CoroutineTimer(
     private var _timerJob = buildTimerJob()
 
     fun start() {
-        if(_timerJob.isFinished) {
+        if (_timerJob.isFinished) {
             _timerJob = buildTimerJob()
         }
-        if(_timerJob.isInactive) {
+        if (_timerJob.isInactive) {
             _timerJob.start()
         }
     }
@@ -36,7 +36,7 @@ class CoroutineTimer(
     }
 
     private suspend fun timerLoop() {
-        while(true) {
+        while (true) {
             withContext(Dispatchers.Main) {
                 callback?.invoke()
             }

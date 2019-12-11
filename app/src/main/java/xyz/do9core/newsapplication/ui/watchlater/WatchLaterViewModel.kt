@@ -1,6 +1,9 @@
 package xyz.do9core.newsapplication.ui.watchlater
 
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.liveData
 import xyz.do9core.newsapplication.NewsApplication
 import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.ui.common.ArticleClickHandler
@@ -26,7 +29,7 @@ class WatchLaterViewModel(
 
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if(modelClass.isAssignableFrom(WatchLaterViewModel::class.java)) {
+            if (modelClass.isAssignableFrom(WatchLaterViewModel::class.java)) {
                 return WatchLaterViewModel(application) as T
             }
             throw InvalidParameterException()

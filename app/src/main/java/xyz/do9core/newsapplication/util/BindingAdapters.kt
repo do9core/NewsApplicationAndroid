@@ -11,7 +11,7 @@ import xyz.do9core.newsapplication.R
 
 @BindingAdapter("isVisible")
 fun View.bindIsVisible(visible: Boolean?) {
-    visibility = if(visible == null || !visible) {
+    visibility = if (visible == null || !visible) {
         View.GONE
     } else {
         View.VISIBLE
@@ -20,7 +20,7 @@ fun View.bindIsVisible(visible: Boolean?) {
 
 @BindingAdapter("isGone")
 fun View.isGone(gone: Boolean?) {
-    visibility = if(gone == null || gone) {
+    visibility = if (gone == null || gone) {
         View.GONE
     } else {
         View.VISIBLE
@@ -29,7 +29,7 @@ fun View.isGone(gone: Boolean?) {
 
 @BindingAdapter("isInvisible")
 fun View.isInvisible(invisible: Boolean?) {
-    visibility = if(invisible == null || invisible) {
+    visibility = if (invisible == null || invisible) {
         View.INVISIBLE
     } else {
         View.VISIBLE
@@ -50,7 +50,7 @@ fun View.setOnExclusiveClickListener(
 ) {
     val channel = Channel<Unit>()
     GlobalScope.launch {
-        for(event in channel) {
+        for (event in channel) {
             withContext(Dispatchers.Main) {
                 onExclusiveClick.onClick(this@setOnExclusiveClickListener)
             }

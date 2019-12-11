@@ -10,6 +10,7 @@ class ArticleAdapter(
 ) : ListAdapter<Article, ArticleViewHolder>(Article.Differ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ArticleViewHolder.from(parent)
+
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) =
         holder.bind(
             data = getItem(position),

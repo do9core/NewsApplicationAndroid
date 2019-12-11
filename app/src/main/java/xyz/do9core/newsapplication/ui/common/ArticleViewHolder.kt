@@ -27,15 +27,19 @@ class ArticleViewHolder private constructor(
             val popup = PopupMenu(context, dropDownButton)
             popup.menuInflater.inflate(R.menu.article_pop_up_menu, popup.menu)
             popup.setOnMenuItemClickListener {
-                when(it.itemId) {
+                when (it.itemId) {
                     R.id.article_pop_up_favourite -> {
-                        if(data == null) { false } else {
+                        if (data == null) {
+                            false
+                        } else {
                             favouriteHandler?.onClick(data)
                             true
                         }
                     }
                     R.id.article_pop_up_watch_later -> {
-                        if(data == null) { false } else {
+                        if (data == null) {
+                            false
+                        } else {
                             watchLaterHandler?.onClick(data)
                             true
                         }

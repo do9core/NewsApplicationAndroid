@@ -1,6 +1,9 @@
 package xyz.do9core.newsapplication.data.model
 
-import androidx.room.*
+import androidx.room.DatabaseView
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 @DatabaseView(
     """

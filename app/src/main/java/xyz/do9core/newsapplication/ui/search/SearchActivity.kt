@@ -22,7 +22,9 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>() {
         binding.lifecycleOwner = this
         binding.toolbar.setNavigationOnClickListener { onBackPressed() }
         binding.queryText.setOnEditorActionListener listener@{ _, event, _ ->
-            return@listener if(event != EditorInfo.IME_ACTION_SEARCH) { false } else {
+            return@listener if (event != EditorInfo.IME_ACTION_SEARCH) {
+                false
+            } else {
                 viewModel.executeQuery()
                 true
             }

@@ -12,6 +12,7 @@ class ResultAdapter(
 ) : PagedListAdapter<Article, ResultViewHolder>(Article.Differ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultViewHolder =
         ResultViewHolder.from(parent)
+
     override fun onBindViewHolder(holder: ResultViewHolder, position: Int) {
         val item = getItem(position) ?: return
         holder.bind(item, viewModel)
