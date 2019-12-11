@@ -22,4 +22,7 @@
     <string name="app_menu_favourites_text">Favourites</string>
     <string name="app_menu_watcher_later_text">Watch Later</string>
     <string name="app_menu_app_info">App Info</string>
+    <string name="app_search_title">Search</string>
+    <string name="app_search_query_hint">Your Query</string>
+    <string name="app_search_helper_text">Searching for what you interest.</string>
 </resources>

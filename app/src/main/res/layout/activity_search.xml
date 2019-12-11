@@ -4,24 +4,70 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="xyz.do9core.newsapplication.ui.search.SearchViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.appcompat.widget.SearchView
-                    tools:text="Search some thing"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </androidx.appcompat.widget.Toolbar>
+                android:layout_height="wrap_content"
+                app:title="@string/app_search_title"
+                app:titleTextColor="@color/primaryTextColor"
+                app:navigationIcon="@drawable/ic_arrow_back" />
         </com.google.android.material.appbar.AppBarLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/query_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:hint="@string/app_search_query_hint"
+            app:helperTextEnabled="true"
+            app:helperText="@string/app_search_helper_text"
+            app:startIconDrawable="@drawable/ic_search"
+            app:layout_constraintTop_toBottomOf="@id/app_bar">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/query_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:imeOptions="actionSearch"
+                android:singleLine="true"
+                android:text="@={viewModel.queryText}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:refreshing="@{viewModel.refreshing}"
+            app:onRefresh="@{() -> viewModel.executeQuery()}"
+            app:layout_constraintTop_toBottomOf="@id/query_field"
+            app:layout_constraintBottom_toBottomOf="parent" >
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/result_list"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:padding="8dp"
+                android:clipToPadding="false"
+                tools:listitem="@layout/item_search_result"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/query_field"
+                app:layout_constraintBottom_toBottomOf="parent" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
