@@ -4,13 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="showFavouriteListener"
+            name="showSearchListener"
             type="android.view.View.OnClickListener" />
     </data>
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/coordinator"
@@ -38,25 +39,13 @@
                 android:layout_height="wrap_content"
                 android:fitsSystemWindows="true">
 
-                <com.google.android.material.appbar.CollapsingToolbarLayout
-                    android:id="@+id/collapsing_toolbar"
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="140dp"
-                    android:fitsSystemWindows="true"
-                    android:minHeight="?attr/actionBarSize"
+                    android:layout_height="?attr/actionBarSize"
                     app:title="@string/app_headline_title"
-                    app:expandedTitleGravity="start|bottom"
-                    app:expandedTitleTextAppearance="@style/ExpandToolbarText"
-                    app:collapsedTitleTextAppearance="@style/CollapsedToolbarText"
-                    app:collapsedTitleGravity="start|center_vertical"
-                    app:layout_scrollFlags="scroll|enterAlwaysCollapsed|exitUntilCollapsed|snap">
-
-                    <androidx.appcompat.widget.Toolbar
-                        android:id="@+id/toolbar"
-                        android:layout_width="match_parent"
-                        android:layout_height="?attr/actionBarSize"
-                        app:layout_collapseMode="pin" />
-                </com.google.android.material.appbar.CollapsingToolbarLayout>
+                    app:titleTextColor="@color/primaryTextColor"
+                    app:layout_scrollFlags="scroll|enterAlways|snap"/>
 
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tab_layout"
@@ -75,7 +64,7 @@
                 android:src="@drawable/ic_search"
                 app:layout_dodgeInsetEdges="bottom"
                 app:tint="#FFF"
-                app:onExclusiveClick="@{showFavouriteListener}"
+                app:onExclusiveClick="@{showSearchListener}"
                 app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior" />
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

@@ -26,7 +26,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
     }
 
     override fun setupBinding(binding: ActivityMainBinding) = with(binding) {
-        setShowFavouriteListener { start<SearchActivity>() }
+        setShowSearchListener { start<SearchActivity>() }
         viewPager.adapter = CategoryPagerAdapter(this@MainActivity)
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = Category.values()[position].title
