@@ -46,7 +46,7 @@ class FavouriteViewModel(
 
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if(modelClass.isAssignableFrom(FavouriteViewModel::class.java)) {
+            if (modelClass.isAssignableFrom(FavouriteViewModel::class.java)) {
                 return FavouriteViewModel(app = application) as T
             }
             throw InvalidParameterException(

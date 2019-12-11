@@ -16,7 +16,7 @@ class ArticleAdapter(
     private var loadResult: LoadResult<*> = LoadResult.OK
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when(viewType) {
+        return when (viewType) {
             ITEM_VIEW_TYPE -> ArticleViewHolder.from(parent)
             LOADING_VIEW_TYPE -> LoadingViewHolder.from(parent)
             else -> throw InvalidParameterException("Unknown view type.")
@@ -24,7 +24,7 @@ class ArticleAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when(getItemViewType(position)) {
+        when (getItemViewType(position)) {
             ITEM_VIEW_TYPE ->
                 (holder as ArticleViewHolder).bind(
                     data = getItem(position),
@@ -47,7 +47,7 @@ class ArticleAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when(position + 1) {
+        return when (position + 1) {
             this.itemCount -> LOADING_VIEW_TYPE
             else -> ITEM_VIEW_TYPE
         }

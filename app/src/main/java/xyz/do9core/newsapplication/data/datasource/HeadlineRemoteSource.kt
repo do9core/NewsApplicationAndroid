@@ -12,7 +12,6 @@ import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.data.model.Category
 import xyz.do9core.newsapplication.data.model.Country
 import xyz.do9core.newsapplication.data.remote.RemoteDataSource
-import java.lang.Exception
 
 class HeadlineSourceFactory(
     private val coroutineScope: CoroutineScope,
@@ -43,10 +42,17 @@ class HeadlineRemoteSource(
     private val _networkState = MutableLiveData<LoadResult<*>>()
     val networkState: LiveData<LoadResult<*>> = _networkState
 
-    override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Article>) {
+    override fun loadInitial(
+        params: LoadInitialParams<Int>,
+        callback: LoadInitialCallback<Int, Article>
+    ) {
         launchApi(params.requestedLoadSize + 1, 0) {
             val nextPageKey =
-                if(it.size < params.requestedLoadSize) { null } else { 1 }
+                if (it.size < params.requestedLoadSize) {
+                    null
+                } else {
+                    1
+                }
             callback.onResult(it, null, nextPageKey)
         }
     }
@@ -54,7 +60,11 @@ class HeadlineRemoteSource(
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Article>) {
         launchApi(params.requestedLoadSize + 1, params.key) {
             val nextPageKey =
-                if(it.size < params.requestedLoadSize) { null } else { params.key + 1 }
+                if (it.size < params.requestedLoadSize) {
+                    null
+                } else {
+                    params.key + 1
+                }
             callback.onResult(it, nextPageKey)
         }
     }
@@ -62,7 +72,11 @@ class HeadlineRemoteSource(
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Article>) {
         launchApi(params.requestedLoadSize + 1, params.key) {
             val lastPageKey =
-                if(it.size < params.requestedLoadSize) { null } else { params.key - 1 }
+                if (it.size < params.requestedLoadSize) {
+                    null
+                } else {
+                    params.key - 1
+                }
             callback.onResult(it, lastPageKey)
         }
     }

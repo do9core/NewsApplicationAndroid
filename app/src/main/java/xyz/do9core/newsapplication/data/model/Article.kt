@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class Article (
+data class Article(
     @PrimaryKey
     val url: String,
     val source: Source,
@@ -19,6 +19,7 @@ data class Article (
     object Differ : DiffUtil.ItemCallback<Article>() {
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean =
             oldItem.title == newItem.title
+
         override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean =
             oldItem == newItem
     }

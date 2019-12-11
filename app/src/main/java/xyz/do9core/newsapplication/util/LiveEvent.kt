@@ -3,14 +3,13 @@ package xyz.do9core.newsapplication.util
 import androidx.annotation.AnyThread
 import androidx.annotation.MainThread
 import androidx.lifecycle.*
-import androidx.lifecycle.map
 
 data class Event<out T>(val param: T) {
 
     private var handled = false
 
     fun handleEvent(handler: (T) -> Unit) {
-        if(!handled) {
+        if (!handled) {
             handled = true
             handler.invoke(param)
         }
@@ -19,8 +18,8 @@ data class Event<out T>(val param: T) {
 
 class LiveEvent<T>() : LiveData<Event<T>>() {
 
-    constructor(initialValue: T?): this() {
-        if(initialValue == null) {
+    constructor(initialValue: T?) : this() {
+        if (initialValue == null) {
             super.setValue(null)
             return
         }

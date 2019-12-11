@@ -21,7 +21,7 @@ class NewsApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        val populateCallback = object: RoomDatabase.Callback() {
+        val populateCallback = object : RoomDatabase.Callback() {
             override fun onCreate(db: SupportSQLiteDatabase) {
                 super.onCreate(db)
                 GlobalScope.launch(Dispatchers.IO) {

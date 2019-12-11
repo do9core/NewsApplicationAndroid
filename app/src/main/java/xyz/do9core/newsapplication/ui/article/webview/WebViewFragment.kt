@@ -28,7 +28,7 @@ class WebViewFragment(
     private fun WebView.setup() {
         webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView?, newProgress: Int) {
-                if(newProgress < 100) {
+                if (newProgress < 100) {
                     refreshing.set(true)
                     binding.progressBar.visibility = View.VISIBLE
                     binding.progressBar.progress = newProgress

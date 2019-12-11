@@ -2,8 +2,6 @@ package xyz.do9core.newsapplication.ui.article
 
 import android.content.Context
 import androidx.core.os.bundleOf
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
 import xyz.do9core.newsapplication.R
 import xyz.do9core.newsapplication.databinding.ActivityArticleBinding
@@ -25,7 +23,7 @@ class ArticleActivity : BindingActivity<ActivityArticleBinding>() {
             onBackPressed()
         }
 
-        if(articleUrl == EMPTY_URL) {
+        if (articleUrl == EMPTY_URL) {
             return@with
         }
 

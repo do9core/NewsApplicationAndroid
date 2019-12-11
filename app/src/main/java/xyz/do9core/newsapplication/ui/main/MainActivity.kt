@@ -33,10 +33,16 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
         }.attach()
 
         navDrawer.setNavigationItemSelectedListener {
-            when(it.itemId) {
-                R.id.app_menu_favourites -> { start<FavouriteActivity>(); true }
-                R.id.app_menu_watch_later -> { start<WatchLaterActivity>(); true }
-                R.id.app_menu_app_info -> { start<AppInfoActivity>(); true }
+            when (it.itemId) {
+                R.id.app_menu_favourites -> {
+                    start<FavouriteActivity>(); true
+                }
+                R.id.app_menu_watch_later -> {
+                    start<WatchLaterActivity>(); true
+                }
+                R.id.app_menu_app_info -> {
+                    start<AppInfoActivity>(); true
+                }
                 else -> false
             }
         }

@@ -27,7 +27,7 @@ class FavouriteActivity : BindingActivity<ActivityFavouriteBinding>() {
         binding.favouriteList.layoutManager = LinearLayoutManager(this)
         binding.favouriteList.adapter = adapter
         binding.toolbar.setOnMenuItemClickListener {
-            when(it.itemId) {
+            when (it.itemId) {
                 R.id.fav_clear -> {
                     MaterialAlertDialogBuilder(this@FavouriteActivity)
                         .setTitle(R.string.app_clear_fav_title)
