@@ -67,7 +67,7 @@ class HeadlineViewModel(
     val articles = loadTrigger.switchMap {
         liveData {
             // sourceFactory.fromLocal = it
-            val source = sourceFactory.toLiveData(20)
+            val source = sourceFactory.toLiveData(10)
             emitSource(source)
         }
     }
