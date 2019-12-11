@@ -20,7 +20,8 @@ class FavouriteViewModel(
     private val reloadTrigger = LiveTrigger()
     val favArticles = reloadTrigger.convertSource {
         liveData {
-            val articles = app.database.articleDao().getFavouriteArticles()
+            val favArticles = app.database.articleDao().getFavourites()
+            val articles = favArticles.map { it.article }
             emit(articles)
         }
     }
@@ -28,7 +29,7 @@ class FavouriteViewModel(
 
     fun clearFavourites() {
         viewModelScope.launch {
-            app.database.articleDao().clearFavourites()
+            app.database.articleDao().clearFavourite()
             loadFavourites()
         }
     }

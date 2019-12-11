@@ -29,14 +29,8 @@ class HeadlineViewModel(
     val favouriteHandler = object : ArticleClickHandler {
         override fun onClick(article: Article) {
             viewModelScope.launch {
-                val favArticle = article.copy().apply {
-                    page = article.page
-                    categoryName = article.categoryName
-                    countryCode = article.countryCode
-                    isFavourite = true
-                }
                 try {
-                    app.database.articleDao().saveArticle(favArticle)
+                    app.database.articleDao().saveFavouriteArticle(article)
                     messageSnackbarEvent.postEvent(R.string.app_save_favourite_success)
                 } catch (e: Exception) {
                     errorSnackbarEvent.postEvent(e.message)
@@ -47,15 +41,8 @@ class HeadlineViewModel(
     val watchLaterHandler = object : ArticleClickHandler {
         override fun onClick(article: Article) {
             viewModelScope.launch {
-                val watchLaterArticle = article.copy().apply {
-                    page = article.page
-                    categoryName = article.categoryName
-                    countryCode = article.countryCode
-                    isFavourite = article.isFavourite
-                    isWatchLater = true
-                }
                 try {
-                    app.database.articleDao().saveArticle(watchLaterArticle)
+                    app.database.articleDao().saveWatchLaterArticle(article)
                     messageSnackbarEvent.postEvent(R.string.app_save_watch_later_success)
                 } catch (e: Exception) {
                     errorSnackbarEvent.postEvent(e.message)

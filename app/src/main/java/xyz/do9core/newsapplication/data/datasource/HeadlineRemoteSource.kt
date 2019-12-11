@@ -71,21 +71,14 @@ class HeadlineRemoteSource(
         coroutineScope.launch(Dispatchers.IO) {
             try {
                 _networkState.postValue(LoadResult.Loading)
-                val rawResult = RemoteDataSource.getHeadline(
+                val result = RemoteDataSource.getHeadline(
                     country = country.code,
                     category = category.title,
                     query = query,
                     pageSize = pageSize,
                     page = page
                 ).articles
-                val filledList = rawResult.map {
-                    return@map it.apply {
-                        this.categoryName = category.title
-                        this.countryCode = country.code
-                        this.page = page
-                    }
-                }
-                loadedCallback.invoke(filledList)
+                loadedCallback.invoke(result)
                 _networkState.postValue(LoadResult.OK)
             } catch (e: Exception) {
                 _networkState.postValue(LoadResult.Error(e.message))

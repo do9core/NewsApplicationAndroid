@@ -6,19 +6,25 @@ import androidx.room.TypeConverters
 import xyz.do9core.newsapplication.data.dao.ArticleDao
 import xyz.do9core.newsapplication.data.dao.CategoryDao
 import xyz.do9core.newsapplication.data.dao.CountryDao
-import xyz.do9core.newsapplication.data.model.Article
-import xyz.do9core.newsapplication.data.model.Category
-import xyz.do9core.newsapplication.data.model.Country
-import xyz.do9core.newsapplication.data.model.Source
+import xyz.do9core.newsapplication.data.model.*
 
 @Database(
-    entities = [Article::class, Country::class, Category::class, Source::class],
-    version = 1,
+    entities = [
+        Article::class,
+        FavouriteIds::class,
+        WatchLaterIds::class,
+        Country::class,
+        Category::class,
+        Source::class
+    ],
+    views = [
+        FavouriteArticle::class,
+        WatchLaterArticle::class
+    ],
+    version = 2,
     exportSchema = false
 )
-@TypeConverters(
-    value = [Converters::class]
-)
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun articleDao(): ArticleDao
     abstract fun countryDao(): CountryDao

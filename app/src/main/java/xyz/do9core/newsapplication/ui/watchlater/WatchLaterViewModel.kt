@@ -13,7 +13,8 @@ class WatchLaterViewModel(
 
     val showBrowserEvent = LiveEvent<Article>()
     val watchLaterArticles = liveData {
-        val articles = app.database.articleDao().getWatchLaterArticles()
+        val watchLaterArticles = app.database.articleDao().getWatchLater()
+        val articles = watchLaterArticles.map { it.article }
         emit(articles)
     }
 
