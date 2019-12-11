@@ -18,6 +18,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 app:title="@string/app_info_title"
                 app:titleTextColor="@color/primaryTextColor"
                 app:navigationIcon="@drawable/ic_arrow_back"
