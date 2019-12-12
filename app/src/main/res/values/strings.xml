@@ -26,6 +26,8 @@
     <string name="app_info_copyright">do9core ©️ 2019</string>
     <string name="app_info_name">News Application</string>
     <string name="app_info_title">App Info</string>
+    <string name="app_info_special_thanks">Special thanks to NewsApi:</string>
+    <string name="app_info_news_api_link">https://newsapi.org/</string>
 
     <string name="app_search_title">Search</string>
     <string name="app_search_query_hint">Your Query</string>
