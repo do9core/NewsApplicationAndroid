@@ -76,6 +76,7 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
     implementation "androidx.paging:paging-runtime-ktx:$rootProject.pagingVersion"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$rootProject.swipeRefreshVersion"
+    implementation "com.snakydesign.livedataextensions:lives:$rootProject.liveDataExtensionsVersion"
 
     // Testing dependencies
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
