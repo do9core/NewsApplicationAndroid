@@ -4,6 +4,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 import xyz.do9core.newsapplication.data.base.NewsDataSource
 import xyz.do9core.newsapplication.data.model.Headline
 
@@ -14,7 +15,7 @@ object RemoteDataSource : NewsDataSource {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    private val service = retrofit.create(NewsService::class.java)
+    private val service = retrofit.create<NewsService>()
 
     // ------------------------------------------------------------------
 
