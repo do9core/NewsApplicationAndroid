@@ -5,8 +5,10 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import xyz.do9core.newsapplication.data.model.Category
 import xyz.do9core.newsapplication.ui.headline.HeadlineFragment
 
-class CategoryPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+class CategoryPagerAdapter(
+    private val fragment: MainFragment
+) : FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int = Category.values().size
     override fun createFragment(position: Int): Fragment =
-        HeadlineFragment(Category.values()[position])
+        HeadlineFragment(Category.values()[position], fragment)
 }

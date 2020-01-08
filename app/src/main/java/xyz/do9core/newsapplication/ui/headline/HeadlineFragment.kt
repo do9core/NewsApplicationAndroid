@@ -1,8 +1,8 @@
 package xyz.do9core.newsapplication.ui.headline
 
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import xyz.do9core.newsapplication.NavGraphDirections
 import xyz.do9core.newsapplication.NewsApplication
 import xyz.do9core.newsapplication.R
@@ -10,11 +10,14 @@ import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.data.model.Category
 import xyz.do9core.newsapplication.databinding.FragmentHeadlineBinding
 import xyz.do9core.newsapplication.ui.base.BindingFragment
+import xyz.do9core.newsapplication.ui.main.MainFragment
+import xyz.do9core.newsapplication.util.navigate
 import xyz.do9core.newsapplication.util.observe
 import xyz.do9core.newsapplication.util.observeEvent
 
 class HeadlineFragment(
-    private val category: Category
+    private val category: Category,
+    private val parent: MainFragment
 ) : BindingFragment<FragmentHeadlineBinding>() {
 
     private val viewModel: HeadlineViewModel by viewModels {
@@ -34,13 +37,13 @@ class HeadlineFragment(
         viewLifecycleOwner.observe(articles) { adapter.submitList(it) }
         viewLifecycleOwner.observe(networkState) { adapter.setLoadState(it) }
         viewLifecycleOwner.observeEvent(showArticleEvent) { showArticle(it) }
-//        viewLifecycleOwner.observeEvent(messageSnackbarEvent) {
-//            (requireActivity() as MainActivity).showSnackbar(it, Snackbar.LENGTH_SHORT)
-//        }
-//        viewLifecycleOwner.observeEvent(errorSnackbarEvent) {
-//            val msg = it ?: getString(R.string.app_save_favourite_failed)
-//            (requireActivity() as MainActivity).showSnackbar(msg, Snackbar.LENGTH_LONG)
-//        }
+        viewLifecycleOwner.observeEvent(messageSnackbarEvent) {
+            parent.showSnackbar(it, Snackbar.LENGTH_SHORT)
+        }
+        viewLifecycleOwner.observeEvent(errorSnackbarEvent) {
+            val msg = it.takeIf { it.isNotBlank() } ?: getString(R.string.app_save_favourite_failed)
+            parent.showSnackbar(msg, Snackbar.LENGTH_LONG)
+        }
     }
 
     override fun initData() {
@@ -51,6 +54,6 @@ class HeadlineFragment(
         NavGraphDirections.showArticle(
             articleUrl = article.url,
             articleTitle = article.title
-        ).let { findNavController().navigate(it) }
+        ).let { navigate(it) }
     }
 }

@@ -8,6 +8,7 @@ import xyz.do9core.newsapplication.R
 import xyz.do9core.newsapplication.data.model.Category
 import xyz.do9core.newsapplication.databinding.FragmentMainBinding
 import xyz.do9core.newsapplication.ui.base.BindingFragment
+import xyz.do9core.newsapplication.util.navigate
 
 class MainFragment : BindingFragment<FragmentMainBinding>() {
 
@@ -44,7 +45,7 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
                 else -> null
             }
             if (dest != null) {
-                findNavController().navigate(dest)
+                navigate(dest)
                 true
             } else {
                 false

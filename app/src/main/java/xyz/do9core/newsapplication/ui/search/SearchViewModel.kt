@@ -2,11 +2,13 @@ package xyz.do9core.newsapplication.ui.search
 
 import androidx.lifecycle.*
 import androidx.paging.toLiveData
+import com.snakydesign.livedataextensions.emptyLiveData
 import xyz.do9core.newsapplication.data.datasource.HeadlineSourceFactory
 import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.data.model.Category
 import xyz.do9core.newsapplication.data.model.Country
-import xyz.do9core.newsapplication.util.LiveEvent
+import xyz.do9core.newsapplication.util.Event
+import xyz.do9core.newsapplication.util.event
 
 class SearchViewModel : ViewModel() {
 
@@ -17,7 +19,7 @@ class SearchViewModel : ViewModel() {
     val refreshing = networkState.map { it.isLoading }
 
     val queryText = MutableLiveData<String>()
-    val showArticleEvent = LiveEvent<Article>()
+    val showArticleEvent = emptyLiveData<Event<Article>>()
 
     fun executeQuery() {
         val query = queryText.value ?: ""

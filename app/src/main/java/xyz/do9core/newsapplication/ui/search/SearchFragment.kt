@@ -7,6 +7,7 @@ import xyz.do9core.newsapplication.R
 import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.databinding.FragmentSearchBinding
 import xyz.do9core.newsapplication.ui.base.BindingFragment
+import xyz.do9core.newsapplication.util.navigate
 import xyz.do9core.newsapplication.util.observe
 import xyz.do9core.newsapplication.util.observeEvent
 
@@ -43,6 +44,6 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
         SearchFragmentDirections.showArticle(
             articleUrl = article.url,
             articleTitle = article.title
-        ).let { findNavController().navigate(it) }
+        ).let { navigate(it) }
     }
 }
