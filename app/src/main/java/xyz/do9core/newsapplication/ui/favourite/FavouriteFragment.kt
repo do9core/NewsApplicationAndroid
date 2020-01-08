@@ -1,39 +1,40 @@
 package xyz.do9core.newsapplication.ui.favourite
 
-import androidx.activity.viewModels
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import xyz.do9core.newsapplication.NewsApplication
 import xyz.do9core.newsapplication.R
 import xyz.do9core.newsapplication.data.model.Article
-import xyz.do9core.newsapplication.databinding.ActivityFavouriteBinding
-import xyz.do9core.newsapplication.ui.article.ArticleActivity
-import xyz.do9core.newsapplication.ui.base.BindLayout
-import xyz.do9core.newsapplication.ui.base.BindingActivity
+import xyz.do9core.newsapplication.databinding.FragmentFavouriteBinding
+import xyz.do9core.newsapplication.ui.base.BindingFragment
 import xyz.do9core.newsapplication.util.observe
 import xyz.do9core.newsapplication.util.observeEvent
 
-@BindLayout(R.layout.activity_favourite)
-class FavouriteActivity : BindingActivity<ActivityFavouriteBinding>() {
+class FavouriteFragment : BindingFragment<FragmentFavouriteBinding>() {
 
     private val viewModel: FavouriteViewModel by viewModels {
+        val application = requireActivity().application
         FavouriteViewModel.Factory(application as NewsApplication)
     }
 
     private val adapter by lazy { ArticleAdapter(viewModel) }
 
-    override fun setupBinding(binding: ActivityFavouriteBinding) {
+    override val layoutResId: Int = R.layout.fragment_favourite
+
+    override fun setupBinding(binding: FragmentFavouriteBinding) {
         binding.lifecycleOwner = this
-        binding.favouriteList.layoutManager = LinearLayoutManager(this)
+        binding.favouriteList.layoutManager = LinearLayoutManager(requireContext())
         binding.favouriteList.adapter = adapter
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.fav_clear -> {
-                    MaterialAlertDialogBuilder(this@FavouriteActivity)
+                    MaterialAlertDialogBuilder(requireContext())
                         .setTitle(R.string.app_clear_fav_title)
                         .setMessage(R.string.app_clear_fav_message)
                         .setPositiveButton(R.string.app_clear_fav_positive) { _, _ ->
-                            this@FavouriteActivity.viewModel.clearFavourites()
+                            this@FavouriteFragment.viewModel.clearFavourites()
                         }
                         .setNegativeButton(R.string.app_clear_fav_negative) { _, _ -> }
                         .show()
@@ -43,7 +44,7 @@ class FavouriteActivity : BindingActivity<ActivityFavouriteBinding>() {
             }
         }
         binding.toolbar.setNavigationOnClickListener {
-            onBackPressed()
+            findNavController().navigateUp()
         }
     }
 
@@ -58,6 +59,9 @@ class FavouriteActivity : BindingActivity<ActivityFavouriteBinding>() {
     }
 
     private fun showFavourite(article: Article) {
-        ArticleActivity.start(this, article.url, article.title)
+        FavouriteFragmentDirections.showArticle(
+            articleUrl = article.url,
+            articleTitle = article.title
+        ).let { findNavController().navigate(it) }
     }
 }

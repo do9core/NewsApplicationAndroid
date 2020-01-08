@@ -10,15 +10,12 @@ abstract class BindingActivity<T : ViewDataBinding> : ContinuationActivity() {
     protected lateinit var binding: T
         private set
 
-    @LayoutRes
-    private fun getLayoutResId(): Int {
-        val bindAnnotation = this::class.annotations.find { it is BindLayout } as? BindLayout
-        return bindAnnotation?.layoutRes ?: 0
-    }
+    @get:LayoutRes
+    abstract val layoutResId: Int
 
     final override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, getLayoutResId())
+        binding = DataBindingUtil.setContentView(this, layoutResId)
         setupBinding(binding)
         setupObservers()
     }
