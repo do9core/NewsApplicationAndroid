@@ -1,7 +1,5 @@
 package xyz.do9core.newsapplication.data.remote
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
@@ -19,15 +17,13 @@ object RemoteDataSource : NewsDataSource {
 
     // ------------------------------------------------------------------
 
-    override suspend fun getHeadline(
+    override suspend fun fetchHeadline(
         country: String,
         category: String,
         query: String,
         pageSize: Int,
         page: Int
-    ): Headline = withContext(Dispatchers.IO) {
-        return@withContext service.getHeadlines(country, category, query, pageSize, page)
-    }
+    ): Headline = service.getHeadline(country, category, query, pageSize, page)
 
     // ------------------------------------------------------------------
 

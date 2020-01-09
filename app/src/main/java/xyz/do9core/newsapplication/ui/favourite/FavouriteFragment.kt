@@ -1,7 +1,6 @@
 package xyz.do9core.newsapplication.ui.favourite
 
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import xyz.do9core.newsapplication.NewsApplication
@@ -10,6 +9,7 @@ import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.databinding.FragmentFavouriteBinding
 import xyz.do9core.newsapplication.ui.base.BindingFragment
 import xyz.do9core.newsapplication.util.navigate
+import xyz.do9core.newsapplication.util.navigateUp
 import xyz.do9core.newsapplication.util.observe
 import xyz.do9core.newsapplication.util.observeEvent
 
@@ -26,6 +26,7 @@ class FavouriteFragment : BindingFragment<FragmentFavouriteBinding>() {
 
     override fun setupBinding(binding: FragmentFavouriteBinding) {
         binding.lifecycleOwner = this
+        binding.toolbar.setNavigationOnClickListener { navigateUp() }
         binding.favouriteList.layoutManager = LinearLayoutManager(requireContext())
         binding.favouriteList.adapter = adapter
         binding.toolbar.setOnMenuItemClickListener {
@@ -43,9 +44,6 @@ class FavouriteFragment : BindingFragment<FragmentFavouriteBinding>() {
                 }
                 else -> super.onOptionsItemSelected(it)
             }
-        }
-        binding.toolbar.setNavigationOnClickListener {
-            findNavController().navigateUp()
         }
     }
 

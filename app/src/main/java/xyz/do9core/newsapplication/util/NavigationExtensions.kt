@@ -6,3 +6,6 @@ import androidx.navigation.fragment.findNavController
 
 fun Fragment.navigate(direction: NavDirections) =
     findNavController().navigate(direction)
+
+fun Fragment.navigateUp() =
+    findNavController().navigateUp()

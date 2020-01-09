@@ -1,7 +1,6 @@
 package xyz.do9core.newsapplication.ui.main
 
 import androidx.annotation.StringRes
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import xyz.do9core.newsapplication.R
@@ -23,9 +22,7 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
     override val layoutResId: Int = R.layout.fragment_main
 
     override fun setupBinding(binding: FragmentMainBinding) = with(binding) {
-        setShowSearchListener {
-            MainFragmentDirections.showSearch().let { findNavController().navigate(it) }
-        }
+        setShowSearchListener { navigate(MainFragmentDirections.showSearch()) }
         viewPager.adapter = CategoryPagerAdapter(this@MainFragment)
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = Category.values()[position].title
@@ -33,15 +30,9 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
 
         navDrawer.setNavigationItemSelectedListener {
             val dest = when (it.itemId) {
-                R.id.app_menu_favourites -> {
-                    MainFragmentDirections.showFavourites()
-                }
-                R.id.app_menu_watch_later -> {
-                    MainFragmentDirections.showWatchLater()
-                }
-                R.id.app_menu_app_info -> {
-                    MainFragmentDirections.showAppInfo()
-                }
+                R.id.app_menu_favourites -> MainFragmentDirections.showFavourites()
+                R.id.app_menu_watch_later -> MainFragmentDirections.showWatchLater()
+                R.id.app_menu_app_info -> MainFragmentDirections.showAppInfo()
                 else -> null
             }
             if (dest != null) {

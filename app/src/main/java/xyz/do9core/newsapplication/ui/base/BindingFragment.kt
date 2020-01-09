@@ -7,9 +7,8 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.fragment.app.Fragment
 
-abstract class BindingFragment<T : ViewDataBinding> : Fragment() {
+abstract class BindingFragment<T : ViewDataBinding> : ContinuationFragment() {
 
     protected lateinit var binding: T
         private set

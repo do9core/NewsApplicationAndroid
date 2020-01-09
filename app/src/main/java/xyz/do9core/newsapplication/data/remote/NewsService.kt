@@ -4,13 +4,14 @@ import okhttp3.ResponseBody
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Query
+import xyz.do9core.newsapplication.BuildConfig
 import xyz.do9core.newsapplication.data.model.Headline
 
 interface NewsService {
 
     @GET("/v2/top-headlines")
-    @Headers("X-Api-Key: 85c9c2cae6de432ca6260a779f955c7c")
-    suspend fun getHeadlines(
+    @Headers("X-Api-Key: ${BuildConfig.API_KEY}")
+    suspend fun getHeadline(
         @Query("country") country: String,
         @Query("category") category: String,
         @Query("q") query: String,
@@ -19,8 +20,8 @@ interface NewsService {
     ): Headline
 
     @GET("/v2/top-headlines")
-    @Headers("X-Api-Key: 85c9c2cae6de432ca6260a779f955c7c")
-    suspend fun getHeadlines(
+    @Headers("X-Api-Key: ${BuildConfig.API_KEY}")
+    suspend fun getHeadline(
         @Query("sources") sources: String,
         @Query("q") query: String,
         @Query("pageSize") pageSize: Int,
@@ -28,7 +29,7 @@ interface NewsService {
     ): Headline
 
     @GET("/v2/everything")
-    @Headers("X-Api-Key: 85c9c2cae6de432ca6260a779f955c7c")
+    @Headers("X-Api-Key: ${BuildConfig.API_KEY}")
     suspend fun everything(
         @Query("q") query: String,
         @Query("qInTitle") queryInTitle: String,
@@ -44,6 +45,7 @@ interface NewsService {
     ): ResponseBody
 
     @GET("/v2/sources")
+    @Headers("X-Api-Key: ${BuildConfig.API_KEY}")
     suspend fun sources(
         @Query("category") category: String,
         @Query("language") language: String,

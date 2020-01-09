@@ -4,7 +4,7 @@ import xyz.do9core.newsapplication.data.model.Headline
 
 interface NewsDataSource {
 
-    suspend fun getHeadline(
+    suspend fun fetchHeadline(
         country: String,
         category: String,
         query: String,

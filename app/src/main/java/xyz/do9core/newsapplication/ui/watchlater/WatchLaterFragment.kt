@@ -1,7 +1,6 @@
 package xyz.do9core.newsapplication.ui.watchlater
 
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import xyz.do9core.newsapplication.NewsApplication
 import xyz.do9core.newsapplication.R
@@ -9,6 +8,7 @@ import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.databinding.FragmentWatchLaterBinding
 import xyz.do9core.newsapplication.ui.base.BindingFragment
 import xyz.do9core.newsapplication.util.navigate
+import xyz.do9core.newsapplication.util.navigateUp
 import xyz.do9core.newsapplication.util.observe
 import xyz.do9core.newsapplication.util.observeEvent
 
@@ -25,9 +25,7 @@ class WatchLaterFragment : BindingFragment<FragmentWatchLaterBinding>() {
     override fun setupBinding(binding: FragmentWatchLaterBinding) = with(binding) {
         watchLaterList.layoutManager = LinearLayoutManager(requireContext())
         watchLaterList.adapter = adapter
-        toolbar.setNavigationOnClickListener {
-            findNavController().navigateUp()
-        }
+        toolbar.setNavigationOnClickListener { navigateUp() }
     }
 
     override fun setupObservers() = with(viewModel) {

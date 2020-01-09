@@ -2,12 +2,12 @@ package xyz.do9core.newsapplication.ui.search
 
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import xyz.do9core.newsapplication.R
 import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.databinding.FragmentSearchBinding
 import xyz.do9core.newsapplication.ui.base.BindingFragment
 import xyz.do9core.newsapplication.util.navigate
+import xyz.do9core.newsapplication.util.navigateUp
 import xyz.do9core.newsapplication.util.observe
 import xyz.do9core.newsapplication.util.observeEvent
 
@@ -21,9 +21,7 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
     override fun setupBinding(binding: FragmentSearchBinding) {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        binding.toolbar.setNavigationOnClickListener {
-            findNavController().navigateUp()
-        }
+        binding.toolbar.setNavigationOnClickListener { navigateUp() }
         binding.queryText.setOnEditorActionListener listener@{ _, event, _ ->
             return@listener if (event != EditorInfo.IME_ACTION_SEARCH) {
                 false
