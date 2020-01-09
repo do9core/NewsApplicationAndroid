@@ -85,7 +85,7 @@ class HeadlineRemoteSource(
         coroutineScope.launch(Dispatchers.IO) {
             try {
                 _networkState.postValue(LoadResult.Loading)
-                val result = RemoteDataSource.getHeadline(
+                val result = RemoteDataSource.fetchHeadline(
                     country = country.code,
                     category = category.title,
                     query = query,

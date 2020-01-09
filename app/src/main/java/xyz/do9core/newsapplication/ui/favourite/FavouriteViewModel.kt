@@ -1,31 +1,32 @@
 package xyz.do9core.newsapplication.ui.favourite
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.snakydesign.livedataextensions.emptyLiveData
+import com.snakydesign.livedataextensions.switchMap
 import kotlinx.coroutines.launch
 import xyz.do9core.newsapplication.NewsApplication
 import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.ui.common.ArticleClickHandler
-import xyz.do9core.newsapplication.util.LiveEvent
-import xyz.do9core.newsapplication.util.LiveTrigger
-import xyz.do9core.newsapplication.util.convertSource
+import xyz.do9core.newsapplication.util.Event
+import xyz.do9core.newsapplication.util.event
+import xyz.do9core.newsapplication.util.trigger
 import java.security.InvalidParameterException
 
 class FavouriteViewModel(
     private val app: NewsApplication
 ) : ViewModel(), ArticleClickHandler {
 
-    private val reloadTrigger = LiveTrigger()
-    val favArticles = reloadTrigger.convertSource {
-        liveData {
-            val favArticles = app.database.articleDao().getFavourites()
-            val articles = favArticles.map { it.article }
-            emit(articles)
+    private val loadEvent = emptyLiveData<Event<Unit>>()
+    private var currentSource: LiveData<List<Article>> = emptyLiveData()
+
+    val favArticles: LiveData<List<Article>> = loadEvent.switchMap {
+        if (!it.handled) {
+            currentSource = getFavouritesLiveData()
         }
+        currentSource
     }
-    val showBrowserEvent = LiveEvent<Article>()
+
+    val showBrowserEvent = MutableLiveData<Event<Article>>()
 
     fun clearFavourites() {
         viewModelScope.launch {
@@ -34,7 +35,13 @@ class FavouriteViewModel(
         }
     }
 
-    fun loadFavourites() = reloadTrigger.signal()
+    fun loadFavourites() = loadEvent.trigger()
+
+    private fun getFavouritesLiveData() = liveData {
+        val favArticles = app.database.articleDao().getFavourites()
+        val articles = favArticles.map { it.article }
+        emit(articles)
+    }
 
     override fun onClick(article: Article) {
         showBrowserEvent.event(article)

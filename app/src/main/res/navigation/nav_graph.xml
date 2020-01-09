@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <action
+        android:id="@+id/showArticle"
+        app:destination="@id/articleFragment" />
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="xyz.do9core.newsapplication.ui.main.MainFragment">
+
+        <action
+            android:id="@+id/showFavourites"
+            app:destination="@id/favouriteFragment" />
+
+        <action
+            android:id="@+id/showSearch"
+            app:destination="@id/searchFragment" />
+
+        <action
+            android:id="@+id/showWatchLater"
+            app:destination="@id/watchLaterFragment" />
+
+        <action
+            android:id="@+id/showAppInfo"
+            app:destination="@id/appInfoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/favouriteFragment"
+        android:name="xyz.do9core.newsapplication.ui.favourite.FavouriteFragment">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="xyz.do9core.newsapplication.ui.search.SearchFragment">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/watchLaterFragment"
+        android:name="xyz.do9core.newsapplication.ui.watchlater.WatchLaterFragment">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/appInfoFragment"
+        android:name="xyz.do9core.newsapplication.ui.appinfo.AppInfoFragment">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/articleFragment"
+        android:name="xyz.do9core.newsapplication.ui.article.ArticleFragment">
+
+        <argument
+            android:name="articleTitle"
+            android:defaultValue=" "
+            app:argType="string" />
+
+        <argument
+            android:name="articleUrl"
+            android:defaultValue="app://blank"
+            app:argType="string" />
+    </fragment>
+
+</navigation>

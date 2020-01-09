@@ -4,17 +4,19 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
+import com.snakydesign.livedataextensions.emptyLiveData
 import xyz.do9core.newsapplication.NewsApplication
 import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.ui.common.ArticleClickHandler
-import xyz.do9core.newsapplication.util.LiveEvent
+import xyz.do9core.newsapplication.util.Event
+import xyz.do9core.newsapplication.util.event
 import java.security.InvalidParameterException
 
 class WatchLaterViewModel(
     private val app: NewsApplication
 ) : AndroidViewModel(app), ArticleClickHandler {
 
-    val showBrowserEvent = LiveEvent<Article>()
+    val showBrowserEvent = emptyLiveData<Event<Article>>()
     val watchLaterArticles = liveData {
         val watchLaterArticles = app.database.articleDao().getWatchLater()
         val articles = watchLaterArticles.map { it.article }
