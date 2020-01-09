@@ -1,21 +1,13 @@
 package xyz.do9core.newsapplication.data.remote
 
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import xyz.do9core.newsapplication.data.base.NewsDataSource
 import xyz.do9core.newsapplication.data.model.Headline
 
-object RemoteDataSource : NewsDataSource {
+object RemoteDataSource : NewsDataSource, KoinComponent {
 
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(Constants.BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-
-    private val service = retrofit.create<NewsService>()
-
-    // ------------------------------------------------------------------
+    private val service by inject<NewsService>()
 
     override suspend fun fetchHeadline(
         country: String,
@@ -24,10 +16,4 @@ object RemoteDataSource : NewsDataSource {
         pageSize: Int,
         page: Int
     ): Headline = service.getHeadline(country, category, query, pageSize, page)
-
-    // ------------------------------------------------------------------
-
-    private object Constants {
-        const val BASE_URL = "https://newsapi.org"
-    }
 }

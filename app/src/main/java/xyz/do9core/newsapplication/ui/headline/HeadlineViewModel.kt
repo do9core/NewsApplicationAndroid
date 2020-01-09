@@ -4,10 +4,13 @@ import androidx.lifecycle.*
 import androidx.paging.toLiveData
 import com.snakydesign.livedataextensions.emptyLiveData
 import kotlinx.coroutines.launch
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import xyz.do9core.newsapplication.NewsApplication
 import xyz.do9core.newsapplication.R
 import xyz.do9core.newsapplication.data.LoadResult
 import xyz.do9core.newsapplication.data.datasource.HeadlineSourceFactory
+import xyz.do9core.newsapplication.data.db.AppDatabase
 import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.data.model.Category
 import xyz.do9core.newsapplication.data.model.Country
@@ -18,7 +21,7 @@ import java.security.InvalidParameterException
 
 class HeadlineViewModel(
     category: Category,
-    private val app: NewsApplication
+    private val database: AppDatabase
 ) : ViewModel() {
 
     private val sourceFactory =
@@ -33,7 +36,7 @@ class HeadlineViewModel(
         override fun onClick(article: Article) {
             viewModelScope.launch {
                 try {
-                    app.database.articleDao().saveFavouriteArticle(article)
+                    database.articleDao().saveFavouriteArticle(article)
                     messageSnackbarEvent.event(R.string.app_save_favourite_success)
                 } catch (e: Exception) {
                     errorSnackbarEvent.event(e.message.orEmpty())
@@ -45,7 +48,7 @@ class HeadlineViewModel(
         override fun onClick(article: Article) {
             viewModelScope.launch {
                 try {
-                    app.database.articleDao().saveWatchLaterArticle(article)
+                    database.articleDao().saveWatchLaterArticle(article)
                     messageSnackbarEvent.event(R.string.app_save_watch_later_success)
                 } catch (e: Exception) {
                     errorSnackbarEvent.event(e.message.orEmpty())
@@ -73,14 +76,15 @@ class HeadlineViewModel(
     fun loadArticles(forceReload: Boolean = false) = loadTrigger.postValue(forceReload)
 
     class Factory(
-        private val category: Category,
-        private val application: NewsApplication
-    ) : ViewModelProvider.NewInstanceFactory() {
+        private val category: Category
+    ) : ViewModelProvider.NewInstanceFactory(), KoinComponent {
+
+        private val database by inject<AppDatabase>()
 
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(HeadlineViewModel::class.java)) {
-                return HeadlineViewModel(category, application) as T
+                return HeadlineViewModel(category, database) as T
             }
             throw InvalidParameterException("This factory cannot create ${modelClass.simpleName} instance.")
         }

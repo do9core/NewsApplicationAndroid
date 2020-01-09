@@ -15,14 +15,13 @@ private typealias ActivityResult = Pair<ResultCode, Intent?>
 
 private val requestMap by lazy { ConcurrentHashMap<Identifier, ActivityCoroutine>() }
 
-private interface ContinuationComponent {
+private interface ContinuationComponent
 
-    fun getIdentifier(requestCode: RequestCode): Identifier =
-        Identifier(this.hashCode(), requestCode)
-}
+private fun ContinuationComponent.getIdentifier(requestCode: RequestCode): Identifier =
+    Identifier(this.hashCode(), requestCode)
 
 private data class Identifier(
-    val componentHashCode: Int,
+    val hashCode: Int,
     val requestCode: RequestCode
 )
 

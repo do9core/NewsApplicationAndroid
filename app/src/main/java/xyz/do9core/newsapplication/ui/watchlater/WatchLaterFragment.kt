@@ -2,7 +2,6 @@ package xyz.do9core.newsapplication.ui.watchlater
 
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import xyz.do9core.newsapplication.NewsApplication
 import xyz.do9core.newsapplication.R
 import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.databinding.FragmentWatchLaterBinding
@@ -14,10 +13,7 @@ import xyz.do9core.newsapplication.util.observeEvent
 
 class WatchLaterFragment : BindingFragment<FragmentWatchLaterBinding>() {
 
-    private val viewModel by viewModels<WatchLaterViewModel> {
-        val application = requireActivity().application
-        WatchLaterViewModel.Factory(application as NewsApplication)
-    }
+    private val viewModel by viewModels<WatchLaterViewModel> { WatchLaterViewModel.Factory() }
     private val adapter by lazy { ArticleAdapter(viewModel) }
 
     override val layoutResId: Int = R.layout.fragment_watch_later
