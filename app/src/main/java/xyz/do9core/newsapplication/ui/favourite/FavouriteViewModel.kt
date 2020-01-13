@@ -4,15 +4,12 @@ import androidx.lifecycle.*
 import com.snakydesign.livedataextensions.emptyLiveData
 import com.snakydesign.livedataextensions.switchMap
 import kotlinx.coroutines.launch
-import org.koin.core.KoinComponent
-import org.koin.core.inject
 import xyz.do9core.newsapplication.data.db.AppDatabase
 import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.ui.common.ArticleClickHandler
 import xyz.do9core.newsapplication.util.Event
 import xyz.do9core.newsapplication.util.event
 import xyz.do9core.newsapplication.util.trigger
-import java.security.InvalidParameterException
 
 class FavouriteViewModel(private val database: AppDatabase) : ViewModel(), ArticleClickHandler {
 
@@ -45,20 +42,5 @@ class FavouriteViewModel(private val database: AppDatabase) : ViewModel(), Artic
 
     override fun onClick(article: Article) {
         showBrowserEvent.event(article)
-    }
-
-    class Factory : ViewModelProvider.NewInstanceFactory(), KoinComponent {
-
-        private val database by inject<AppDatabase>()
-
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(FavouriteViewModel::class.java)) {
-                return FavouriteViewModel(database) as T
-            }
-            throw InvalidParameterException(
-                "This factory can only create ${FavouriteViewModel::class.java.simpleName}."
-            )
-        }
     }
 }

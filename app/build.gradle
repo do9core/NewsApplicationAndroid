@@ -76,7 +76,8 @@ dependencies {
     implementation "androidx.paging:paging-runtime-ktx:$rootProject.pagingVersion"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$rootProject.swipeRefreshVersion"
     implementation "com.snakydesign.livedataextensions:lives:$rootProject.liveDataExtensionsVersion"
-    implementation "org.koin:koin-android:$rootProject.koinVersion"
+    implementation "org.koin:koin-androidx-scope:$rootProject.koinVersion"
+    implementation "org.koin:koin-androidx-viewmodel:$rootProject.koinVersion"
 
     // Testing dependencies
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"

@@ -1,8 +1,9 @@
 package xyz.do9core.newsapplication.ui.favourite
 
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import org.koin.androidx.viewmodel.ext.android.getSharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import xyz.do9core.newsapplication.R
 import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.databinding.FragmentFavouriteBinding
@@ -14,7 +15,7 @@ import xyz.do9core.newsapplication.util.observeEvent
 
 class FavouriteFragment : BindingFragment<FragmentFavouriteBinding>() {
 
-    private val viewModel: FavouriteViewModel by viewModels { FavouriteViewModel.Factory() }
+    private val viewModel by viewModel<FavouriteViewModel>()
     private val adapter by lazy { ArticleAdapter(viewModel) }
 
     override val layoutResId: Int = R.layout.fragment_favourite
