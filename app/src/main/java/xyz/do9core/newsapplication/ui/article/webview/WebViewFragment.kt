@@ -4,15 +4,17 @@ import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import androidx.databinding.ObservableBoolean
-import xyz.do9core.newsapplication.R
+import org.koin.android.ext.android.get
+import org.koin.core.qualifier.named
 import xyz.do9core.newsapplication.databinding.FragmentWebviewBinding
+import xyz.do9core.newsapplication.di.LayoutIdName
 import xyz.do9core.newsapplication.ui.base.BindingFragment
 
 class WebViewFragment(private val targetUrl: String) : BindingFragment<FragmentWebviewBinding>() {
 
     private val refreshing = ObservableBoolean(false)
 
-    override val layoutResId: Int = R.layout.fragment_webview
+    override val layoutResId: Int = get(named(LayoutIdName.WebView))
 
     override fun setupBinding(binding: FragmentWebviewBinding) {
         super.setupBinding(binding)
