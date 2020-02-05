@@ -3,10 +3,13 @@ package xyz.do9core.newsapplication.ui.main
 import androidx.annotation.StringRes
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
+import org.koin.android.ext.android.get
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.core.qualifier.named
 import xyz.do9core.newsapplication.R
 import xyz.do9core.newsapplication.data.model.Category
 import xyz.do9core.newsapplication.databinding.FragmentMainBinding
+import xyz.do9core.newsapplication.di.LayoutIdName
 import xyz.do9core.newsapplication.ui.base.BindingFragment
 import xyz.do9core.newsapplication.util.navigate
 import xyz.do9core.newsapplication.util.viewObserveEvent
@@ -15,7 +18,7 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
 
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
 
-    override val layoutResId: Int = R.layout.fragment_main
+    override val layoutResId: Int = get(named(LayoutIdName.MainHost))
 
     override fun setupBinding(binding: FragmentMainBinding) = with(binding) {
         setShowSearchListener { navigate(MainFragmentDirections.showSearch()) }

@@ -1,14 +1,18 @@
 package xyz.do9core.newsapplication.ui.headline
 
 import androidx.recyclerview.widget.LinearLayoutManager
+import org.koin.android.ext.android.get
+import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
+import org.koin.core.qualifier.named
 import xyz.do9core.newsapplication.NavGraphDirections
 import xyz.do9core.newsapplication.R
 import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.data.model.Category
 import xyz.do9core.newsapplication.databinding.FragmentHeadlineBinding
+import xyz.do9core.newsapplication.di.LayoutIdName
 import xyz.do9core.newsapplication.ui.base.BindingFragment
 import xyz.do9core.newsapplication.ui.main.SharedViewModel
 import xyz.do9core.newsapplication.util.event
@@ -20,9 +24,9 @@ class HeadlineFragment(private val category: Category) : BindingFragment<Fragmen
 
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
     private val viewModel by viewModel<HeadlineViewModel> { parametersOf(category) }
-    private val adapter by lazy { ArticleAdapter(viewModel) }
+    private val adapter: ArticleAdapter by currentScope.inject { parametersOf(viewModel) }
 
-    override val layoutResId: Int = R.layout.fragment_headline
+    override val layoutResId: Int = get(named(LayoutIdName.Headline))
 
     override fun setupBinding(binding: FragmentHeadlineBinding) = with(binding) {
         viewModel = this@HeadlineFragment.viewModel

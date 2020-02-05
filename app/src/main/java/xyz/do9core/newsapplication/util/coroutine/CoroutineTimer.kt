@@ -1,4 +1,4 @@
-package xyz.do9core.newsapplication.util
+package xyz.do9core.newsapplication.util.coroutine
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -59,4 +59,8 @@ fun CoroutineScope.launchTimer(duration: Duration, callback: TimerCallback? = nu
     launchTimer(duration.toMillis(), callback)
 
 fun CoroutineScope.launchTimer(durationInMs: Long, callback: TimerCallback? = null) =
-    CoroutineTimer(this, durationInMs, callback)
+    CoroutineTimer(
+        this,
+        durationInMs,
+        callback
+    )

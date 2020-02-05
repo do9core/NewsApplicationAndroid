@@ -1,7 +1,9 @@
 package xyz.do9core.newsapplication.ui.search
 
 import android.view.inputmethod.EditorInfo
-import androidx.fragment.app.viewModels
+import org.koin.androidx.scope.currentScope
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 import xyz.do9core.newsapplication.R
 import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.databinding.FragmentSearchBinding
@@ -13,8 +15,8 @@ import xyz.do9core.newsapplication.util.observeEvent
 
 class SearchFragment : BindingFragment<FragmentSearchBinding>() {
 
-    private val viewModel: SearchViewModel by viewModels()
-    private val adapter by lazy { ResultAdapter(viewModel) }
+    private val viewModel: SearchViewModel by viewModel()
+    private val adapter: ResultAdapter by currentScope.inject { parametersOf(viewModel) }
 
     override val layoutResId: Int = R.layout.fragment_search
 
