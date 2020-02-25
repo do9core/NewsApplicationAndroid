@@ -1,11 +1,11 @@
 package xyz.do9core.newsapplication.ui.main
 
 import androidx.annotation.StringRes
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import org.koin.android.ext.android.get
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.core.qualifier.named
+import splitties.snackbar.snack
 import xyz.do9core.newsapplication.R
 import xyz.do9core.newsapplication.data.model.Category
 import xyz.do9core.newsapplication.databinding.FragmentMainBinding
@@ -28,18 +28,12 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
         }.attach()
 
         navDrawer.setNavigationItemSelectedListener {
-            val dest = when (it.itemId) {
+            when (it.itemId) {
                 R.id.app_menu_favourites -> MainFragmentDirections.showFavourites()
                 R.id.app_menu_watch_later -> MainFragmentDirections.showWatchLater()
                 R.id.app_menu_app_info -> MainFragmentDirections.showAppInfo()
                 else -> null
-            }
-            if (dest != null) {
-                navigate(dest)
-                true
-            } else {
-                false
-            }
+            }?.also { dest -> navigate(dest) } != null
         }
     }
 
@@ -48,11 +42,7 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
         viewObserveEvent(showErrorEvent) { showSnackbar(it) }
     }
 
-    private fun showSnackbar(text: CharSequence) = with(binding) {
-        Snackbar.make(coordinator, text, Snackbar.LENGTH_LONG).show()
-    }
+    private fun showSnackbar(text: CharSequence) = binding.coordinator.snack(text).show()
 
-    private fun showSnackbar(@StringRes text: Int) = with(binding) {
-        Snackbar.make(coordinator, text, Snackbar.LENGTH_LONG).show()
-    }
+    private fun showSnackbar(@StringRes text: Int) = binding.coordinator.snack(text).show()
 }
