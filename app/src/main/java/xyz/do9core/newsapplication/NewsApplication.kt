@@ -6,8 +6,8 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 import xyz.do9core.newsapplication.di.*
-import xyz.do9core.newsapplication.util.crashhandler.Alert
-import xyz.do9core.newsapplication.util.crashhandler.CrashReportUtil
+import xyz.do9core.newsapplication.util.crashreporter.Alert
+import xyz.do9core.newsapplication.util.crashreporter.CrashReportUtil
 
 @Suppress("unused")
 class NewsApplication : Application() {
