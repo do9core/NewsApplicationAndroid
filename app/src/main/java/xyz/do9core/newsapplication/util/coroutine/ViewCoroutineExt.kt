@@ -15,7 +15,7 @@ fun View.autoDispose(job: Job) {
 }
 
 val View.autoDisposeScope: CoroutineScope
-    get() = SafeCoroutineScope(Dispatchers.Main)
+    get() = SafeCoroutineScope(Dispatchers.Main + ViewAutoDisposeInterceptorImpl(this))
 
 private class ViewListener(
     private val view: View,
