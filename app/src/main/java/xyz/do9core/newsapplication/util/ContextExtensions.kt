@@ -11,8 +11,10 @@ inline fun <reified T : AppCompatActivity> Context.start() {
     startActivity(intent)
 }
 
-inline fun <reified T : AppCompatActivity> Fragment.start() =
-    requireContext().start<T>()
+inline fun <reified T : AppCompatActivity> Fragment.start() {
+    val intent = Intent(requireContext(), T::class.java)
+    startActivity(intent)
+}
 
 inline fun <reified T : AppCompatActivity> Context.start(paramProducer: () -> Bundle) {
     val bundle = paramProducer.invoke()
