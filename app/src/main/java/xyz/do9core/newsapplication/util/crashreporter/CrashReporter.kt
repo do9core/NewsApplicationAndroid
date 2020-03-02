@@ -1,4 +1,4 @@
-package xyz.do9core.newsapplication.util.crashhandler
+package xyz.do9core.newsapplication.util.crashreporter
 
 import android.app.Application
 import androidx.work.CoroutineWorker
@@ -18,7 +18,7 @@ class CrashReporter(
         const val KEY_REMARK = "KEY_REMARK"
 
         private val retrofit = Retrofit.Builder()
-            .baseUrl("https://do9core.xyz/newsapplication")
+            .baseUrl("https://do9core.xyz/newsapplication/")
             .build()
         private val service = retrofit.create<CrashReportService>()
     }
