@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
+
         <variable
             name="showFavouriteListener"
             type="android.view.View.OnClickListener" />
     </data>
+
     <androidx.drawerlayout.widget.DrawerLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -23,12 +25,13 @@
                 android:layout_height="match_parent"
                 android:fillViewport="true"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/view_pager"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:layout_constraintTop_toBottomOf="@id/tab_layout"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tab_layout" />
             </androidx.core.widget.NestedScrollView>
 
             <com.google.android.material.appbar.AppBarLayout
@@ -43,12 +46,12 @@
                     android:layout_height="200dp"
                     android:fitsSystemWindows="true"
                     android:minHeight="?attr/actionBarSize"
-                    app:title="@string/app_name"
+                    app:collapsedTitleGravity="start|center_vertical"
+                    app:collapsedTitleTextAppearance="@style/CollapsedToolbarText"
                     app:expandedTitleGravity="start|bottom"
                     app:expandedTitleTextAppearance="@style/ExpandToolbarText"
-                    app:collapsedTitleTextAppearance="@style/CollapsedToolbarText"
-                    app:collapsedTitleGravity="start|center_vertical"
-                    app:layout_scrollFlags="scroll|enterAlwaysCollapsed|exitUntilCollapsed|snap">
+                    app:layout_scrollFlags="scroll|enterAlwaysCollapsed|exitUntilCollapsed|snap"
+                    app:title="@string/app_name">
 
                     <androidx.appcompat.widget.Toolbar
                         android:id="@+id/toolbar"
@@ -68,15 +71,15 @@
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:layout_gravity="bottom|end"
                 android:src="@drawable/ic_star"
-                app:layout_dodgeInsetEdges="bottom"
                 app:layout_anchorGravity="bottom|end"
-                app:tint="#FFF"
+                app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
+                app:layout_dodgeInsetEdges="bottom"
                 app:onExclusiveClick="@{showFavouriteListener}"
-                app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior" />
+                app:tint="#FFF" />
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         <com.google.android.material.navigation.NavigationView

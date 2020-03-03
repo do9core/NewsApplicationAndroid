@@ -1,16 +1,13 @@
 package xyz.do9core.newsapplication.ui.appinfo
 
-import org.koin.android.ext.android.get
-import org.koin.core.qualifier.named
 import xyz.do9core.newsapplication.R
 import xyz.do9core.newsapplication.databinding.FragmentAppInfoBinding
-import xyz.do9core.newsapplication.di.LayoutIdName
 import xyz.do9core.newsapplication.ui.base.BindingFragment
 import xyz.do9core.newsapplication.util.navigateUp
 
 class AppInfoFragment : BindingFragment<FragmentAppInfoBinding>() {
 
-    override val layoutResId: Int = get(named(LayoutIdName.AppInfo))
+    override val layoutResId: Int = R.layout.fragment_app_info
 
     override fun setupBinding(binding: FragmentAppInfoBinding) {
         binding.toolbar.setNavigationOnClickListener { navigateUp() }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -19,11 +18,11 @@
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
-                app:title="@string/app_info_title"
-                app:titleTextColor="@color/primaryTextColor"
-                app:navigationIcon="@drawable/ic_arrow_back"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize" />
+                android:layout_height="?attr/actionBarSize"
+                app:navigationIcon="@drawable/ic_arrow_back"
+                app:title="@string/app_info_title"
+                app:titleTextColor="@color/primaryTextColor" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <ImageView
@@ -32,48 +31,48 @@
             android:layout_height="96dp"
             android:layout_marginTop="56dp"
             android:src="@mipmap/ic_launcher"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/app_bar" />
 
         <View
             android:id="@+id/divider"
-            android:layout_marginTop="28dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="8dp"
             android:background="#CCCCCC"
-            app:layout_constraintTop_toBottomOf="@id/app_icon"/>
+            app:layout_constraintTop_toBottomOf="@id/app_icon" />
 
         <TextView
             android:id="@+id/app_name"
-            android:text="@string/app_info_name"
-            android:gravity="center"
-            android:textColor="#000"
-            android:textSize="20sp"
-            android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="@string/app_info_name"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@id/divider" />
 
         <TextView
             android:id="@+id/news_api_link"
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:autoLink="web"
+            android:gravity="center"
             android:linksClickable="true"
             app:layout_constraintTop_toBottomOf="@id/app_name" />
 
         <TextView
-            android:text="@string/app_info_copyright"
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="@string/app_info_copyright"
             app:layout_constraintTop_toBottomOf="@id/news_api_link" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

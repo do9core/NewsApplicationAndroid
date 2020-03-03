@@ -17,16 +17,12 @@ class HeadlineSourceFactory(
     private val coroutineScope: CoroutineScope,
     private val category: Category,
     private val country: Country,
-    private val query: String = "",
-    var fromLocal: Boolean = false
+    private val query: String = ""
 ) : DataSource.Factory<Int, Article>() {
 
     val dataSource = MutableLiveData<HeadlineRemoteSource>()
 
     override fun create(): DataSource<Int, Article> {
-        if (fromLocal) {
-            // TODO
-        }
         return HeadlineRemoteSource(coroutineScope, category, country, query)
             .also { dataSource.postValue(it) }
     }

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/fav_clear"
-        android:title="@string/menu_fav_clear"
         android:icon="@drawable/ic_layers_clear"
+        android:title="@string/menu_fav_clear"
         app:showAsAction="always" />
 </menu>

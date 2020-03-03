@@ -27,7 +27,7 @@ object CrashReportUtil {
     }
 
     fun report(report: Report) {
-
+        workManager.enqueue(buildWorkRequest(report))
     }
 
     private fun defaultConstrains(): Constraints = Constraints.Builder()

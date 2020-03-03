@@ -18,7 +18,6 @@ class NewsApplication : Application() {
             modules(
                 DataModule,
                 ViewModelModule,
-                LayoutIdModule,
                 SearchFragmentDependency,
                 FavouriteFragmentDependency,
                 HeadlineFragmentDependency,
