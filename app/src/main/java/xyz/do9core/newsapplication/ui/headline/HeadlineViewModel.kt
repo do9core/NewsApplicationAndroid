@@ -4,6 +4,8 @@ import androidx.lifecycle.*
 import androidx.paging.toLiveData
 import com.snakydesign.livedataextensions.emptyLiveData
 import kotlinx.coroutines.launch
+import xyz.do9core.extensions.lifecycle.Event
+import xyz.do9core.extensions.lifecycle.call
 import xyz.do9core.newsapplication.R
 import xyz.do9core.newsapplication.data.LoadResult
 import xyz.do9core.newsapplication.data.datasource.HeadlineSourceFactory
@@ -12,8 +14,6 @@ import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.data.model.Category
 import xyz.do9core.newsapplication.data.model.Country
 import xyz.do9core.newsapplication.ui.common.ArticleClickHandler
-import xyz.do9core.newsapplication.util.Event
-import xyz.do9core.newsapplication.util.event
 
 class HeadlineViewModel(
     category: Category,
@@ -25,7 +25,7 @@ class HeadlineViewModel(
     private val loadTrigger = MutableLiveData<Boolean>()
     val itemClickHandler = object : ArticleClickHandler {
         override fun onClick(article: Article) {
-            showArticleEvent.event(article)
+            showArticleEvent.call(article)
         }
     }
     val favouriteHandler = object : ArticleClickHandler {
@@ -33,9 +33,9 @@ class HeadlineViewModel(
             viewModelScope.launch {
                 try {
                     database.articleDao().saveFavouriteArticle(article)
-                    messageSnackbarEvent.event(R.string.app_save_favourite_success)
+                    messageSnackbarEvent.call(R.string.app_save_favourite_success)
                 } catch (e: Exception) {
-                    errorSnackbarEvent.event(e.message.orEmpty())
+                    errorSnackbarEvent.call(e.message.orEmpty())
                 }
             }
         }
@@ -45,9 +45,9 @@ class HeadlineViewModel(
             viewModelScope.launch {
                 try {
                     database.articleDao().saveWatchLaterArticle(article)
-                    messageSnackbarEvent.event(R.string.app_save_watch_later_success)
+                    messageSnackbarEvent.call(R.string.app_save_watch_later_success)
                 } catch (e: Exception) {
-                    errorSnackbarEvent.event(e.message.orEmpty())
+                    errorSnackbarEvent.call(e.message.orEmpty())
                 }
             }
         }

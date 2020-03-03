@@ -4,12 +4,11 @@ import androidx.lifecycle.*
 import com.snakydesign.livedataextensions.emptyLiveData
 import com.snakydesign.livedataextensions.switchMap
 import kotlinx.coroutines.launch
+import xyz.do9core.extensions.lifecycle.Event
+import xyz.do9core.extensions.lifecycle.call
 import xyz.do9core.newsapplication.data.db.AppDatabase
 import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.ui.common.ArticleClickHandler
-import xyz.do9core.newsapplication.util.Event
-import xyz.do9core.newsapplication.util.event
-import xyz.do9core.newsapplication.util.trigger
 
 class FavouriteViewModel(private val database: AppDatabase) : ViewModel(), ArticleClickHandler {
 
@@ -32,7 +31,7 @@ class FavouriteViewModel(private val database: AppDatabase) : ViewModel(), Artic
         }
     }
 
-    fun loadFavourites() = loadEvent.trigger()
+    fun loadFavourites() = loadEvent.call()
 
     private fun getFavouritesLiveData() = liveData {
         val favArticles = database.articleDao().getFavourites()
@@ -41,6 +40,6 @@ class FavouriteViewModel(private val database: AppDatabase) : ViewModel(), Artic
     }
 
     override fun onClick(article: Article) {
-        showBrowserEvent.event(article)
+        showBrowserEvent.call(article)
     }
 }

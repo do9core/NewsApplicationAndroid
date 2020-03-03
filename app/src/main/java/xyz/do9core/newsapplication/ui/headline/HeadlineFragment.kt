@@ -7,6 +7,9 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.named
+import xyz.do9core.extensions.fragment.viewObserve
+import xyz.do9core.extensions.fragment.viewObserveEvent
+import xyz.do9core.extensions.lifecycle.call
 import xyz.do9core.newsapplication.NavGraphDirections
 import xyz.do9core.newsapplication.R
 import xyz.do9core.newsapplication.data.model.Article
@@ -15,12 +18,10 @@ import xyz.do9core.newsapplication.databinding.FragmentHeadlineBinding
 import xyz.do9core.newsapplication.di.LayoutIdName
 import xyz.do9core.newsapplication.ui.base.BindingFragment
 import xyz.do9core.newsapplication.ui.main.SharedViewModel
-import xyz.do9core.newsapplication.util.event
 import xyz.do9core.newsapplication.util.navigate
-import xyz.do9core.newsapplication.util.viewObserve
-import xyz.do9core.newsapplication.util.viewObserveEvent
 
-class HeadlineFragment(private val category: Category) : BindingFragment<FragmentHeadlineBinding>() {
+class HeadlineFragment(private val category: Category) :
+    BindingFragment<FragmentHeadlineBinding>() {
 
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
     private val viewModel by viewModel<HeadlineViewModel> { parametersOf(category) }
@@ -38,10 +39,10 @@ class HeadlineFragment(private val category: Category) : BindingFragment<Fragmen
         viewObserve(articles) { adapter.submitList(it) }
         viewObserve(networkState) { adapter.setLoadState(it) }
         viewObserveEvent(showArticleEvent) { showArticle(it) }
-        viewObserveEvent(messageSnackbarEvent) { sharedViewModel.showErrorEvent.event(it) }
+        viewObserveEvent(messageSnackbarEvent) { sharedViewModel.showErrorEvent.call(it) }
         viewObserveEvent(errorSnackbarEvent) {
             val msg = it.takeIf { it.isNotBlank() } ?: getString(R.string.app_save_favourite_failed)
-            sharedViewModel.showSnackbarEvent.event(msg)
+            sharedViewModel.showSnackbarEvent.call(msg)
         }
     }
 

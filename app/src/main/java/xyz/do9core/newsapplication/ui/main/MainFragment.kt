@@ -6,13 +6,13 @@ import org.koin.android.ext.android.get
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.core.qualifier.named
 import splitties.snackbar.snack
+import xyz.do9core.extensions.fragment.viewObserveEvent
 import xyz.do9core.newsapplication.R
 import xyz.do9core.newsapplication.data.model.Category
 import xyz.do9core.newsapplication.databinding.FragmentMainBinding
 import xyz.do9core.newsapplication.di.LayoutIdName
 import xyz.do9core.newsapplication.ui.base.BindingFragment
 import xyz.do9core.newsapplication.util.navigate
-import xyz.do9core.newsapplication.util.viewObserveEvent
 
 class MainFragment : BindingFragment<FragmentMainBinding>() {
 

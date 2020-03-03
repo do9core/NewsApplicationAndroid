@@ -6,8 +6,6 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 import xyz.do9core.newsapplication.di.*
-import xyz.do9core.newsapplication.util.crashreporter.Alert
-import xyz.do9core.newsapplication.util.crashreporter.CrashReportUtil
 
 @Suppress("unused")
 class NewsApplication : Application() {
@@ -26,15 +24,6 @@ class NewsApplication : Application() {
                 HeadlineFragmentDependency,
                 WatchLaterFragmentDependency
             )
-        }
-        CrashReportUtil.install(this)
-        Thread.setDefaultUncaughtExceptionHandler { t, e ->
-            val alert = Alert(
-                errorLevel = 5,
-                message = e.message.toString(),
-                remark = t.toString()
-            )
-            CrashReportUtil.report(alert)
         }
     }
 }

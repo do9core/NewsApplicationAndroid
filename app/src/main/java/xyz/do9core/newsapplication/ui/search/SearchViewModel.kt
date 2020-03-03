@@ -3,12 +3,12 @@ package xyz.do9core.newsapplication.ui.search
 import androidx.lifecycle.*
 import androidx.paging.toLiveData
 import com.snakydesign.livedataextensions.emptyLiveData
+import xyz.do9core.extensions.lifecycle.Event
+import xyz.do9core.extensions.lifecycle.call
 import xyz.do9core.newsapplication.data.datasource.HeadlineSourceFactory
 import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.data.model.Category
 import xyz.do9core.newsapplication.data.model.Country
-import xyz.do9core.newsapplication.util.Event
-import xyz.do9core.newsapplication.util.event
 
 class SearchViewModel : ViewModel() {
 
@@ -32,5 +32,5 @@ class SearchViewModel : ViewModel() {
         dataFactory.value = sourceFactory
     }
 
-    fun showArticle(article: Article) = showArticleEvent.event(article)
+    fun showArticle(article: Article) = showArticleEvent.call(article)
 }

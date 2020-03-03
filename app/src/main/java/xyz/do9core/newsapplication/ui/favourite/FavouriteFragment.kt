@@ -7,6 +7,8 @@ import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.named
+import xyz.do9core.extensions.lifecycle.observe
+import xyz.do9core.extensions.lifecycle.observeEvent
 import xyz.do9core.newsapplication.R
 import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.databinding.FragmentFavouriteBinding
@@ -14,8 +16,6 @@ import xyz.do9core.newsapplication.di.LayoutIdName
 import xyz.do9core.newsapplication.ui.base.BindingFragment
 import xyz.do9core.newsapplication.util.navigate
 import xyz.do9core.newsapplication.util.navigateUp
-import xyz.do9core.newsapplication.util.observe
-import xyz.do9core.newsapplication.util.observeEvent
 
 class FavouriteFragment : BindingFragment<FragmentFavouriteBinding>() {
 

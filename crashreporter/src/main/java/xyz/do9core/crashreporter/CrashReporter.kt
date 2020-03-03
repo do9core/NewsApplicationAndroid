@@ -1,4 +1,4 @@
-package xyz.do9core.newsapplication.util.crashreporter
+package xyz.do9core.crashreporter
 
 import android.app.Application
 import androidx.work.CoroutineWorker
