@@ -32,7 +32,7 @@ class WatchLaterFragment : ContinuationFragment() {
             watchLaterList.adapter = adapter
             toolbar.setNavigationOnClickListener { navigateUp() }
         }
-        return super.onCreateView(inflater, container, savedInstanceState)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
