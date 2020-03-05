@@ -1,5 +1,8 @@
 package xyz.do9core.newsapplication.ui.main
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
 import androidx.annotation.StringRes
 import com.google.android.material.tabs.TabLayoutMediator
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -15,16 +18,19 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
 
     private val sharedViewModel by sharedViewModel<SharedViewModel>()
 
-    override val layoutResId: Int = R.layout.fragment_main
+    override fun createViewBinding(inflater: LayoutInflater): FragmentMainBinding
+        = FragmentMainBinding.inflate(inflater)
 
-    override fun setupBinding(binding: FragmentMainBinding) = with(binding) {
-        setShowSearchListener { navigate(MainFragmentDirections.showSearch()) }
-        viewPager.adapter = CategoryPagerAdapter(this@MainFragment)
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewPager.adapter = CategoryPagerAdapter(this@MainFragment)
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = Category.values()[position].title
         }.attach()
 
-        navDrawer.setNavigationItemSelectedListener {
+        binding.setShowSearchListener { navigate(MainFragmentDirections.showSearch()) }
+        binding.navDrawer.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.app_menu_favourites -> MainFragmentDirections.showFavourites()
                 R.id.app_menu_watch_later -> MainFragmentDirections.showWatchLater()
@@ -32,14 +38,14 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
                 else -> null
             }?.also { dest -> navigate(dest) } != null
         }
-    }
 
-    override fun setupObservers(): Unit = with(sharedViewModel) {
-        viewObserveEvent(showSnackbarEvent) { showSnackbar(it) }
-        viewObserveEvent(showErrorEvent) { showSnackbar(it) }
+        with(sharedViewModel) {
+            viewObserveEvent(showSnackbarEvent) { showSnackbar(it) }
+            viewObserveEvent(showErrorEvent) { showSnackbar(it) }
+        }
     }
 
     private fun showSnackbar(text: CharSequence) = binding.coordinator.snack(text).show()
 
-    private fun showSnackbar(@StringRes text: Int) = binding.coordinator.snack(text).show()
+    private fun showSnackbar(@StringRes text: Int) = showSnackbar(getString(text))
 }

@@ -3,39 +3,31 @@ package xyz.do9core.newsapplication.ui.article
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.commit
 import androidx.navigation.fragment.navArgs
 import xyz.do9core.newsapplication.databinding.FragmentArticleBinding
 import xyz.do9core.newsapplication.ui.article.webview.WebViewFragment
-import xyz.do9core.newsapplication.ui.base.ContinuationFragment
+import xyz.do9core.newsapplication.ui.base.BindingFragment
 import xyz.do9core.newsapplication.util.navigateUp
 
-class ArticleFragment : ContinuationFragment() {
+class ArticleFragment : BindingFragment<FragmentArticleBinding>() {
 
     private val navArgs by navArgs<ArticleFragmentArgs>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val binding = FragmentArticleBinding.inflate(inflater)
-        setupBinding(binding)
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
+    override fun createViewBinding(inflater: LayoutInflater): FragmentArticleBinding =
+        FragmentArticleBinding.inflate(inflater)
 
-    private fun setupBinding(binding: FragmentArticleBinding): Unit = with(binding) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.toolbar.title = navArgs.articleTitle
         binding.toolbar.setNavigationOnClickListener { navigateUp() }
 
-        if (navArgs.articleUrl == "app://blank") {
-            return@with
-        }
-
-        val webView = WebViewFragment(navArgs.articleUrl)
-        childFragmentManager.commit {
-            add(webViewHost.id, webView)
+        if (navArgs.articleUrl != "app://blank") {
+            val webView = WebViewFragment(navArgs.articleUrl)
+            childFragmentManager.fragmentFactory = WebViewFragment.Factory(navArgs.articleUrl)
+            childFragmentManager.commit {
+                replace(binding.webViewHost.id, webView)
+            }
         }
     }
 }
