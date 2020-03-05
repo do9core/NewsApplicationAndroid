@@ -53,6 +53,7 @@ dependencies {
 
     implementation project(':coroutineutils')
     implementation project(':extensions')
+    implementation project(':crashreporter')
 
     kapt "androidx.room:room-compiler:$rootProject.roomVersion"
     kapt "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
