@@ -7,16 +7,17 @@ import xyz.do9core.extensions.lifecycle.Event
 import xyz.do9core.extensions.lifecycle.call
 import xyz.do9core.newsapplication.data.db.AppDatabase
 import xyz.do9core.newsapplication.data.model.Article
-import xyz.do9core.newsapplication.ui.common.ArticleClickHandler
+import xyz.do9core.newsapplication.ui.common.ArticleClickedListener
 
-class WatchLaterViewModel(private val database: AppDatabase) : ViewModel(), ArticleClickHandler {
+class WatchLaterViewModel(private val database: AppDatabase) : ViewModel() {
 
     val showBrowserEvent = emptyLiveData<Event<Article>>()
+    
+    val articleClicked: ArticleClickedListener = { showBrowserEvent.call(it) }
+    
     val watchLaterArticles = liveData {
         val watchLaterArticles = database.articleDao().getWatchLater()
         val articles = watchLaterArticles.map { it.article }
         emit(articles)
     }
-
-    override fun onClick(article: Article) = showBrowserEvent.call(article)
 }

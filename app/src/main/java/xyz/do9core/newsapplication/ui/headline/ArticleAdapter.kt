@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import xyz.do9core.newsapplication.data.LoadResult
 import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.ui.common.ArticleViewHolder
+import xyz.do9core.newsapplication.ui.common.ArticleViewModel
 import xyz.do9core.newsapplication.ui.common.LoadingViewHolder
 import java.security.InvalidParameterException
 
@@ -25,14 +26,18 @@ class ArticleAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)) {
-            ITEM_VIEW_TYPE ->
+            ITEM_VIEW_TYPE -> {
+                val article = getItem(position) ?: return
                 (holder as ArticleViewHolder).bind(
-                    data = getItem(position),
-                    itemClickHandler = viewModel.itemClickHandler,
-                    optionMenuButtonGone = false,
-                    favouriteHandler = viewModel.favouriteHandler,
-                    watchLaterHandler = viewModel.watchLaterHandler
+                    ArticleViewModel(
+                        article,
+                        viewModel.articleClicked,
+                        false,
+                        viewModel.favouriteHandler,
+                        viewModel.watchLaterHandler
+                    )
                 )
+            }
             LOADING_VIEW_TYPE ->
                 (holder as LoadingViewHolder).bind(
                     this.itemCount <= 1 || !loadResult.isLoading
