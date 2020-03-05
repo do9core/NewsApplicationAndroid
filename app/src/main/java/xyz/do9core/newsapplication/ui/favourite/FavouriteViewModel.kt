@@ -8,9 +8,9 @@ import xyz.do9core.extensions.lifecycle.Event
 import xyz.do9core.extensions.lifecycle.call
 import xyz.do9core.newsapplication.data.db.AppDatabase
 import xyz.do9core.newsapplication.data.model.Article
-import xyz.do9core.newsapplication.ui.common.ArticleClickHandler
+import xyz.do9core.newsapplication.ui.common.ArticleClickedListener
 
-class FavouriteViewModel(private val database: AppDatabase) : ViewModel(), ArticleClickHandler {
+class FavouriteViewModel(private val database: AppDatabase) : ViewModel() {
 
     private val loadEvent = emptyLiveData<Event<Unit>>()
     private var currentSource: LiveData<List<Article>> = emptyLiveData()
@@ -23,6 +23,8 @@ class FavouriteViewModel(private val database: AppDatabase) : ViewModel(), Artic
     }
 
     val showBrowserEvent = MutableLiveData<Event<Article>>()
+    
+    val articleClicked: ArticleClickedListener = { showBrowserEvent.call(it) }
 
     fun clearFavourites() {
         viewModelScope.launch {
@@ -37,9 +39,5 @@ class FavouriteViewModel(private val database: AppDatabase) : ViewModel(), Artic
         val favArticles = database.articleDao().getFavourites()
         val articles = favArticles.map { it.article }
         emit(articles)
-    }
-
-    override fun onClick(article: Article) {
-        showBrowserEvent.call(article)
     }
 }
