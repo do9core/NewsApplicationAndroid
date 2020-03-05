@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.annotation.StringRes
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import splitties.snackbar.snack
 import xyz.do9core.extensions.fragment.viewObserveEvent
 import xyz.do9core.newsapplication.R
 import xyz.do9core.newsapplication.data.model.Category
@@ -45,7 +45,9 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
         }
     }
 
-    private fun showSnackbar(text: CharSequence) = binding.coordinator.snack(text).show()
+    private fun showSnackbar(text: CharSequence) {
+        Snackbar.make(binding.coordinator, text, Snackbar.LENGTH_LONG).show()
+    }
 
     private fun showSnackbar(@StringRes text: Int) = showSnackbar(getString(text))
 }

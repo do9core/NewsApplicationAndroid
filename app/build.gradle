@@ -83,7 +83,6 @@ dependencies {
     implementation "com.snakydesign.livedataextensions:lives:$rootProject.liveDataExtensionsVersion"
     implementation "org.koin:koin-androidx-scope:$rootProject.koinVersion"
     implementation "org.koin:koin-androidx-viewmodel:$rootProject.koinVersion"
-    implementation "com.louiscad.splitties:splitties-fun-pack-android-material-components-with-views-dsl:$rootProject.splittiesVersion"
 
     // Testing dependencies
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
