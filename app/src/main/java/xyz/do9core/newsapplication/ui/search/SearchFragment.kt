@@ -1,26 +1,30 @@
 package xyz.do9core.newsapplication.ui.search
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import xyz.do9core.newsapplication.R
+import xyz.do9core.extensions.lifecycle.observe
+import xyz.do9core.extensions.lifecycle.observeEvent
 import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.databinding.FragmentSearchBinding
 import xyz.do9core.newsapplication.ui.base.BindingFragment
 import xyz.do9core.newsapplication.util.navigate
 import xyz.do9core.newsapplication.util.navigateUp
-import xyz.do9core.newsapplication.util.observe
-import xyz.do9core.newsapplication.util.observeEvent
 
 class SearchFragment : BindingFragment<FragmentSearchBinding>() {
 
     private val viewModel: SearchViewModel by viewModel()
     private val adapter: ResultAdapter by currentScope.inject { parametersOf(viewModel) }
 
-    override val layoutResId: Int = R.layout.fragment_search
+    override fun createViewBinding(inflater: LayoutInflater): FragmentSearchBinding =
+        FragmentSearchBinding.inflate(inflater)
 
-    override fun setupBinding(binding: FragmentSearchBinding) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         binding.toolbar.setNavigationOnClickListener { navigateUp() }
@@ -32,12 +36,16 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
                 true
             }
         }
-        binding.queryText.requestFocus()
+
+        with(viewModel) {
+            observe(searchResult) { adapter.submitList(it) }
+            observeEvent(showArticleEvent) { openArticle(it) }
+        }
     }
 
-    override fun setupObservers() = with(viewModel) {
-        observe(searchResult) { adapter.submitList(it) }
-        observeEvent(showArticleEvent) { openArticle(it) }
+    override fun onResume() {
+        super.onResume()
+        binding.queryText.requestFocus()
     }
 
     private fun openArticle(article: Article) {

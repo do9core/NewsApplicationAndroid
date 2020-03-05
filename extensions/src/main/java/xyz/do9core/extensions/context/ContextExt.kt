@@ -1,4 +1,4 @@
-package xyz.do9core.newsapplication.util
+package xyz.do9core.extensions.context
 
 import android.content.Context
 import android.content.Intent

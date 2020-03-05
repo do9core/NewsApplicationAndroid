@@ -4,18 +4,18 @@
     <group android:id="@+id/group_actions">
         <item
             android:id="@+id/app_menu_favourites"
-            android:title="@string/app_menu_favourites_text"
-            android:icon="@drawable/ic_star" />
+            android:icon="@drawable/ic_star"
+            android:title="@string/app_menu_favourites_text" />
         <item
             android:id="@+id/app_menu_watch_later"
-            android:title="@string/app_menu_watcher_later_text"
-            android:icon="@drawable/ic_access_time" />
+            android:icon="@drawable/ic_access_time"
+            android:title="@string/app_menu_watcher_later_text" />
     </group>
 
     <group android:id="@+id/group_app_info">
         <item
             android:id="@+id/app_menu_app_info"
-            android:title="@string/app_menu_app_info"
-            android:icon="@drawable/ic_info_outline" />
+            android:icon="@drawable/ic_info_outline"
+            android:title="@string/app_menu_app_info" />
     </group>
 </menu>

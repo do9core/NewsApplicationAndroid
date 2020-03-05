@@ -3,9 +3,11 @@
 
     <item>
         <shape>
-            <solid android:color="#DDD"/>
-            <padding android:left="20dp"  android:right="20dp"/>
+            <solid android:color="#DDD" />
+            <padding
+                android:left="20dp"
+                android:right="20dp" />
         </shape>
     </item>
-    <item android:drawable="@drawable/ic_image"/>
+    <item android:drawable="@drawable/ic_image" />
 </layer-list>

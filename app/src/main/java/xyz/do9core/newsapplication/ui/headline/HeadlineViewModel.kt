@@ -4,6 +4,8 @@ import androidx.lifecycle.*
 import androidx.paging.toLiveData
 import com.snakydesign.livedataextensions.emptyLiveData
 import kotlinx.coroutines.launch
+import xyz.do9core.extensions.lifecycle.Event
+import xyz.do9core.extensions.lifecycle.call
 import xyz.do9core.newsapplication.R
 import xyz.do9core.newsapplication.data.LoadResult
 import xyz.do9core.newsapplication.data.datasource.HeadlineSourceFactory
@@ -11,9 +13,7 @@ import xyz.do9core.newsapplication.data.db.AppDatabase
 import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.data.model.Category
 import xyz.do9core.newsapplication.data.model.Country
-import xyz.do9core.newsapplication.ui.common.ArticleClickHandler
-import xyz.do9core.newsapplication.util.Event
-import xyz.do9core.newsapplication.util.event
+import xyz.do9core.newsapplication.ui.common.ArticleClickedListener
 
 class HeadlineViewModel(
     category: Category,
@@ -23,35 +23,10 @@ class HeadlineViewModel(
     private val sourceFactory =
         HeadlineSourceFactory(viewModelScope, category, Country.UnitedStates)
     private val loadTrigger = MutableLiveData<Boolean>()
-    val itemClickHandler = object : ArticleClickHandler {
-        override fun onClick(article: Article) {
-            showArticleEvent.event(article)
-        }
-    }
-    val favouriteHandler = object : ArticleClickHandler {
-        override fun onClick(article: Article) {
-            viewModelScope.launch {
-                try {
-                    database.articleDao().saveFavouriteArticle(article)
-                    messageSnackbarEvent.event(R.string.app_save_favourite_success)
-                } catch (e: Exception) {
-                    errorSnackbarEvent.event(e.message.orEmpty())
-                }
-            }
-        }
-    }
-    val watchLaterHandler = object : ArticleClickHandler {
-        override fun onClick(article: Article) {
-            viewModelScope.launch {
-                try {
-                    database.articleDao().saveWatchLaterArticle(article)
-                    messageSnackbarEvent.event(R.string.app_save_watch_later_success)
-                } catch (e: Exception) {
-                    errorSnackbarEvent.event(e.message.orEmpty())
-                }
-            }
-        }
-    }
+
+    val articleClicked: ArticleClickedListener = { showArticleEvent.call(it) }
+    val favouriteHandler: ArticleClickedListener = ::saveToFavourite
+    val watchLaterHandler: ArticleClickedListener = ::saveToWatchLater
 
     val articles = loadTrigger.switchMap {
         liveData {
@@ -70,4 +45,26 @@ class HeadlineViewModel(
 
     @JvmOverloads
     fun loadArticles(forceReload: Boolean = false) = loadTrigger.postValue(forceReload)
+
+    private fun saveToFavourite(article: Article) {
+        viewModelScope.launch {
+            try {
+                database.articleDao().saveFavouriteArticle(article)
+                messageSnackbarEvent.call(R.string.app_save_favourite_success)
+            } catch (e: Exception) {
+                errorSnackbarEvent.call(e.message.orEmpty())
+            }
+        }
+    }
+
+    private fun saveToWatchLater(article: Article) {
+        viewModelScope.launch {
+            try {
+                database.articleDao().saveWatchLaterArticle(article)
+                messageSnackbarEvent.call(R.string.app_save_watch_later_success)
+            } catch (e: Exception) {
+                errorSnackbarEvent.call(e.message.orEmpty())
+            }
+        }
+    }
 }

@@ -1,30 +1,20 @@
 package xyz.do9core.newsapplication.ui.article.webview
 
+import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import androidx.databinding.ObservableBoolean
-import org.koin.android.ext.android.get
-import org.koin.core.qualifier.named
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentFactory
 import xyz.do9core.newsapplication.databinding.FragmentWebviewBinding
-import xyz.do9core.newsapplication.di.LayoutIdName
 import xyz.do9core.newsapplication.ui.base.BindingFragment
 
 class WebViewFragment(private val targetUrl: String) : BindingFragment<FragmentWebviewBinding>() {
 
     private val refreshing = ObservableBoolean(false)
-
-    override val layoutResId: Int = get(named(LayoutIdName.WebView))
-
-    override fun setupBinding(binding: FragmentWebviewBinding) {
-        super.setupBinding(binding)
-        binding.webView.setup()
-        binding.refreshingState = refreshing
-        binding.setRefreshWebView {
-            binding.webView.reload()
-        }
-    }
-
+    
     private fun WebView.setup() {
         webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView?, newProgress: Int) {
@@ -41,9 +31,32 @@ class WebViewFragment(private val targetUrl: String) : BindingFragment<FragmentW
         loadUrl(targetUrl)
     }
 
+    override fun createViewBinding(inflater: LayoutInflater): FragmentWebviewBinding =
+        FragmentWebviewBinding.inflate(inflater)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.lifecycleOwner = this
+        binding.refreshingState = refreshing
+        binding.webView.setup()
+        binding.setRefreshWebView {
+            binding.webView.reload()
+        }
+    }
+
     override fun onDestroy() {
         binding.webView.loadData("", null, null)
         binding.webView.destroy()
         super.onDestroy()
+    }
+
+    class Factory(private val url: String) : FragmentFactory() {
+
+        override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
+            if (className == WebViewFragment::class.java.name) {
+                return WebViewFragment(targetUrl = url)
+            }
+            return super.instantiate(classLoader, className)
+        }
     }
 }

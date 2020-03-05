@@ -1,3 +1,5 @@
 include ':app'
 rootProject.name='testApplication'
 include ':coroutineutils'
+include ':extensions'
+include ':crashreporter'

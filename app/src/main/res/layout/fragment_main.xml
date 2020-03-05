@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="showSearchListener"
             type="android.view.View.OnClickListener" />
@@ -27,12 +27,13 @@
                 android:layout_height="match_parent"
                 android:fillViewport="true"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/view_pager"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:layout_constraintTop_toBottomOf="@id/tab_layout"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tab_layout" />
             </androidx.core.widget.NestedScrollView>
 
             <com.google.android.material.appbar.AppBarLayout
@@ -45,9 +46,9 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
+                    app:layout_scrollFlags="scroll|enterAlways|snap"
                     app:title="@string/app_headline_title"
-                    app:titleTextColor="@color/primaryTextColor"
-                    app:layout_scrollFlags="scroll|enterAlways|snap"/>
+                    app:titleTextColor="@color/primaryTextColor" />
 
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tab_layout"
@@ -60,14 +61,14 @@
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:layout_gravity="bottom|end"
                 android:src="@drawable/ic_search"
+                app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
                 app:layout_dodgeInsetEdges="bottom"
-                app:tint="#FFF"
                 app:onExclusiveClick="@{showSearchListener}"
-                app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior" />
+                app:tint="#FFF" />
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         <com.google.android.material.navigation.NavigationView
@@ -76,8 +77,8 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:fitsSystemWindows="true"
-            app:menu="@menu/app_drawer_menu"
-            app:headerLayout="@layout/include_navigation_header"/>
+            app:headerLayout="@layout/include_navigation_header"
+            app:menu="@menu/app_drawer_menu" />
     </androidx.drawerlayout.widget.DrawerLayout>
 
 </layout>

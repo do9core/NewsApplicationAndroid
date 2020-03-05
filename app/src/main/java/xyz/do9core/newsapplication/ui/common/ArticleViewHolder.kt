@@ -5,23 +5,14 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import xyz.do9core.newsapplication.R
-import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.databinding.ItemArticleBinding
 
 class ArticleViewHolder private constructor(
     private val binding: ItemArticleBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(
-        data: Article?,
-        itemClickHandler: ArticleClickHandler,
-        optionMenuButtonGone: Boolean,
-        favouriteHandler: ArticleClickHandler?,
-        watchLaterHandler: ArticleClickHandler?
-    ) {
-        binding.model = data
-        binding.clickHandler = itemClickHandler
-        binding.optionMenuButtonGone = optionMenuButtonGone
+    fun bind(viewModel: ArticleViewModel) {
+        binding.viewModel = viewModel
         binding.setShowDropDownHandler { dropDownButton ->
             val context = binding.root.context
             val popup = PopupMenu(context, dropDownButton)
@@ -29,20 +20,12 @@ class ArticleViewHolder private constructor(
             popup.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.article_pop_up_favourite -> {
-                        if (data == null) {
-                            false
-                        } else {
-                            favouriteHandler?.onClick(data)
-                            true
-                        }
+                        viewModel.favouriteClicked?.invoke(viewModel.data)
+                        true
                     }
                     R.id.article_pop_up_watch_later -> {
-                        if (data == null) {
-                            false
-                        } else {
-                            watchLaterHandler?.onClick(data)
-                            true
-                        }
+                        viewModel.watchLaterClicked?.invoke(viewModel.data)
+                        true
                     }
                     else -> false
                 }
