@@ -9,13 +9,13 @@ import kotlin.reflect.KClass
 private typealias Subject = SubjectLiveData<*>
 private typealias KeyPair = Pair<KClass<*>, LiveEventBus.Key>
 
-internal class LiveEventBusImpl : LiveEventBus {
+internal class LiveEventBusImpl : LiveEventBus() {
 
     private val subjects = ConcurrentHashMap<KeyPair, Subject>()
 
     @Suppress("UNCHECKED_CAST")
-    override fun <T : Any> subject(dataType: KClass<T>, key: LiveEventBus.Key?) {
-        val keyPair = Pair(dataType, key ?: LiveEventBusImpl)
+    override fun <T : Any> subject(dataType: KClass<T>, key: Key) {
+        val keyPair = Pair(dataType, key)
         if (subjects[keyPair] != null) {
             Log.w(
                 LiveEventBus::class.qualifiedName,
@@ -28,12 +28,10 @@ internal class LiveEventBusImpl : LiveEventBus {
     }
 
     @Suppress("UNCHECKED_CAST")
-    override fun <T : Any> with(dataType: KClass<T>, key: LiveEventBus.Key?): MutableLiveData<T> {
-        val keyPair = Pair(dataType, key ?: LiveEventBusImpl)
+    override fun <T : Any> with(dataType: KClass<T>, key: Key): MutableLiveData<T> {
+        val keyPair = Pair(dataType, key)
         val subject = subjects[keyPair]
         require(subject != null) { "No subject with ${dataType.java.name} and $key has been registered." }
         return subject as MutableLiveData<T>
     }
-
-    private companion object : LiveEventBus.Key
 }
