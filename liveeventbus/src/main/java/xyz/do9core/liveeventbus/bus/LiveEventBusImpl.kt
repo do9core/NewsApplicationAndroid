@@ -6,33 +6,31 @@ import xyz.do9core.liveeventbus.subject.SubjectLiveData
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.reflect.KClass
 
-private typealias DataType = KClass<*>
 private typealias Subject = SubjectLiveData<*>
-private typealias SubjectMap = MutableMap<LiveEventBus.Key, Subject>
+private typealias KeyPair = Pair<KClass<*>, LiveEventBus.Key>
 
 internal class LiveEventBusImpl : LiveEventBus {
 
-    private val subjects = ConcurrentHashMap<DataType, SubjectMap>()
+    private val subjects = ConcurrentHashMap<KeyPair, Subject>()
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : Any> subject(dataType: KClass<T>, key: LiveEventBus.Key?) {
-        val map = subjects.getOrPut(dataType) { ConcurrentHashMap() }
-        val actualKey = key ?: LiveEventBusImpl
-        Log.w(
-            LiveEventBus::class.qualifiedName,
-            "Subject with ${dataType.java.name} and $key already registered. " +
-                    "New subject replacing it. " +
-                    "Please make sure this is what you want."
-        )
-        map[actualKey] = SubjectLiveData<T>()
+        val keyPair = Pair(dataType, key ?: LiveEventBusImpl)
+        if (subjects[keyPair] != null) {
+            Log.w(
+                LiveEventBus::class.qualifiedName,
+                "Subject with ${dataType.java.name} and $key already registered. " +
+                        "New subject replacing it. " +
+                        "Please make sure this is what you want."
+            )
+        }
+        subjects[keyPair] = SubjectLiveData<T>()
     }
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : Any> with(dataType: KClass<T>, key: LiveEventBus.Key?): MutableLiveData<T> {
-        val actualKey = key ?: LiveEventBusImpl
-        val map = subjects[dataType]
-        require(map != null) { "No subject with ${dataType.java.name} has been registered." }
-        val subject = map[actualKey]
+        val keyPair = Pair(dataType, key ?: LiveEventBusImpl)
+        val subject = subjects[keyPair]
         require(subject != null) { "No subject with ${dataType.java.name} and $key has been registered." }
         return subject as MutableLiveData<T>
     }
