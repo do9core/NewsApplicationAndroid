@@ -46,4 +46,5 @@ dependencies {
     testImplementation "junit:junit:$rootProject.junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.testExtJunit"
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
+    implementation "com.louiscad.splitties:splitties-initprovider:$rootProject.splittiesVersion"
 }
