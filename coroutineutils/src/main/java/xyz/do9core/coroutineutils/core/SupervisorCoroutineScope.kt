@@ -1,13 +1,10 @@
 package xyz.do9core.coroutineutils.core
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancel
+import kotlinx.coroutines.*
 import java.io.Closeable
 import kotlin.coroutines.CoroutineContext
 
-class SafeCoroutineScope(context: CoroutineContext) : CoroutineScope, Closeable {
+class SupervisorCoroutineScope(context: CoroutineContext) : CoroutineScope, Closeable {
 
     override val coroutineContext: CoroutineContext
 
@@ -20,3 +17,5 @@ class SafeCoroutineScope(context: CoroutineContext) : CoroutineScope, Closeable 
         coroutineContext.cancel()
     }
 }
+
+val mainSupervisorScope = SupervisorCoroutineScope(Dispatchers.Main)
