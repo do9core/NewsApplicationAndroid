@@ -4,7 +4,7 @@
     <application>
         <provider
             android:name=".Installer"
-            android:authorities="${applicationId}.do9core.CrashReportInstaller"
+            android:authorities="${applicationId}.CrashReportInstaller"
             android:exported="false" />
     </application>
 </manifest>
