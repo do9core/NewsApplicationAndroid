@@ -2,7 +2,7 @@ package xyz.do9core.liveeventbus.bus
 
 import androidx.annotation.AnyThread
 import androidx.annotation.MainThread
-import androidx.lifecycle.MutableLiveData
+import xyz.do9core.liveeventbus.subject.SubjectLiveData
 
 inline fun <reified T : Any> LiveEventBus.subject(
     key: LiveEventBus.Key = LiveEventBus.DefaultKey
@@ -14,32 +14,23 @@ inline fun <reified T : Any> LiveEventBus.with(
 
 @Suppress("UNCHECKED_CAST")
 @AnyThread
-fun <T : Any> LiveEventBus.post(event: T, key: LiveEventBus.Key = LiveEventBus.DefaultKey) {
-    (with(event::class, key) as MutableLiveData<T>).postValue(event)
-}
+fun <T : Any> LiveEventBus.post(event: T, key: LiveEventBus.Key = LiveEventBus.DefaultKey) =
+    (with(event::class, key) as SubjectLiveData<T>).post(event)
 
 @Suppress("UNCHECKED_CAST")
 @MainThread
-fun <T : Any> LiveEventBus.postNow(event: T, key: LiveEventBus.Key = LiveEventBus.DefaultKey) {
-    (with(event::class, key) as MutableLiveData<T>).value = event
-}
+fun <T : Any> LiveEventBus.postNow(event: T, key: LiveEventBus.Key = LiveEventBus.DefaultKey) =
+    (with(event::class, key) as SubjectLiveData<T>).postNow(event)
 
-interface EventBusDelegate {
+@Suppress("UNCHECKED_CAST")
+@AnyThread
+fun <T : Any> LiveEventBus.postSticky(event: T, key: LiveEventBus.Key = LiveEventBus.DefaultKey) =
+    (with(event::class, key) as SubjectLiveData<T>).postSticky(event)
 
-    fun <T : Any> post(event: T)
+@Suppress("UNCHECKED_CAST")
+@MainThread
+fun <T : Any> LiveEventBus.postStickyNow(event: T, key: LiveEventBus.Key = LiveEventBus.DefaultKey) =
+    (with(event::class, key) as SubjectLiveData<T>).postSticky(event)
 
-    fun <T : Any> postNow(event: T)
-}
-
-internal data class EventBusDelegateImpl(
-    private val eventBus: LiveEventBus,
-    val key: LiveEventBus.Key
-) : EventBusDelegate {
-
-    override fun <T : Any> post(event: T) = eventBus.post(event, key)
-
-    override fun <T : Any> postNow(event: T) = eventBus.postNow(event, key)
-}
-
-fun LiveEventBus.withKey(key: LiveEventBus.Key, block: EventBusDelegate.() -> Unit) =
-    EventBusDelegateImpl(this, key).run(block)
+fun LiveEventBus.withKey(key: LiveEventBus.Key, block: KeyDelegate.() -> Unit) =
+    KeyDelegate(this, key).run(block)

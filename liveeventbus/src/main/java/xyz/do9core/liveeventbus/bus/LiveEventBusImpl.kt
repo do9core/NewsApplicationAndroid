@@ -1,6 +1,5 @@
 package xyz.do9core.liveeventbus.bus
 
-import androidx.lifecycle.MutableLiveData
 import xyz.do9core.liveeventbus.subject.SubjectLiveData
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.reflect.KClass
@@ -21,10 +20,10 @@ internal class LiveEventBusImpl : LiveEventBus() {
     }
 
     @Suppress("UNCHECKED_CAST")
-    override fun <T : Any> with(dataType: KClass<T>, key: Key): MutableLiveData<T> {
+    override fun <T : Any> with(dataType: KClass<T>, key: Key): SubjectLiveData<T> {
         val keyPair = Pair(dataType, key)
         val subject = subjects[keyPair]
         require(subject != null) { "No subject with ${dataType.java.name} and $key has been registered." }
-        return subject as MutableLiveData<T>
+        return subject as SubjectLiveData<T>
     }
 }

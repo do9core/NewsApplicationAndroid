@@ -1,6 +1,6 @@
 package xyz.do9core.liveeventbus.bus
 
-import androidx.lifecycle.MutableLiveData
+import xyz.do9core.liveeventbus.subject.SubjectLiveData
 import kotlin.reflect.KClass
 
 /**
@@ -26,7 +26,7 @@ abstract class LiveEventBus {
     /**
      * 获取一个具有[dataType]类型和[key]索引的Subject的LiveData
      * */
-    abstract fun <T : Any> with(dataType: KClass<T>, key: Key = DefaultKey): MutableLiveData<T>
+    abstract fun <T : Any> with(dataType: KClass<T>, key: Key = DefaultKey): SubjectLiveData<T>
 
     companion object {
 

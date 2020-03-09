@@ -1,4 +1,4 @@
 package androidx.lifecycle
 
 // TODO: customize this live data
-class FlexLiveData<T> : LiveData<T>()
+open class FlexLiveData<T : Any> : LiveData<T>()
