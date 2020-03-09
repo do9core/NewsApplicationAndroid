@@ -20,11 +20,11 @@ internal class LiveEventBusImpl : LiveEventBus() {
         subjects.putIfAbsent(keyPair, SubjectLiveData<T>())
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun <T : Any> with(dataType: KClass<T>, key: Key): MutableLiveData<T> {
         val keyPair = Pair(dataType, key)
         val subject = subjects[keyPair]
         require(subject != null) { "No subject with ${dataType.java.name} and $key has been registered." }
-        @Suppress("UNCHECKED_CAST")
         return subject as MutableLiveData<T>
     }
 }
