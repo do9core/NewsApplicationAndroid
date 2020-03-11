@@ -7,8 +7,8 @@ import android.view.inputmethod.EditorInfo
 import org.koin.androidx.scope.lifecycleScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import xyz.do9core.extensions.lifecycle.observe
-import xyz.do9core.extensions.lifecycle.observeEvent
+import xyz.do9core.extensions.fragment.viewObserve
+import xyz.do9core.extensions.fragment.viewObserveEvent
 import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.databinding.FragmentSearchBinding
 import xyz.do9core.newsapplication.ui.base.BindingFragment
@@ -38,8 +38,8 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
         }
 
         with(viewModel) {
-            observe(searchResult) { adapter.submitList(it) }
-            observeEvent(showArticleEvent) { openArticle(it) }
+            viewObserve(searchResult) { adapter.submitList(it) }
+            viewObserveEvent(showArticleEvent) { openArticle(it) }
         }
     }
 

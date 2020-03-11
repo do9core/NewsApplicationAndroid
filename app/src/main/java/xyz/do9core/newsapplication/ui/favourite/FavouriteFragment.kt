@@ -7,8 +7,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.koin.androidx.scope.lifecycleScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import xyz.do9core.extensions.lifecycle.observe
-import xyz.do9core.extensions.lifecycle.observeEvent
+import xyz.do9core.extensions.fragment.viewObserve
+import xyz.do9core.extensions.fragment.viewObserveEvent
 import xyz.do9core.newsapplication.R
 import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.databinding.FragmentFavouriteBinding
@@ -46,8 +46,8 @@ class FavouriteFragment : BindingFragment<FragmentFavouriteBinding>() {
         }
 
         with(viewModel) {
-            observeEvent(showBrowserEvent) { showFavourite(it) }
-            observe(favArticles) { adapter.submitList(it) }
+            viewObserveEvent(showBrowserEvent) { showFavourite(it) }
+            viewObserve(favArticles) { adapter.submitList(it) }
         }
     }
 

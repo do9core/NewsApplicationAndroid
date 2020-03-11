@@ -6,8 +6,8 @@ import android.view.View
 import org.koin.androidx.scope.lifecycleScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import xyz.do9core.extensions.lifecycle.observe
-import xyz.do9core.extensions.lifecycle.observeEvent
+import xyz.do9core.extensions.fragment.viewObserve
+import xyz.do9core.extensions.fragment.viewObserveEvent
 import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.databinding.FragmentWatchLaterBinding
 import xyz.do9core.newsapplication.ui.base.BindingFragment
@@ -27,8 +27,8 @@ class WatchLaterFragment : BindingFragment<FragmentWatchLaterBinding>() {
         binding.watchLaterList.adapter = adapter
         binding.toolbar.setNavigationOnClickListener { navigateUp() }
         with(viewModel) {
-            observe(watchLaterArticles) { adapter.submitList(it) }
-            observeEvent(showBrowserEvent) { showWatchLater(it) }
+            viewObserve(watchLaterArticles) { adapter.submitList(it) }
+            viewObserveEvent(showBrowserEvent) { showWatchLater(it) }
         }
     }
 
