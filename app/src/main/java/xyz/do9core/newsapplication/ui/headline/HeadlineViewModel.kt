@@ -2,9 +2,8 @@ package xyz.do9core.newsapplication.ui.headline
 
 import androidx.lifecycle.*
 import androidx.paging.toLiveData
-import com.snakydesign.livedataextensions.emptyLiveData
 import kotlinx.coroutines.launch
-import xyz.do9core.extensions.lifecycle.Event
+import xyz.do9core.extensions.lifecycle.EventLiveData
 import xyz.do9core.extensions.lifecycle.call
 import xyz.do9core.newsapplication.R
 import xyz.do9core.newsapplication.data.LoadResult
@@ -39,9 +38,9 @@ class HeadlineViewModel(
     val isRefreshing = networkState.map { it.isLoading }
     val hasNetworkError = networkState.map { it.isError }
     val networkErrorMessage = networkState.map { (it as? LoadResult.Error)?.msg }
-    val showArticleEvent = emptyLiveData<Event<Article>>()
-    val messageSnackbarEvent = emptyLiveData<Event<Int>>()
-    val errorSnackbarEvent = emptyLiveData<Event<String>>()
+    val showArticleEvent = EventLiveData<Article>()
+    val messageSnackbarEvent = EventLiveData<Int>()
+    val errorSnackbarEvent = EventLiveData<String>()
 
     @JvmOverloads
     fun loadArticles(forceReload: Boolean = false) = loadTrigger.postValue(forceReload)
