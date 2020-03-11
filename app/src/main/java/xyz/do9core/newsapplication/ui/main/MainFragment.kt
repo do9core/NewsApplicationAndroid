@@ -7,9 +7,8 @@ import androidx.annotation.StringRes
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import xyz.do9core.extensions.lifecycle.observe
-import xyz.do9core.liveeventbus.bus.LiveEventBus
-import xyz.do9core.liveeventbus.bus.subject
-import xyz.do9core.liveeventbus.bus.with
+import xyz.do9core.liveeventbus.eventbus.LiveEventBus
+import xyz.do9core.liveeventbus.eventbus.withKey
 import xyz.do9core.newsapplication.R
 import xyz.do9core.newsapplication.data.model.Category
 import xyz.do9core.newsapplication.databinding.FragmentMainBinding
@@ -23,9 +22,9 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        with(LiveEventBus.Default) {
-            subject<String>(MainFragment)
-            subject<Int>(MainFragment)
+        LiveEventBus.Default.withKey(MainFragment) {
+            subject<String>()
+            subject<Int>()
         }
     }
 
@@ -49,9 +48,9 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
             }
         }
 
-        with(viewLifecycleOwner) {
-            observe(LiveEventBus.Default.with<String>(MainFragment), ::showSnackbar)
-            observe(LiveEventBus.Default.with<Int>(MainFragment), ::showSnackbar)
+        LiveEventBus.Default.withKey(MainFragment) {
+            viewLifecycleOwner.observe(with<String>(), ::showSnackbar)
+            viewLifecycleOwner.observe(with<Int>(), ::showSnackbar)
         }
     }
 

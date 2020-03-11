@@ -1,4 +1,4 @@
-package xyz.do9core.liveeventbus.bus
+package xyz.do9core.liveeventbus.eventbus
 
 import xyz.do9core.liveeventbus.subject.SubjectLiveData
 import xyz.do9core.liveeventbus.subject.SubjectLiveDataImpl
