@@ -62,5 +62,5 @@ inline fun <reified T : Any> LiveEventBus.postStickyNow(
  * */
 inline fun LiveEventBus.withKey(
     key: LiveEventBus.Key,
-    crossinline block: KeyDelegate.() -> Unit
-) = KeyDelegate.build(this, key).run(block)
+    crossinline block: LiveEventBusOperationDsl.() -> Unit
+) = LiveEventBusOperationDsl.build(this, key).run(block)
