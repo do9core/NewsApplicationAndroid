@@ -19,10 +19,10 @@ import xyz.do9core.newsapplication.ui.base.BindingFragment
 import xyz.do9core.newsapplication.ui.main.MainFragment
 import xyz.do9core.newsapplication.util.navigate
 
-class HeadlineFragment(private val category: Category) : BindingFragment<FragmentHeadlineBinding>() {
+class HeadlineFragment : BindingFragment<FragmentHeadlineBinding>() {
 
-    private val viewModel by viewModel<HeadlineViewModel> { parametersOf(category) }
     private val adapter: ArticleAdapter by lifecycleScope.inject { parametersOf(viewModel) }
+    private val viewModel by viewModel<HeadlineViewModel> { parametersOf(getCategory()) }
 
     override fun createViewBinding(inflater: LayoutInflater): FragmentHeadlineBinding
         = FragmentHeadlineBinding.inflate(inflater)
@@ -52,10 +52,18 @@ class HeadlineFragment(private val category: Category) : BindingFragment<Fragmen
         }
     }
 
+    private fun getCategory(): Category {
+        return requireArguments()[KEY_CATEGORY] as Category
+    }
+
     private fun showArticle(article: Article) {
         NavGraphDirections.showArticle(
             articleUrl = article.url,
             articleTitle = article.title
         ).let { navigate(it) }
+    }
+
+    companion object {
+        const val KEY_CATEGORY = "HeadlineFragment.KEY_CATEGORY"
     }
 }
