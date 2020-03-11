@@ -7,6 +7,6 @@ class EventObserver<T : Any>(
 ) : Observer<Event<T>> {
 
     override fun onChanged(t: Event<T>?) {
-        t?.getParameter()?.let { block(it) }
+        t?.get()?.let { block(it) }
     }
 }
