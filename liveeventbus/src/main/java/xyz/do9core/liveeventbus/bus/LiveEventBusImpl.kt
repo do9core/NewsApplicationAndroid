@@ -1,6 +1,7 @@
 package xyz.do9core.liveeventbus.bus
 
 import xyz.do9core.liveeventbus.subject.SubjectLiveData
+import xyz.do9core.liveeventbus.subject.SubjectLiveDataImpl
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.reflect.KClass
 
@@ -16,7 +17,7 @@ internal class LiveEventBusImpl : LiveEventBus() {
 
     override fun <T : Any> subject(dataType: KClass<T>, key: Key) {
         val keyPair = Pair(dataType, key)
-        subjects.putIfAbsent(keyPair, SubjectLiveData<T>())
+        subjects.putIfAbsent(keyPair, SubjectLiveDataImpl<T>())
     }
 
     @Suppress("UNCHECKED_CAST")

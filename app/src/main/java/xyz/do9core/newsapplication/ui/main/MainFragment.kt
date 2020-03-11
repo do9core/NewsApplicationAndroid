@@ -6,8 +6,10 @@ import android.view.View
 import androidx.annotation.StringRes
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import xyz.do9core.extensions.fragment.viewObserveEvent
+import xyz.do9core.extensions.lifecycle.observe
+import xyz.do9core.liveeventbus.bus.LiveEventBus
+import xyz.do9core.liveeventbus.bus.subject
+import xyz.do9core.liveeventbus.bus.with
 import xyz.do9core.newsapplication.R
 import xyz.do9core.newsapplication.data.model.Category
 import xyz.do9core.newsapplication.databinding.FragmentMainBinding
@@ -16,10 +18,14 @@ import xyz.do9core.newsapplication.util.navigate
 
 class MainFragment : BindingFragment<FragmentMainBinding>() {
 
-    private val sharedViewModel by sharedViewModel<SharedViewModel>()
-
     override fun createViewBinding(inflater: LayoutInflater): FragmentMainBinding
         = FragmentMainBinding.inflate(inflater)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        LiveEventBus.Default.subject<String>(MainFragment)
+        LiveEventBus.Default.subject<Int>(MainFragment)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,9 +45,9 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
             }?.also { dest -> navigate(dest) } != null
         }
 
-        with(sharedViewModel) {
-            viewObserveEvent(showSnackbarEvent) { showSnackbar(it) }
-            viewObserveEvent(showErrorEvent) { showSnackbar(it) }
+        with(viewLifecycleOwner) {
+            observe(LiveEventBus.Default.with<String>(MainFragment), ::showSnackbar)
+            observe(LiveEventBus.Default.with<Int>(MainFragment), ::showSnackbar)
         }
     }
 
@@ -50,4 +56,6 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
     }
 
     private fun showSnackbar(@StringRes text: Int) = showSnackbar(getString(text))
+
+    companion object : LiveEventBus.Key
 }
