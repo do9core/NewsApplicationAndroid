@@ -44,10 +44,11 @@ class WebViewFragment(private val targetUrl: String) : BindingFragment<FragmentW
         }
     }
 
-    override fun onDestroy() {
+    override fun onDestroyView() {
         binding.webView.loadData("", null, null)
         binding.webView.destroy()
-        super.onDestroy()
+        // After super.onDestroyView() the binding is not available
+        super.onDestroyView()
     }
 
     class Factory(private val url: String) : FragmentFactory() {
