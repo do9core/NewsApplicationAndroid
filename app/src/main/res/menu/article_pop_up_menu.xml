@@ -9,7 +9,7 @@
         android:icon="@drawable/ic_access_time"
         android:title="@string/article_pop_up_watch_later" />
     <item
-        android:id="@+id/article_pup_up_save_image"
+        android:id="@+id/article_pop_up_save_image"
         android:icon="@drawable/ic_image"
         android:title="@string/article_pop_up_save_image"/>
 </menu>
