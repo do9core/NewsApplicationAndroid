@@ -38,11 +38,12 @@ fun View.isInvisible(invisible: Boolean?) {
 private const val DEFAULT_EXCLUSIVE_DURATION = 1000L
 
 @BindingAdapter(value = ["onExclusiveClick", "exclusiveDuration"], requireAll = false)
-@JvmOverloads
 fun View.bindOnExclusiveClick(
     onExclusiveClick: View.OnClickListener,
-    exclusiveDurationInMs: Long = DEFAULT_EXCLUSIVE_DURATION
-) = onExclusiveClick(exclusiveDurationInMs) { onExclusiveClick.onClick(this) }
+    exclusiveDurationInMs: Long?
+) = onExclusiveClick(exclusiveDurationInMs ?: DEFAULT_EXCLUSIVE_DURATION) {
+    onExclusiveClick.onClick(this)
+}
 
 @BindingAdapter("urlToImage")
 fun ImageView.bindUrl(urlToImage: String?) {
