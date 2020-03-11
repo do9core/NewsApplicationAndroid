@@ -10,4 +10,11 @@ class KeyDelegate internal constructor(
     inline fun <reified T : Any> postNow(event: T) = eventBus.postNow(event, key)
     inline fun <reified T : Any> postSticky(event: T) = eventBus.postSticky(event, key)
     inline fun <reified T : Any> postStickyNow(event: T) = eventBus.postStickyNow(event, key)
+
+    companion object {
+
+        fun build(eventBus: LiveEventBus, key: LiveEventBus.Key): KeyDelegate {
+            return KeyDelegate(eventBus, key)
+        }
+    }
 }

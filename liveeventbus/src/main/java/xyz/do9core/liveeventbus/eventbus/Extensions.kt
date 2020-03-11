@@ -60,5 +60,7 @@ inline fun <reified T : Any> LiveEventBus.postStickyNow(
 /**
  * 便于对同一个[key]下的Subject进行连续多个操作
  * */
-fun LiveEventBus.withKey(key: LiveEventBus.Key, block: KeyDelegate.() -> Unit) =
-    KeyDelegate(this, key).run(block)
+inline fun LiveEventBus.withKey(
+    key: LiveEventBus.Key,
+    crossinline block: KeyDelegate.() -> Unit
+) = KeyDelegate.build(this, key).run(block)
