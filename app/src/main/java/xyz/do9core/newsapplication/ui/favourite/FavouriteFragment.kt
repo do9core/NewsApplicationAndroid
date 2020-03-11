@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import org.koin.androidx.scope.currentScope
+import org.koin.androidx.scope.lifecycleScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import xyz.do9core.extensions.lifecycle.observe
@@ -19,7 +19,7 @@ import xyz.do9core.newsapplication.util.navigateUp
 class FavouriteFragment : BindingFragment<FragmentFavouriteBinding>() {
 
     private val viewModel by viewModel<FavouriteViewModel>()
-    private val adapter: ArticleAdapter by currentScope.inject { parametersOf(viewModel) }
+    private val adapter: ArticleAdapter by lifecycleScope.inject { parametersOf(viewModel) }
 
     override fun createViewBinding(inflater: LayoutInflater): FragmentFavouriteBinding =
         FragmentFavouriteBinding.inflate(inflater)

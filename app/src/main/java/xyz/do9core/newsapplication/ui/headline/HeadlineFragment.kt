@@ -3,7 +3,7 @@ package xyz.do9core.newsapplication.ui.headline
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import org.koin.androidx.scope.currentScope
+import org.koin.androidx.scope.lifecycleScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import xyz.do9core.extensions.fragment.viewObserve
@@ -22,7 +22,7 @@ import xyz.do9core.newsapplication.util.navigate
 class HeadlineFragment(private val category: Category) : BindingFragment<FragmentHeadlineBinding>() {
 
     private val viewModel by viewModel<HeadlineViewModel> { parametersOf(category) }
-    private val adapter: ArticleAdapter by currentScope.inject { parametersOf(viewModel) }
+    private val adapter: ArticleAdapter by lifecycleScope.inject { parametersOf(viewModel) }
 
     override fun createViewBinding(inflater: LayoutInflater): FragmentHeadlineBinding
         = FragmentHeadlineBinding.inflate(inflater)

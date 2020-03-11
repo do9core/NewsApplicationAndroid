@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import org.koin.androidx.scope.currentScope
+import org.koin.androidx.scope.lifecycleScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import xyz.do9core.extensions.lifecycle.observe
@@ -18,7 +18,7 @@ import xyz.do9core.newsapplication.util.navigateUp
 class SearchFragment : BindingFragment<FragmentSearchBinding>() {
 
     private val viewModel: SearchViewModel by viewModel()
-    private val adapter: ResultAdapter by currentScope.inject { parametersOf(viewModel) }
+    private val adapter: ResultAdapter by lifecycleScope.inject { parametersOf(viewModel) }
 
     override fun createViewBinding(inflater: LayoutInflater): FragmentSearchBinding =
         FragmentSearchBinding.inflate(inflater)
