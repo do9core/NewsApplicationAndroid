@@ -9,13 +9,14 @@ import org.koin.core.parameter.parametersOf
 import xyz.do9core.extensions.fragment.viewObserve
 import xyz.do9core.extensions.fragment.viewObserveEvent
 import xyz.do9core.liveeventbus.bus.LiveEventBus
-import xyz.do9core.liveeventbus.bus.postStickyNow
+import xyz.do9core.liveeventbus.bus.withKey
 import xyz.do9core.newsapplication.NavGraphDirections
 import xyz.do9core.newsapplication.R
 import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.data.model.Category
 import xyz.do9core.newsapplication.databinding.FragmentHeadlineBinding
 import xyz.do9core.newsapplication.ui.base.BindingFragment
+import xyz.do9core.newsapplication.ui.main.MainFragment
 import xyz.do9core.newsapplication.util.navigate
 
 class HeadlineFragment(private val category: Category) : BindingFragment<FragmentHeadlineBinding>() {
@@ -40,12 +41,12 @@ class HeadlineFragment(private val category: Category) : BindingFragment<Fragmen
             viewObserve(articles) { adapter.submitList(it) }
             viewObserve(networkState) { adapter.setLoadState(it) }
             viewObserveEvent(showArticleEvent) { showArticle(it) }
-            viewObserveEvent(messageSnackbarEvent) {
-                LiveEventBus.Default.postStickyNow(it)
-            }
-            viewObserveEvent(errorSnackbarEvent) {
-                val msg = it.takeIf { it.isNotBlank() } ?: getString(R.string.app_save_favourite_failed)
-                LiveEventBus.Default.postStickyNow(msg)
+            LiveEventBus.Default.withKey(MainFragment) {
+                viewObserveEvent(messageSnackbarEvent) { postStickyNow(it) }
+                viewObserveEvent(errorSnackbarEvent) {
+                    val msg = it.takeIf { it.isNotBlank() } ?: getString(R.string.app_save_favourite_failed)
+                    postStickyNow(msg)
+                }
             }
         }
     }

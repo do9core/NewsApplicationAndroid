@@ -23,26 +23,30 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        LiveEventBus.Default.subject<String>(MainFragment)
-        LiveEventBus.Default.subject<Int>(MainFragment)
+        with(LiveEventBus.Default) {
+            subject<String>(MainFragment)
+            subject<Int>(MainFragment)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewPager.adapter = CategoryPagerAdapter(this@MainFragment)
-        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
-            tab.text = Category.values()[position].title
-        }.attach()
 
-        binding.setShowSearchListener { navigate(MainFragmentDirections.showSearch()) }
-        binding.navDrawer.setNavigationItemSelectedListener {
-            when (it.itemId) {
-                R.id.app_menu_favourites -> MainFragmentDirections.showFavourites()
-                R.id.app_menu_watch_later -> MainFragmentDirections.showWatchLater()
-                R.id.app_menu_app_info -> MainFragmentDirections.showAppInfo()
-                else -> null
-            }?.also { dest -> navigate(dest) } != null
+        with(binding) {
+            lifecycleOwner = viewLifecycleOwner
+            viewPager.adapter = CategoryPagerAdapter(this@MainFragment)
+            TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+                tab.text = Category.values()[position].title
+            }.attach()
+            setShowSearchListener { navigate(MainFragmentDirections.showSearch()) }
+            navDrawer.setNavigationItemSelectedListener {
+                when (it.itemId) {
+                    R.id.app_menu_favourites -> MainFragmentDirections.showFavourites()
+                    R.id.app_menu_watch_later -> MainFragmentDirections.showWatchLater()
+                    R.id.app_menu_app_info -> MainFragmentDirections.showAppInfo()
+                    else -> null
+                }?.also { dest -> navigate(dest) } != null
+            }
         }
 
         with(viewLifecycleOwner) {
