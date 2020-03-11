@@ -15,6 +15,7 @@
 
     <string name="article_pop_up_favourite">Favourite</string>
     <string name="article_pop_up_watch_later">Watch Later</string>
+    <string name="article_pop_up_save_image">Save Image</string>
 
     <string name="app_watch_later_subtitle">Watch Later</string>
     <string name="app_save_watch_later_success">Article saved in watch later!</string>

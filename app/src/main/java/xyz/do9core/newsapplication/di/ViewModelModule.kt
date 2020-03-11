@@ -14,5 +14,5 @@ val ViewModelModule = module {
     viewModel { WatchLaterViewModel(get()) }
     viewModel { FavouriteViewModel(get()) }
     viewModel { SearchViewModel() }
-    viewModel { (category: Category) -> HeadlineViewModel(category, get()) }
+    viewModel { (category: Category) -> HeadlineViewModel(category, get(), get()) }
 }

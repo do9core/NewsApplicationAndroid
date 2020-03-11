@@ -43,6 +43,10 @@ class HeadlineFragment(private val category: Category) : BindingFragment<Fragmen
             viewObserve(networkState) { adapter.setLoadState(it) }
             viewObserveEvent(showArticleEvent) { showArticle(it) }
             viewObserveEvent(messageSnackbarEvent) { sharedViewModel.showErrorEvent.call(it) }
+            viewObserveEvent(imageSavedEvent) {
+                val snackText = getString(it)
+                sharedViewModel.showSnackbarEvent.call(snackText)
+            }
             viewObserveEvent(errorSnackbarEvent) {
                 val msg = it.takeIf { it.isNotBlank() } ?: getString(R.string.app_save_favourite_failed)
                 sharedViewModel.showSnackbarEvent.call(msg)

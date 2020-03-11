@@ -18,4 +18,4 @@ class SupervisorCoroutineScope(context: CoroutineContext) : CoroutineScope, Clos
     }
 }
 
-val mainSupervisorScope = SupervisorCoroutineScope(Dispatchers.Main)
+val mainSupervisorScope by lazy { SupervisorCoroutineScope(Dispatchers.Main) }

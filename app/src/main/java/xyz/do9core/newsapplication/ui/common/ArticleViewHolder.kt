@@ -27,6 +27,10 @@ class ArticleViewHolder private constructor(
                         viewModel.watchLaterClicked?.invoke(viewModel.data)
                         true
                     }
+                    R.id.article_pop_up_save_image -> {
+                        viewModel.saveImageClicked?.invoke(viewModel.data)
+                        true
+                    }
                     else -> false
                 }
             }

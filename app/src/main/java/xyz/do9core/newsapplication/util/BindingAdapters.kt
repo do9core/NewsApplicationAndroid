@@ -2,6 +2,9 @@ package xyz.do9core.newsapplication.util
 
 import android.view.View
 import android.widget.ImageView
+import androidx.core.view.isGone
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
@@ -10,29 +13,17 @@ import xyz.do9core.newsapplication.R
 
 @BindingAdapter("isVisible")
 fun View.bindIsVisible(visible: Boolean?) {
-    visibility = if (visible == null || !visible) {
-        View.GONE
-    } else {
-        View.VISIBLE
-    }
+    this.isVisible = visible ?: false
 }
 
 @BindingAdapter("isGone")
 fun View.isGone(gone: Boolean?) {
-    visibility = if (gone == null || gone) {
-        View.GONE
-    } else {
-        View.VISIBLE
-    }
+    this.isGone = gone ?: true
 }
 
 @BindingAdapter("isInvisible")
 fun View.isInvisible(invisible: Boolean?) {
-    visibility = if (invisible == null || invisible) {
-        View.INVISIBLE
-    } else {
-        View.VISIBLE
-    }
+    this.isInvisible = invisible ?: true
 }
 
 private const val DEFAULT_EXCLUSIVE_DURATION = 1000L
