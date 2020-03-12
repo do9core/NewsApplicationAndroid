@@ -41,7 +41,7 @@ class HeadlineFragment : BindingFragment<FragmentHeadlineBinding>() {
             viewObserve(articles) { adapter.submitList(it) }
             viewObserve(networkState) { adapter.setLoadState(it) }
             viewObserveEvent(showArticleEvent) { showArticle(it) }
-            LiveEventBus.Default.withKey(MainFragment) {
+            LiveEventBus.withKey(MainFragment) {
                 viewObserveEvent(messageSnackbarEvent) { postStickyNow(it) }
                 viewObserveEvent(imageSavedEvent) { postStickyNow(it) }
                 viewObserveEvent(errorSnackbarEvent) {

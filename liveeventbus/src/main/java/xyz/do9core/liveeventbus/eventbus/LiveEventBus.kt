@@ -1,7 +1,12 @@
 package xyz.do9core.liveeventbus.eventbus
 
 import xyz.do9core.liveeventbus.subject.SubjectLiveData
+import xyz.do9core.liveeventbus.subject.SubjectLiveDataImpl
+import java.util.concurrent.ConcurrentHashMap
 import kotlin.reflect.KClass
+
+private typealias Subject = SubjectLiveData<*>
+private typealias KeyPair = Pair<KClass<*>, LiveEventBus.Key>
 
 /**
  * 使用LiveData的EventBus，得益于LiveData和Lifecycle可以不需要手动解注册来使用
@@ -28,11 +33,21 @@ abstract class LiveEventBus {
      * */
     abstract fun <T : Any> with(dataType: KClass<T>, key: Key = DefaultKey): SubjectLiveData<T>
 
-    companion object {
+    companion object : LiveEventBus() {
 
-        /**
-         * 默认的EventBus单例
-         * */
-        val Default: LiveEventBus = LiveEventBusImpl()
+        private val subjects = ConcurrentHashMap<KeyPair, Subject>()
+
+        override fun <T : Any> subject(dataType: KClass<T>, key: Key) {
+            val keyPair = Pair(dataType, key)
+            subjects.putIfAbsent(keyPair, SubjectLiveDataImpl<T>())
+        }
+
+        @Suppress("UNCHECKED_CAST")
+        override fun <T : Any> with(dataType: KClass<T>, key: Key): SubjectLiveData<T> {
+            val keyPair = Pair(dataType, key)
+            val subject = subjects[keyPair]
+            require(subject != null) { "No subject with ${dataType.java.name} and $key has been registered." }
+            return subject as SubjectLiveData<T>
+        }
     }
 }

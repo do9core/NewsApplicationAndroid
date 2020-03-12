@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.annotation.StringRes
-import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import xyz.do9core.extensions.lifecycle.observe
@@ -23,7 +22,7 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        LiveEventBus.Default.withKey(MainFragment) {
+        LiveEventBus.withKey(MainFragment) {
             subject<String>()
             subject<Int>()
         }
@@ -49,7 +48,7 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
             }
         }
 
-        LiveEventBus.Default.withKey(MainFragment) {
+        LiveEventBus.withKey(MainFragment) {
             with<String>().observe(viewLifecycleOwner) { showSnackbar(it) }
             with<Int>().observe(viewLifecycleOwner) { showSnackbar(it) }
         }
