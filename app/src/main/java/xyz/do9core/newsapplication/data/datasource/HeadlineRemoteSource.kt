@@ -15,8 +15,8 @@ import xyz.do9core.newsapplication.data.remote.RemoteDataSource
 
 class HeadlineSourceFactory(
     private val coroutineScope: CoroutineScope,
-    private val category: Category,
-    private val country: Country,
+    private val category: Category?,
+    private val country: Country?,
     private val query: String = ""
 ) : DataSource.Factory<Int, Article>() {
 
@@ -30,8 +30,8 @@ class HeadlineSourceFactory(
 
 class HeadlineRemoteSource(
     private val coroutineScope: CoroutineScope,
-    private val category: Category,
-    private val country: Country,
+    private val category: Category?,
+    private val country: Country?,
     private val query: String
 ) : PageKeyedDataSource<Int, Article>() {
 
@@ -82,8 +82,8 @@ class HeadlineRemoteSource(
             try {
                 _networkState.postValue(LoadResult.Loading)
                 val result = RemoteDataSource.fetchHeadline(
-                    country = country.code,
-                    category = category.title,
+                    country = country?.code.orEmpty(),
+                    category = category?.title.orEmpty(),
                     query = query,
                     pageSize = pageSize,
                     page = page

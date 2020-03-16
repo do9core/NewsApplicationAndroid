@@ -12,64 +12,175 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/primaryColor">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:elevation="0dp"
+            app:elevation="0dp"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:navigationIcon="@drawable/ic_arrow_back"
+                android:elevation="0dp"
+                app:navigationIcon="@drawable/ic_menu"
                 app:title="@string/app_search_title"
-                app:titleTextColor="@color/primaryTextColor" />
+                app:titleTextColor="@color/primaryTextColor"/>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/query_field"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:hint="@string/app_search_query_hint"
-            app:helperText="@string/app_search_helper_text"
-            app:helperTextEnabled="true"
-            app:layout_constraintTop_toBottomOf="@id/app_bar"
-            app:startIconDrawable="@drawable/ic_search">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/query_text"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:imeOptions="actionSearch"
-                android:singleLine="true"
-                android:text="@={viewModel.queryText}" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:padding="8dp"
+            android:clipToPadding="false"
+            app:layout_constraintTop_toBottomOf="@id/app_bar"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/query_field"
-            app:onRefresh="@{() -> viewModel.executeQuery()}"
-            app:refreshing="@{viewModel.refreshing}">
+            android:layout_marginBottom="56dp">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/result_list"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                    android:hint="@string/app_search_query_hint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    app:placeholderTextColor="@color/primaryTextColor"
+                    app:helperTextTextColor="@color/primaryTextColor"
+                    android:textColorHint="@color/primaryTextColor"
+                    app:startIconTint="@color/primaryTextColor"
+                    app:hintTextColor="@color/secondaryTextColor"
+                    app:startIconDrawable="@drawable/ic_search"
+                    app:boxBackgroundColor="@color/primaryDarkColor"
+                    app:boxBackgroundMode="filled">
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/query_text"
+                        android:textColor="@color/primaryTextColor"
+                        android:singleLine="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:imeOptions="actionSearch"
+                        android:text="@={viewModel.queryText}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:id="@+id/country_button"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:text="Country"
+                    android:gravity="start|center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:icon="@drawable/ic_location_city" />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none">
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/country_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:singleLine="true" />
+                </HorizontalScrollView>
+
+                <Button
+                    android:id="@+id/category_button"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:text="Category"
+                    android:gravity="start|center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:icon="@drawable/ic_category" />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none">
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/category_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:singleLine="true" />
+                </HorizontalScrollView>
+            </LinearLayout>
+        </ScrollView>
+
+        <androidx.constraintlayout.motion.widget.MotionLayout
+            android:id="@+id/backdrop"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/app_bar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layoutDescription="@xml/badge_scene">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                tools:visibility="visible"
+                android:id="@+id/badge_top"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:clipToPadding="false"
-                android:padding="8dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/query_field"
-                tools:listitem="@layout/item_search_result" />
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                android:elevation="8dp"
+                android:background="@drawable/bg_radius"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <TextView
+                    android:id="@+id/label_text"
+                    android:text="Search results"
+                    android:textSize="18sp"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="20dp"
+                    android:textColor="#000"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/result_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:clipToPadding="false"
+                    android:padding="8dp"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/label_text"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:listitem="@layout/item_search_result" />
+
+                <ProgressBar
+                    tools:visibility="gone"
+                    app:isVisible="@{viewModel.isLoading}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:layout_constraintTop_toTopOf="@id/result_list"
+                    app:layout_constraintBottom_toBottomOf="@id/result_list"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <TextView
+                    tools:visibility="gone"
+                    app:isVisible="@{viewModel.noResult}"
+                    android:text="No result found :("
+                    android:textSize="16sp"
+                    android:textColor="#000"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/result_list"
+                    app:layout_constraintBottom_toBottomOf="@id/result_list"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.motion.widget.MotionLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
