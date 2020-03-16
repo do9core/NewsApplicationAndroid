@@ -73,6 +73,10 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
             backdrop.transitionToEnd()
             toolbar.setNavigationIcon(R.drawable.ic_close)
             revealed = false
+            this@SearchFragment.viewModel.executeQuery(
+                category = categoryController.getSelection(),
+                country = countryController.getSelection()
+            )
         }
 
         fun showBackLayer(): Unit = with(binding) {
@@ -117,7 +121,6 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
                         country = countryController.getSelection()
                     )
                     hideSoftInput()
-                    backdropController.showFrontLayer()
                     true
                 } else {
                     false
