@@ -8,7 +8,7 @@ import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
-import xyz.do9core.coroutineutils.exclusive.onExclusiveClick
+import xyz.do9core.coroutineutils.view.onExclusiveClick
 import xyz.do9core.newsapplication.R
 
 @BindingAdapter("isVisible")
