@@ -6,7 +6,6 @@ import android.view.View
 import androidx.annotation.StringRes
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
-import xyz.do9core.extensions.lifecycle.observe
 import xyz.do9core.liveeventbus.eventbus.LiveEventBus
 import xyz.do9core.liveeventbus.eventbus.withKey
 import xyz.do9core.newsapplication.R
@@ -48,8 +47,8 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
         }
 
         LiveEventBus.withKey(MainFragment) {
-            with<String>().observe(viewLifecycleOwner) { showSnackbar(it) }
-            with<Int>().observe(viewLifecycleOwner) { showSnackbar(it) }
+            register<String>(viewLifecycleOwner) { showSnackbar(it) }
+            register<Int>(viewLifecycleOwner) { showSnackbar(it) }
         }
     }
 

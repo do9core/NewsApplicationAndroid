@@ -42,8 +42,8 @@ class HeadlineFragment : BindingFragment<FragmentHeadlineBinding>() {
             viewObserve(networkState) { adapter.setLoadState(it) }
             viewObserveEvent(showArticleEvent) { showArticle(it) }
             LiveEventBus.withKey(MainFragment) {
-                viewObserveEvent(messageSnackbarEvent) { postStickyNow(it) }
-                viewObserveEvent(imageSavedEvent) { postStickyNow(it) }
+                viewObserveEvent(messageSnackbarEvent) { postNow(it) }
+                viewObserveEvent(imageSavedEvent) { postNow(it) }
                 viewObserveEvent(errorSnackbarEvent) {
                     val msg = it.takeIf { it.isNotBlank() }
                         ?: getString(R.string.app_save_favourite_failed)

@@ -1,5 +1,7 @@
 package xyz.do9core.liveeventbus.eventbus
 
+import androidx.annotation.MainThread
+import androidx.lifecycle.LifecycleOwner
 import xyz.do9core.liveeventbus.subject.SubjectLiveData
 
 class LiveEventBusOperationDsl internal constructor(
@@ -35,6 +37,12 @@ class LiveEventBusOperationDsl internal constructor(
      * [SubjectLiveData.postStickyNow]
      * */
     inline fun <reified T : Any> postStickyNow(event: T) = eventBus.postStickyNow(event, key)
+
+    @MainThread
+    inline fun <reified T : Any> register(
+        lifecycleOwner: LifecycleOwner,
+        noinline subscriber: (T) -> Unit
+    ) = eventBus.register(lifecycleOwner, key, subscriber)
 
     companion object {
 
