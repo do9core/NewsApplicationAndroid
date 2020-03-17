@@ -9,6 +9,5 @@ data class ArticleViewModel(
     val clickHandler: ArticleClickedListener,
     val noDropDownButton: Boolean = true,
     val favouriteClicked: ArticleClickedListener? = null,
-    val watchLaterClicked: ArticleClickedListener? = null,
     val saveImageClicked: ArticleClickedListener? = null
 )

@@ -27,7 +27,6 @@ class HeadlineViewModel(
 
     val articleClicked: ArticleClickedListener = { showArticleEvent.call(it) }
     val favouriteHandler: ArticleClickedListener = ::saveToFavourite
-    val watchLaterHandler: ArticleClickedListener = ::saveToWatchLater
     val saveImageHandler: ArticleClickedListener = ::saveImage
 
     val articles = loadTrigger.switchMap {
@@ -54,17 +53,6 @@ class HeadlineViewModel(
             try {
                 database.articleDao().saveFavouriteArticle(article)
                 messageSnackbarEvent.call(R.string.app_save_favourite_success)
-            } catch (e: Exception) {
-                errorSnackbarEvent.call(e.message.orEmpty())
-            }
-        }
-    }
-
-    private fun saveToWatchLater(article: Article) {
-        viewModelScope.launch {
-            try {
-                database.articleDao().saveWatchLaterArticle(article)
-                messageSnackbarEvent.call(R.string.app_save_watch_later_success)
             } catch (e: Exception) {
                 errorSnackbarEvent.call(e.message.orEmpty())
             }

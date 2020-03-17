@@ -34,7 +34,6 @@ class ArticleAdapter(
                         viewModel.articleClicked,
                         false,
                         viewModel.favouriteHandler,
-                        viewModel.watchLaterHandler,
                         viewModel.saveImageHandler
                     )
                 )

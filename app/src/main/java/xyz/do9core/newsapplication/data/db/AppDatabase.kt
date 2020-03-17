@@ -12,16 +12,14 @@ import xyz.do9core.newsapplication.data.model.*
     entities = [
         Article::class,
         FavouriteIds::class,
-        WatchLaterIds::class,
         Country::class,
         Category::class,
         Source::class
     ],
     views = [
-        FavouriteArticle::class,
-        WatchLaterArticle::class
+        FavouriteArticle::class
     ],
-    version = 3,
+    version = 4,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
