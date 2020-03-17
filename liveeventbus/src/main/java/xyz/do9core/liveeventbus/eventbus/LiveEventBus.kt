@@ -32,8 +32,10 @@ abstract class LiveEventBus {
      * */
     abstract fun <T : Any> with(dataType: KClass<T>, key: Key = DefaultKey): SubjectLiveData<T>
 
+    // 用companion object作为默认实现
     companion object : LiveEventBus() {
 
+        // 使用 (数据类型, Key接口) 的元组作为Subject的索引
         private val subjects = ConcurrentHashMap<KeyPair, Subject>()
 
         override fun <T : Any> subject(dataType: KClass<T>, key: Key) {

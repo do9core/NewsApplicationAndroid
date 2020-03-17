@@ -7,13 +7,16 @@ import androidx.lifecycle.Observer
 
 class SubjectLiveData<T : Any> : LiveData<DataWrapper<T>>() {
 
-    private class Subscriber<T : Any>(
+    // Subscriber的Wrapper，用于进行版本校验
+    private class SubscriberWrapper<T : Any>(
         private val subscriber: (T) -> Unit
     ) : Observer<DataWrapper<T>> {
-
+        // 使用当前时间作为版本号
         private val version = System.currentTimeMillis()
 
         override fun onChanged(wrapper: DataWrapper<T>?) {
+            // 根据版本号判断是否能够接受事件
+            // 如果Subscriber的版本更早，则可以接收事件；否则不能接收，取得null
             wrapper?.get(version)?.let(subscriber)
         }
     }
@@ -23,7 +26,7 @@ class SubjectLiveData<T : Any> : LiveData<DataWrapper<T>>() {
     fun register(
         lifecycleOwner: LifecycleOwner,
         subscriber: (T) -> Unit
-    ) = super.observe(lifecycleOwner, Subscriber(subscriber))
+    ) = super.observe(lifecycleOwner, SubscriberWrapper(subscriber))
 
     // 发送粘性Event
     fun postSticky(event: T) = super.postValue(DataWrapper(event))
