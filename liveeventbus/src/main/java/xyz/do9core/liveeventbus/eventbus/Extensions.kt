@@ -2,6 +2,7 @@ package xyz.do9core.liveeventbus.eventbus
 
 import androidx.annotation.AnyThread
 import androidx.annotation.MainThread
+import androidx.lifecycle.LifecycleOwner
 
 /**
  * 注册一个具有[T]类型和[key]索引的Subject的LiveData
@@ -56,6 +57,13 @@ inline fun <reified T : Any> LiveEventBus.postStickyNow(
     event: T,
     key: LiveEventBus.Key = LiveEventBus.DefaultKey
 ) = with(T::class, key).postStickyNow(event)
+
+@MainThread
+inline fun <reified T : Any> LiveEventBus.register(
+    lifecycleOwner: LifecycleOwner,
+    key: LiveEventBus.Key = LiveEventBus.DefaultKey,
+    noinline subscriber: (T) -> Unit
+) = with(T::class, key).register(lifecycleOwner, subscriber)
 
 /**
  * 便于对同一个[key]下的Subject进行连续多个操作

@@ -18,7 +18,7 @@ data class Article(
 ) {
     object Differ : DiffUtil.ItemCallback<Article>() {
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean =
-            oldItem.title == newItem.title
+            oldItem.url == newItem.url
 
         override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean =
             oldItem == newItem

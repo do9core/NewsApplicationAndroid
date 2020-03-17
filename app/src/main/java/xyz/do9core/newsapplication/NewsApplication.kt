@@ -20,8 +20,7 @@ class NewsApplication : Application() {
                 ViewModelModule,
                 SearchFragmentDependency,
                 FavouriteFragmentDependency,
-                HeadlineFragmentDependency,
-                WatchLaterFragmentDependency
+                HeadlineFragmentDependency
             )
         }
     }

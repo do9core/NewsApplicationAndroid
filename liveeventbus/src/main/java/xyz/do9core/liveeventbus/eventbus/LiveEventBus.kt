@@ -1,7 +1,6 @@
 package xyz.do9core.liveeventbus.eventbus
 
 import xyz.do9core.liveeventbus.subject.SubjectLiveData
-import xyz.do9core.liveeventbus.subject.SubjectLiveDataImpl
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.reflect.KClass
 
@@ -33,13 +32,15 @@ abstract class LiveEventBus {
      * */
     abstract fun <T : Any> with(dataType: KClass<T>, key: Key = DefaultKey): SubjectLiveData<T>
 
+    // 用companion object作为默认实现
     companion object : LiveEventBus() {
 
+        // 使用 (数据类型, Key接口) 的元组作为Subject的索引
         private val subjects = ConcurrentHashMap<KeyPair, Subject>()
 
         override fun <T : Any> subject(dataType: KClass<T>, key: Key) {
             val keyPair = Pair(dataType, key)
-            subjects.putIfAbsent(keyPair, SubjectLiveDataImpl<T>())
+            subjects.putIfAbsent(keyPair, SubjectLiveData<T>())
         }
 
         @Suppress("UNCHECKED_CAST")

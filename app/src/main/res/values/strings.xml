@@ -12,6 +12,8 @@
     <string name="app_clear_fav_message">This operation will clear ALL favourites from your device and CANNOT be recovered!</string>
     <string name="app_clear_fav_positive">Confirm</string>
     <string name="app_clear_fav_negative">Let me consider</string>
+    <string name="app_clear_fav_snack">Favourites cleared!</string>
+    <string name="app_remove_fav_snack">Favourite item deleted.</string>
 
     <string name="article_pop_up_favourite">Favourite</string>
     <string name="article_pop_up_watch_later">Watch Later</string>

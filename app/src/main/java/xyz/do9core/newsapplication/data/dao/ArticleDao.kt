@@ -33,6 +33,9 @@ interface ArticleDao {
     @Query("DELETE FROM Article")
     suspend fun clearArticles()
 
+    @Query("DELETE FROM favouriteids WHERE favouriteids.articleUrl = :articleUrl")
+    suspend fun deleteFavourite(articleUrl: String)
+
     @Transaction
     suspend fun saveFavouriteArticle(article: Article) {
         saveArticle(article)

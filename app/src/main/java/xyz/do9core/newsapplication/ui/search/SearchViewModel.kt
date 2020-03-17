@@ -2,8 +2,8 @@ package xyz.do9core.newsapplication.ui.search
 
 import androidx.lifecycle.*
 import androidx.paging.toLiveData
-import com.snakydesign.livedataextensions.emptyLiveData
-import xyz.do9core.extensions.lifecycle.Event
+import com.snakydesign.livedataextensions.startWith
+import xyz.do9core.extensions.lifecycle.EventLiveData
 import xyz.do9core.extensions.lifecycle.call
 import xyz.do9core.newsapplication.data.datasource.HeadlineSourceFactory
 import xyz.do9core.newsapplication.data.model.Article
@@ -16,17 +16,18 @@ class SearchViewModel : ViewModel() {
     private val dataSource = dataFactory.switchMap { it.dataSource }
     private val networkState = dataSource.switchMap { it.networkState }
     val searchResult = dataFactory.switchMap { it.toLiveData(10) }
-    val refreshing = networkState.map { it.isLoading }
+    val isLoading = networkState.map { it.isLoading }.startWith(false)
+    val noResult = networkState.map { it.isError }.startWith(false)
 
     val queryText = MutableLiveData<String>()
-    val showArticleEvent = emptyLiveData<Event<Article>>()
+    val showArticleEvent = EventLiveData<Article>()
 
-    fun executeQuery() {
+    fun executeQuery(category: Category?, country: Country?) {
         val query = queryText.value ?: ""
         val sourceFactory = HeadlineSourceFactory(
             coroutineScope = viewModelScope,
-            category = Category.Technology,
-            country = Country.UnitedStates,
+            category = category,
+            country = country,
             query = query
         )
         dataFactory.value = sourceFactory

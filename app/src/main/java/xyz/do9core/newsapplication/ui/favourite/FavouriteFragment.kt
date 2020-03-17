@@ -3,7 +3,9 @@ package xyz.do9core.newsapplication.ui.favourite
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.scope.lifecycleScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -28,6 +30,10 @@ class FavouriteFragment : BindingFragment<FragmentFavouriteBinding>() {
         super.onViewCreated(view, savedInstanceState)
         binding.toolbar.setNavigationOnClickListener { navigateUp() }
         binding.favouriteList.adapter = adapter
+        ItemTouchHelper(SlideHelper { position ->
+            val article = adapter.currentList[position]
+            viewModel.removeArticle(article)
+        }).attachToRecyclerView(binding.favouriteList)
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.fav_clear -> {
@@ -46,8 +52,11 @@ class FavouriteFragment : BindingFragment<FragmentFavouriteBinding>() {
         }
 
         with(viewModel) {
-            viewObserveEvent(showBrowserEvent) { showFavourite(it) }
             viewObserve(favArticles) { adapter.submitList(it) }
+            viewObserveEvent(showBrowserEvent) { showFavourite(it) }
+            viewObserveEvent(snackbarEvent) { resId ->
+                Snackbar.make(binding.coordinator, resId, Snackbar.LENGTH_SHORT).show()
+            }
         }
     }
 
