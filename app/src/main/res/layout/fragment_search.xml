@@ -87,8 +87,8 @@
                     android:scrollbars="none">
                     <com.google.android.material.chip.ChipGroup
                         android:id="@+id/country_group"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
                         app:singleLine="true" />
                 </HorizontalScrollView>
 
@@ -107,8 +107,8 @@
                     android:scrollbars="none">
                     <com.google.android.material.chip.ChipGroup
                         android:id="@+id/category_group"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
                         app:singleLine="true" />
                 </HorizontalScrollView>
             </LinearLayout>
@@ -134,7 +134,7 @@
 
                 <TextView
                     android:id="@+id/label_text"
-                    android:text="Search results"
+                    android:text="@string/app_search_result_label"
                     android:textSize="18sp"
                     android:gravity="center_vertical"
                     android:paddingHorizontal="20dp"
@@ -160,23 +160,23 @@
                     tools:visibility="gone"
                     app:isVisible="@{viewModel.isLoading}"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_gravity="center"
-                    app:layout_constraintTop_toTopOf="@id/result_list"
-                    app:layout_constraintBottom_toBottomOf="@id/result_list"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                    android:layout_margin="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/label_text"
+                    app:layout_constraintBottom_toBottomOf="@id/label_text" />
 
                 <TextView
                     tools:visibility="gone"
                     app:isVisible="@{viewModel.noResult}"
-                    android:text="No result found :("
+                    android:text="@string/app_search_nothing"
                     android:textSize="16sp"
                     android:textColor="#000"
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@id/result_list"
+                    app:layout_constraintTop_toBottomOf="@id/label_text"
                     app:layout_constraintBottom_toBottomOf="@id/result_list"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>

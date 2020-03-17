@@ -4,6 +4,9 @@
     <string name="menu_fav_clear">Clear All</string>
 
     <string name="app_headline_title">Headlines</string>
+    <string name="app_headline_image_saved_message">Image saved to album!</string>
+    <string name="app_headline_load_failed_message">There\'s some errors :(\nPlease try reloading this page.</string>
+    <string name="app_headline_reload_button_text">Refresh</string>
 
     <string name="app_favourite_subtitle">Favourites</string>
     <string name="app_save_favourite_success">Article saved!</string>
@@ -34,5 +37,6 @@
 
     <string name="app_search_title">Search</string>
     <string name="app_search_query_hint">Your Query</string>
-    <string name="app_search_helper_text">Searching for what you interest.</string>
+    <string name="app_search_result_label">Search results</string>
+    <string name="app_search_nothing">No result found.</string>
 </resources>

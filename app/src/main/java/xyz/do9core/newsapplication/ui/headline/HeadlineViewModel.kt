@@ -1,17 +1,11 @@
 package xyz.do9core.newsapplication.ui.headline
 
 import android.content.Context
-import android.os.Environment
-import androidx.core.net.toUri
 import androidx.lifecycle.*
 import androidx.paging.toLiveData
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import xyz.do9core.extensions.lifecycle.EventLiveData
 import xyz.do9core.extensions.lifecycle.call
-import xyz.do9core.extensions.storage.MediaImage
-import xyz.do9core.extensions.storage.useLocalStorage
 import xyz.do9core.newsapplication.R
 import xyz.do9core.newsapplication.data.LoadResult
 import xyz.do9core.newsapplication.data.datasource.HeadlineSourceFactory
@@ -20,9 +14,6 @@ import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.data.model.Category
 import xyz.do9core.newsapplication.data.model.Country
 import xyz.do9core.newsapplication.ui.common.ArticleClickedListener
-import java.io.File
-import java.net.URL
-import java.util.*
 
 class HeadlineViewModel(
     category: Category,
@@ -81,49 +72,6 @@ class HeadlineViewModel(
     }
 
     private fun saveImage(article: Article) {
-        viewModelScope.launch {
-            val path = appContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-            if (path == null) {
-                // TODO: update error message
-                errorSnackbarEvent.call("")
-                return@launch
-            }
-            val fileName = UUID.randomUUID().toString()
-            val newFile = File(path, fileName)
-            val success = withContext(Dispatchers.IO) {
-                if (!newFile.createNewFile()) {
-                    return@withContext false
-                }
-                try {
-                    URL(article.urlToImage).openStream().use { inputStream ->
-                        newFile.outputStream().use { outputStream ->
-                            inputStream.copyTo(outputStream)
-                        }
-                    }
-                    return@withContext true
-                } catch (e: Exception) {
-                    return@withContext false
-                }
-            }
-
-            if (!success) {
-                // TODO: update error message
-                errorSnackbarEvent.call("")
-                return@launch
-            }
-
-            // TODO: update image info model
-            val image = MediaImage(
-                mimeType = "image/jpeg",
-                imageUri = newFile.toUri()
-            )
-
-            appContext.useLocalStorage {
-                saveImage(image)
-            }
-
-            // TODO: update notification text resource
-            imageSavedEvent.call(0)
-        }
+        TODO()
     }
 }

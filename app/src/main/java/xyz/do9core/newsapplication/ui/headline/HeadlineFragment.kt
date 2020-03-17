@@ -47,7 +47,7 @@ class HeadlineFragment : BindingFragment<FragmentHeadlineBinding>() {
                 viewObserveEvent(errorSnackbarEvent) {
                     val msg = it.takeIf { it.isNotBlank() }
                         ?: getString(R.string.app_save_favourite_failed)
-                    postStickyNow(msg)
+                    postNow(msg)
                 }
             }
         }
