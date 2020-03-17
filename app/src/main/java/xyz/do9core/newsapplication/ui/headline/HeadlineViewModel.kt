@@ -5,11 +5,10 @@ import android.os.Environment
 import androidx.core.net.toUri
 import androidx.lifecycle.*
 import androidx.paging.toLiveData
-import com.snakydesign.livedataextensions.emptyLiveData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import xyz.do9core.extensions.lifecycle.Event
+import xyz.do9core.extensions.lifecycle.EventLiveData
 import xyz.do9core.extensions.lifecycle.call
 import xyz.do9core.extensions.storage.MediaImage
 import xyz.do9core.extensions.storage.useLocalStorage
@@ -51,10 +50,10 @@ class HeadlineViewModel(
     val isRefreshing = networkState.map { it.isLoading }
     val hasNetworkError = networkState.map { it.isError }
     val networkErrorMessage = networkState.map { (it as? LoadResult.Error)?.msg }
-    val showArticleEvent = emptyLiveData<Event<Article>>()
-    val messageSnackbarEvent = emptyLiveData<Event<Int>>()
-    val errorSnackbarEvent = emptyLiveData<Event<String>>()
-    val imageSavedEvent = emptyLiveData<Event<Int>>()
+    val showArticleEvent = EventLiveData<Article>()
+    val messageSnackbarEvent = EventLiveData<Int>()
+    val errorSnackbarEvent = EventLiveData<String>()
+    val imageSavedEvent = EventLiveData<Int>()
 
     @JvmOverloads
     fun loadArticles(forceReload: Boolean = false) = loadTrigger.postValue(forceReload)

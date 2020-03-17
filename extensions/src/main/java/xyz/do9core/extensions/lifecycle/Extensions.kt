@@ -1,5 +1,7 @@
 package xyz.do9core.extensions.lifecycle
 
+import androidx.annotation.AnyThread
+import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -28,3 +30,19 @@ inline fun <T : Any> LiveData<T?>.observeNullable(
     lifecycleOwner: LifecycleOwner,
     crossinline block: (T?) -> Unit
 ) = observe(lifecycleOwner, Observer { block(it) })
+
+@MainThread
+fun <T : Any> EventLiveData<T>.call(param: T) {
+    this.value = Event(param)
+}
+
+@AnyThread
+fun <T : Any> EventLiveData<T>.post(param: T) = this.postValue(Event(param))
+
+@MainThread
+fun EventLiveData<Unit>.call() {
+    this.value = Event(Unit)
+}
+
+@AnyThread
+fun EventLiveData<Unit>.post() = this.postValue(Event(Unit))

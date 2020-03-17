@@ -14,7 +14,7 @@ import xyz.do9core.newsapplication.ui.base.BindingFragment
 class WebViewFragment(private val targetUrl: String) : BindingFragment<FragmentWebviewBinding>() {
 
     private val refreshing = ObservableBoolean(false)
-    
+
     private fun WebView.setup() {
         webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView?, newProgress: Int) {

@@ -21,10 +21,6 @@
             app:destination="@id/searchFragment" />
 
         <action
-            android:id="@+id/showWatchLater"
-            app:destination="@id/watchLaterFragment" />
-
-        <action
             android:id="@+id/showAppInfo"
             app:destination="@id/appInfoFragment" />
     </fragment>
@@ -38,12 +34,6 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="xyz.do9core.newsapplication.ui.search.SearchFragment">
-
-    </fragment>
-
-    <fragment
-        android:id="@+id/watchLaterFragment"
-        android:name="xyz.do9core.newsapplication.ui.watchlater.WatchLaterFragment">
 
     </fragment>
 

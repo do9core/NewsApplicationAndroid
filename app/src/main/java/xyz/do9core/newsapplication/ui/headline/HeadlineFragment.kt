@@ -24,8 +24,8 @@ class HeadlineFragment : BindingFragment<FragmentHeadlineBinding>() {
     private val adapter: ArticleAdapter by lifecycleScope.inject { parametersOf(viewModel) }
     private val viewModel by viewModel<HeadlineViewModel> { parametersOf(getCategory()) }
 
-    override fun createViewBinding(inflater: LayoutInflater): FragmentHeadlineBinding
-        = FragmentHeadlineBinding.inflate(inflater)
+    override fun createViewBinding(inflater: LayoutInflater): FragmentHeadlineBinding =
+        FragmentHeadlineBinding.inflate(inflater)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +45,8 @@ class HeadlineFragment : BindingFragment<FragmentHeadlineBinding>() {
                 viewObserveEvent(messageSnackbarEvent) { postStickyNow(it) }
                 viewObserveEvent(imageSavedEvent) { postStickyNow(it) }
                 viewObserveEvent(errorSnackbarEvent) {
-                    val msg = it.takeIf { it.isNotBlank() } ?: getString(R.string.app_save_favourite_failed)
+                    val msg = it.takeIf { it.isNotBlank() }
+                        ?: getString(R.string.app_save_favourite_failed)
                     postStickyNow(msg)
                 }
             }

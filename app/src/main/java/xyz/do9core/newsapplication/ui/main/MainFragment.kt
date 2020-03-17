@@ -17,8 +17,8 @@ import xyz.do9core.newsapplication.util.navigate
 
 class MainFragment : BindingFragment<FragmentMainBinding>() {
 
-    override fun createViewBinding(inflater: LayoutInflater): FragmentMainBinding
-        = FragmentMainBinding.inflate(inflater)
+    override fun createViewBinding(inflater: LayoutInflater): FragmentMainBinding =
+        FragmentMainBinding.inflate(inflater)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +41,6 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
             navDrawer.setNavigationItemSelectedListener {
                 when (it.itemId) {
                     R.id.app_menu_favourites -> MainFragmentDirections.showFavourites()
-                    R.id.app_menu_watch_later -> MainFragmentDirections.showWatchLater()
                     R.id.app_menu_app_info -> MainFragmentDirections.showAppInfo()
                     else -> null
                 }?.also { dest -> navigate(dest) } != null

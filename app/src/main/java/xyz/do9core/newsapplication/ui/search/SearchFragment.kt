@@ -36,7 +36,7 @@ class ChipGroupController<T : Any>(
     fun showDialog() {
         MaterialAlertDialogBuilder(context)
             .setTitle(title)
-            .setSingleChoiceItems(displayArray, checkedIndex) { _, pos-> checkedIndex = pos }
+            .setSingleChoiceItems(displayArray, checkedIndex) { _, pos -> checkedIndex = pos }
             .setPositiveButton("OK") { _, _ ->
                 chipGroup.removeAllViews()
                 val checkedItem = displayArray.getOrNull(checkedIndex) ?: return@setPositiveButton
