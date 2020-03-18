@@ -12,14 +12,15 @@ import kotlinx.coroutines.withContext
 import xyz.do9core.extensions.lifecycle.EventLiveData
 import xyz.do9core.extensions.lifecycle.call
 import xyz.do9core.extensions.storage.canWriteExternalStorage
+import xyz.do9core.liveeventbus.eventbus.LiveEventBus
+import xyz.do9core.liveeventbus.eventbus.get
 import xyz.do9core.newsapplication.R
 import xyz.do9core.newsapplication.data.LoadResult
 import xyz.do9core.newsapplication.data.datasource.HeadlineSourceFactory
 import xyz.do9core.newsapplication.data.db.AppDatabase
-import xyz.do9core.newsapplication.data.model.Article
-import xyz.do9core.newsapplication.data.model.Category
-import xyz.do9core.newsapplication.data.model.Country
+import xyz.do9core.newsapplication.data.model.*
 import xyz.do9core.newsapplication.ui.common.ArticleClickedListener
+import xyz.do9core.newsapplication.ui.main.MainFragment
 import java.net.URL
 import java.util.*
 
@@ -51,9 +52,6 @@ class HeadlineViewModel(
     val hasNetworkError = networkState.map { it.isError }
     val networkErrorMessage = networkState.map { (it as? LoadResult.Error)?.msg }
     val showArticleEvent = EventLiveData<Article>()
-    val messageSnackbarEvent = EventLiveData<Int>()
-    val errorSnackbarEvent = EventLiveData<String>()
-    val imageSavedEvent = EventLiveData<Int>()
 
     @JvmOverloads
     fun loadArticles(forceReload: Boolean = false) = loadTrigger.postValue(forceReload)
@@ -62,9 +60,13 @@ class HeadlineViewModel(
         viewModelScope.launch {
             try {
                 database.articleDao().saveFavouriteArticle(article)
-                messageSnackbarEvent.call(R.string.app_save_favourite_success)
+                LiveEventBus.get<SnackbarEvent>(MainFragment).postNow(
+                    resSnackEvent(R.string.app_save_favourite_success)
+                )
             } catch (e: Exception) {
-                errorSnackbarEvent.call(e.message.orEmpty())
+                LiveEventBus.get<SnackbarEvent>(MainFragment).postNow(
+                    textSnackEvent(e.message.orEmpty())
+                )
             }
         }
     }
@@ -76,12 +78,16 @@ class HeadlineViewModel(
 //            .build()
 //        workManager.enqueue(workRequest)
         if (!canWriteExternalStorage()) {
-            errorSnackbarEvent.call("Application cannot write external storage.")
+            LiveEventBus.get<SnackbarEvent>().postNow(
+                textSnackEvent("Application cannot write external storage.")
+            )
             return
         }
         val imageUrl = article.urlToImage
         if (imageUrl == null) {
-            errorSnackbarEvent.call("Nothing to save.")
+            LiveEventBus.get<SnackbarEvent>().postNow(
+                textSnackEvent("Nothing to save.")
+            )
             return
         }
         viewModelScope.launch {
@@ -94,7 +100,9 @@ class HeadlineViewModel(
                 }
                 val newFile = resolver.insert(collection, imageDetail)
                 if (newFile == null) {
-                    errorSnackbarEvent.call("Media info insert failed.")
+                    LiveEventBus.get<SnackbarEvent>().postNow(
+                        textSnackEvent("Media info insert failed.")
+                    )
                     return@launch
                 }
                 withContext(Dispatchers.IO) {
@@ -104,9 +112,13 @@ class HeadlineViewModel(
                         }
                     }
                 }
-                imageSavedEvent.call(R.string.app_headline_image_saved_message)
+                LiveEventBus.get<SnackbarEvent>().postNow(
+                    resSnackEvent(R.string.app_headline_image_saved_message)
+                )
             } catch (e: Exception) {
-                errorSnackbarEvent.call(e.message.orEmpty())
+                LiveEventBus.get<SnackbarEvent>().postNow(
+                    textSnackEvent(e.message.orEmpty())
+                )
             }
         }
     }

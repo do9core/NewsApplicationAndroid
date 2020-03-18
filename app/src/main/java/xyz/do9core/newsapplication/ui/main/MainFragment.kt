@@ -46,10 +46,9 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
         }
 
         LiveEventBus.register<SnackbarEvent>(viewLifecycleOwner, MainFragment) {
-            if (it.text != null) {
-                showSnackbar(it.text)
-            } else if (it.textRes != null) {
-                showSnackbar(it.textRes)
+            when {
+                it.text != null -> showSnackbar(it.text)
+                it.textRes != null -> showSnackbar(it.textRes)
             }
         }
     }

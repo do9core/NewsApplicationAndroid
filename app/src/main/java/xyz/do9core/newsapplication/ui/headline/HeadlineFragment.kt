@@ -8,16 +8,11 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import xyz.do9core.extensions.fragment.viewObserve
 import xyz.do9core.extensions.fragment.viewObserveEvent
-import xyz.do9core.liveeventbus.eventbus.LiveEventBus
-import xyz.do9core.liveeventbus.eventbus.withKey
 import xyz.do9core.newsapplication.NavGraphDirections
-import xyz.do9core.newsapplication.R
 import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.data.model.Category
-import xyz.do9core.newsapplication.data.model.SnackbarEvent
 import xyz.do9core.newsapplication.databinding.FragmentHeadlineBinding
 import xyz.do9core.newsapplication.ui.base.BindingFragment
-import xyz.do9core.newsapplication.ui.main.MainFragment
 import xyz.do9core.newsapplication.util.navigate
 
 class HeadlineFragment : BindingFragment<FragmentHeadlineBinding>() {
@@ -42,15 +37,6 @@ class HeadlineFragment : BindingFragment<FragmentHeadlineBinding>() {
             viewObserve(articles) { adapter.submitList(it) }
             viewObserve(networkState) { adapter.setLoadState(it) }
             viewObserveEvent(showArticleEvent) { showArticle(it) }
-            LiveEventBus.withKey(MainFragment) {
-                viewObserveEvent(messageSnackbarEvent) { postNow(SnackbarEvent(textRes = it)) }
-                viewObserveEvent(imageSavedEvent) { postNow(SnackbarEvent(textRes = it)) }
-                viewObserveEvent(errorSnackbarEvent) {
-                    val msg = it.takeIf { it.isNotBlank() }
-                        ?: getString(R.string.app_save_favourite_failed)
-                    postNow(SnackbarEvent(text = msg))
-                }
-            }
         }
     }
 
