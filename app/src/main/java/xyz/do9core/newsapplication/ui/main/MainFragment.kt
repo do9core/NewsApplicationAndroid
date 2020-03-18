@@ -7,9 +7,11 @@ import androidx.annotation.StringRes
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import xyz.do9core.liveeventbus.eventbus.LiveEventBus
-import xyz.do9core.liveeventbus.eventbus.withKey
+import xyz.do9core.liveeventbus.eventbus.register
+import xyz.do9core.liveeventbus.eventbus.subject
 import xyz.do9core.newsapplication.R
 import xyz.do9core.newsapplication.data.model.Category
+import xyz.do9core.newsapplication.data.model.SnackbarEvent
 import xyz.do9core.newsapplication.databinding.FragmentMainBinding
 import xyz.do9core.newsapplication.ui.base.BindingFragment
 import xyz.do9core.newsapplication.util.navigate
@@ -21,10 +23,7 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        LiveEventBus.withKey(MainFragment) {
-            subject<String>()
-            subject<Int>()
-        }
+        LiveEventBus.subject<SnackbarEvent>(MainFragment)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,9 +45,12 @@ class MainFragment : BindingFragment<FragmentMainBinding>() {
             }
         }
 
-        LiveEventBus.withKey(MainFragment) {
-            register<String>(viewLifecycleOwner) { showSnackbar(it) }
-            register<Int>(viewLifecycleOwner) { showSnackbar(it) }
+        LiveEventBus.register<SnackbarEvent>(viewLifecycleOwner, MainFragment) {
+            if (it.text != null) {
+                showSnackbar(it.text)
+            } else if (it.textRes != null) {
+                showSnackbar(it.textRes)
+            }
         }
     }
 

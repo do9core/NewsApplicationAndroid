@@ -2,14 +2,10 @@ package xyz.do9core.newsapplication.ui.headline
 
 import android.content.ContentValues
 import android.content.Context
-import android.os.Build
 import android.provider.MediaStore
-import androidx.core.net.toFile
 import androidx.lifecycle.*
 import androidx.paging.toLiveData
-import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
-import androidx.work.workDataOf
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -23,7 +19,6 @@ import xyz.do9core.newsapplication.data.db.AppDatabase
 import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.data.model.Category
 import xyz.do9core.newsapplication.data.model.Country
-import xyz.do9core.newsapplication.data.workers.SaveImageWorker
 import xyz.do9core.newsapplication.ui.common.ArticleClickedListener
 import java.net.URL
 import java.util.*

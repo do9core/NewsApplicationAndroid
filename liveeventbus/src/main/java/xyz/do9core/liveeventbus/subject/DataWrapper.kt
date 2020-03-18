@@ -1,7 +1,9 @@
 package xyz.do9core.liveeventbus.subject
 
+import xyz.do9core.liveeventbus.eventbus.LiveEventBus
+
 // SubjectLiveData的数据信息Wrapper，即一个事件对象，主要提供粘性/非粘性事件的处理功能
-data class DataWrapper<out T : Any> internal constructor(
+data class DataWrapper<out T : LiveEventBus.Event> internal constructor(
     private val data: T,
     private val sticky: Boolean = true
 ) {

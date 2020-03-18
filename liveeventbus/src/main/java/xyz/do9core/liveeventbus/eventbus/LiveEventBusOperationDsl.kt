@@ -11,35 +11,37 @@ class LiveEventBusOperationDsl internal constructor(
     /**
      * [LiveEventBus.subject]
      * */
-    inline fun <reified T : Any> subject() = eventBus.subject<T>(key)
+    inline fun <reified T : LiveEventBus.Event> subject() = eventBus.subject<T>(key)
 
     /**
-     * [LiveEventBus.with]
+     * [LiveEventBus.get]
      * */
-    inline fun <reified T : Any> with() = eventBus.with<T>(key)
+    inline fun <reified T : LiveEventBus.Event> with() = eventBus.get<T>(key)
 
     /**
      * [SubjectLiveData.post]
      * */
-    inline fun <reified T : Any> post(event: T) = eventBus.post(event, key)
+    inline fun <reified T : LiveEventBus.Event> post(event: T) = eventBus.post(event, key)
 
     /**
      * [SubjectLiveData.postNow]
      * */
-    inline fun <reified T : Any> postNow(event: T) = eventBus.postNow(event, key)
+    @MainThread
+    inline fun <reified T : LiveEventBus.Event> postNow(event: T) = eventBus.postNow(event, key)
 
     /**
      * [SubjectLiveData.postSticky]
      * */
-    inline fun <reified T : Any> postSticky(event: T) = eventBus.postSticky(event, key)
+    inline fun <reified T : LiveEventBus.Event> postSticky(event: T) = eventBus.postSticky(event, key)
 
     /**
      * [SubjectLiveData.postStickyNow]
      * */
-    inline fun <reified T : Any> postStickyNow(event: T) = eventBus.postStickyNow(event, key)
+    @MainThread
+    inline fun <reified T : LiveEventBus.Event> postStickyNow(event: T) = eventBus.postStickyNow(event, key)
 
     @MainThread
-    inline fun <reified T : Any> register(
+    inline fun <reified T : LiveEventBus.Event> register(
         lifecycleOwner: LifecycleOwner,
         noinline subscriber: (T) -> Unit
     ) = eventBus.register(lifecycleOwner, key, subscriber)

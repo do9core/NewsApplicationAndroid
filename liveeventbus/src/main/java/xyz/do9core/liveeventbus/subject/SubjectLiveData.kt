@@ -4,11 +4,12 @@ import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import xyz.do9core.liveeventbus.eventbus.LiveEventBus
 
-class SubjectLiveData<T : Any> : LiveData<DataWrapper<T>>() {
+class SubjectLiveData<T : LiveEventBus.Event> : LiveData<DataWrapper<T>>() {
 
     // Subscriber的Wrapper，用于进行版本校验
-    private class SubscriberWrapper<T : Any>(
+    private class SubscriberWrapper<T : LiveEventBus.Event>(
         private val subscriber: (T) -> Unit
     ) : Observer<DataWrapper<T>> {
         // 使用当前时间作为版本号

@@ -14,6 +14,7 @@ import xyz.do9core.newsapplication.NavGraphDirections
 import xyz.do9core.newsapplication.R
 import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.data.model.Category
+import xyz.do9core.newsapplication.data.model.SnackbarEvent
 import xyz.do9core.newsapplication.databinding.FragmentHeadlineBinding
 import xyz.do9core.newsapplication.ui.base.BindingFragment
 import xyz.do9core.newsapplication.ui.main.MainFragment
@@ -42,12 +43,12 @@ class HeadlineFragment : BindingFragment<FragmentHeadlineBinding>() {
             viewObserve(networkState) { adapter.setLoadState(it) }
             viewObserveEvent(showArticleEvent) { showArticle(it) }
             LiveEventBus.withKey(MainFragment) {
-                viewObserveEvent(messageSnackbarEvent) { postNow(it) }
-                viewObserveEvent(imageSavedEvent) { postNow(it) }
+                viewObserveEvent(messageSnackbarEvent) { postNow(SnackbarEvent(textRes = it)) }
+                viewObserveEvent(imageSavedEvent) { postNow(SnackbarEvent(textRes = it)) }
                 viewObserveEvent(errorSnackbarEvent) {
                     val msg = it.takeIf { it.isNotBlank() }
                         ?: getString(R.string.app_save_favourite_failed)
-                    postNow(msg)
+                    postNow(SnackbarEvent(text = msg))
                 }
             }
         }
