@@ -5,13 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import com.google.android.material.chip.Chip
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.koin.androidx.scope.lifecycleScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import xyz.do9core.extensions.fragment.viewObserve
 import xyz.do9core.extensions.fragment.viewObserveEvent
 import xyz.do9core.extensions.fragment.viewObserveNullable
+import xyz.do9core.extensions.lifecycle.valueOrDefault
 import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.data.model.Category
 import xyz.do9core.newsapplication.data.model.Country
@@ -38,28 +38,22 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
                 frontLayerExpanded.value = !frontLayerExpanded.value!!
             }
             binding.countryButton.setOnClickListener {
-                var tempIndex = countryIndex.value!!
-                MaterialAlertDialogBuilder(requireContext())
-                    .setTitle("Country")
-                    .setSingleChoiceItems(
-                        Country.values().map { it.code.capitalize() }.toTypedArray(),
-                        tempIndex
-                    ) { _, pos -> tempIndex = pos }
-                    .setPositiveButton("OK") { _, _ -> countryIndex.value = tempIndex }
-                    .create()
-                    .show()
+                filterDialog<Country>(requireContext()) {
+                    title = "Country"
+                    items = Country.values()
+                    selectionIndex = countryIndex.valueOrDefault(-1)
+                    mapItem { country -> country.code.capitalize() }
+                    onConfirm { result ->countryIndex.value = result }
+                }.show()
             }
             binding.categoryButton.setOnClickListener {
-                var tempIndex = categoryIndex.value!!
-                MaterialAlertDialogBuilder(requireContext())
-                    .setTitle("Category")
-                    .setSingleChoiceItems(
-                        Category.values().map { it.title.capitalize() }.toTypedArray(),
-                        tempIndex
-                    ) { _, pos -> tempIndex = pos }
-                    .setPositiveButton("OK") { _, _ -> categoryIndex.value = tempIndex }
-                    .create()
-                    .show()
+                filterDialog<Category>(requireContext()) {
+                    title = "Category"
+                    items = Category.values()
+                    selectionIndex = categoryIndex.valueOrDefault(-1)
+                    mapItem { category -> category.title.capitalize() }
+                    onConfirm { result -> categoryIndex.value = result }
+                }.show()
             }
 
             viewObserveEvent(showArticleEvent) { openArticle(it) }

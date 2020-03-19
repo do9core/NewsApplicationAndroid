@@ -1,6 +1,5 @@
 package xyz.do9core.newsapplication.ui.search
 
-import android.annotation.SuppressLint
 import androidx.lifecycle.*
 import androidx.paging.toLiveData
 import com.snakydesign.livedataextensions.combineLatest
@@ -33,19 +32,17 @@ class SearchViewModel : ViewModel() {
             loading, result, expanded ->
         when {
             !expanded -> false
-            loading && result.isNullOrEmpty() -> true
+            loading || result.isNullOrEmpty() -> true
             else -> false
         }
     }.startWith(false)
 
     val countryIndex = MutableLiveData(-1)
-    @SuppressLint("DefaultLocale")
     val country: LiveData<Country?> = countryIndex.map { index ->
         Country.values().getOrNull(index)
     }
 
     val categoryIndex = MutableLiveData(-1)
-    @SuppressLint("DefaultLocale")
     val category: LiveData<Category?> = categoryIndex.map { index ->
         Category.values().getOrNull(index)
     }

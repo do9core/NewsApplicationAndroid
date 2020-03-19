@@ -46,3 +46,5 @@ fun EventLiveData<Unit>.call() {
 
 @AnyThread
 fun EventLiveData<Unit>.post() = this.postValue(Event(Unit))
+
+fun <T : Any> LiveData<T>.valueOrDefault(default: T): T = value ?: default
