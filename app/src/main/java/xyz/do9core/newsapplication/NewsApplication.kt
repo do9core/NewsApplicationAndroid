@@ -13,15 +13,14 @@ class NewsApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         startKoin {
-            androidLogger(Level.DEBUG)
+            androidLogger(Level.ERROR)
             androidContext(this@NewsApplication)
             modules(
                 DataModule,
                 ViewModelModule,
                 SearchFragmentDependency,
                 FavouriteFragmentDependency,
-                HeadlineFragmentDependency,
-                WatchLaterFragmentDependency
+                HeadlineFragmentDependency
             )
         }
     }

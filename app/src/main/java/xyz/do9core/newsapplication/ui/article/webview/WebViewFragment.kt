@@ -14,7 +14,7 @@ import xyz.do9core.newsapplication.ui.base.BindingFragment
 class WebViewFragment(private val targetUrl: String) : BindingFragment<FragmentWebviewBinding>() {
 
     private val refreshing = ObservableBoolean(false)
-    
+
     private fun WebView.setup() {
         webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView?, newProgress: Int) {
@@ -44,10 +44,11 @@ class WebViewFragment(private val targetUrl: String) : BindingFragment<FragmentW
         }
     }
 
-    override fun onDestroy() {
+    override fun onDestroyView() {
         binding.webView.loadData("", null, null)
         binding.webView.destroy()
-        super.onDestroy()
+        // After super.onDestroyView() the binding is not available
+        super.onDestroyView()
     }
 
     class Factory(private val url: String) : FragmentFactory() {

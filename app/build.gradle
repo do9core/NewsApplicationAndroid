@@ -14,6 +14,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        proguardFiles
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = ["room.incremental": "true"]
@@ -23,11 +24,14 @@ android {
     buildTypes {
         debug {
             buildConfigField('String', 'API_KEY', '"b21b3035a5884eceba9d84597683b7b0"')
+            debuggable = true
+            signingConfig signingConfigs.debug
         }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField('string', 'API_KEY', '"b21b3035a5884eceba9d84597683b7b0"')
+            debuggable = false
         }
     }
     compileOptions {
@@ -53,7 +57,7 @@ dependencies {
 
     implementation project(':coroutineutils')
     implementation project(':extensions')
-    implementation project(':crashreporter')
+    implementation project(':liveeventbus')
 
     kapt "androidx.room:room-compiler:$rootProject.roomVersion"
     kapt "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
@@ -84,6 +88,7 @@ dependencies {
     implementation "com.snakydesign.livedataextensions:lives:$rootProject.liveDataExtensionsVersion"
     implementation "org.koin:koin-androidx-scope:$rootProject.koinVersion"
     implementation "org.koin:koin-androidx-viewmodel:$rootProject.koinVersion"
+    implementation "androidx.work:work-runtime-ktx:$rootProject.workVersion"
 
     // Testing dependencies
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
@@ -92,7 +97,6 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-intents:$rootProject.espressoVersion"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.testExtJunit"
     androidTestImplementation "androidx.test.uiautomator:uiautomator:$rootProject.uiAutomatorVersion"
-    androidTestImplementation "androidx.work:work-testing:$rootProject.workVersion"
     androidTestImplementation "com.google.truth:truth:$rootProject.truthVersion"
     testImplementation "junit:junit:$rootProject.junitVersion"
 }

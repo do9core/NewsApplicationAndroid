@@ -1,5 +1,6 @@
 include ':app'
-rootProject.name='testApplication'
+rootProject.name='news-application'
 include ':coroutineutils'
 include ':extensions'
 include ':crashreporter'
+include ':liveeventbus'

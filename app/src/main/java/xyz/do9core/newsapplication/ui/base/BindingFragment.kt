@@ -11,7 +11,7 @@ abstract class BindingFragment<T : ViewBinding> : ContinuationFragment() {
     private var _binding: T? = null
 
     // Only available between onCreateView() and onDestroyView()
-    protected val binding: T = _binding!!
+    protected val binding: T get() = _binding!!
 
     @CallSuper
     override fun onCreateView(

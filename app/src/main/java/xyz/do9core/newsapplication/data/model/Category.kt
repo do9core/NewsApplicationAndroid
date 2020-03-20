@@ -3,23 +3,24 @@ package xyz.do9core.newsapplication.data.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity
 open class Category(
     @PrimaryKey
     @ColumnInfo(name = "title")
     var title: String
-) {
-    object Business : Category("business")
-    object Entertainment : Category("entertainment")
-    object General : Category("general")
-    object Health : Category("health")
-    object Science : Category("science")
-    object Sports : Category("sports")
-    object Technology : Category("technology")
+) : Serializable {
+    object Business : Category("business"), Serializable
+    object Entertainment : Category("entertainment"), Serializable
+    object General : Category("general"), Serializable
+    object Health : Category("health"), Serializable
+    object Science : Category("science"), Serializable
+    object Sports : Category("sports"), Serializable
+    object Technology : Category("technology"), Serializable
 
     companion object {
-        fun values() = listOf(
+        fun values(): List<Category> = listOf(
             Business,
             Entertainment,
             General,

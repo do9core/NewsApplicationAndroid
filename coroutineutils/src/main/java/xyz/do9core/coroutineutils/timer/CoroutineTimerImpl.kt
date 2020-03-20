@@ -11,7 +11,7 @@ internal class CoroutineTimerImpl(
 ) : CoroutineTimer {
 
     private val coroutineScope =
-        CoroutineScope(Dispatchers.Default + coroutineContext)
+        CoroutineScope(Job() + Dispatchers.Default + coroutineContext)
 
     private var timerJob: Job? = null
 

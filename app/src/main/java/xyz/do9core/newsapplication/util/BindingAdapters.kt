@@ -5,44 +5,36 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
-import xyz.do9core.coroutineutils.exclusive.onExclusiveClick
+import xyz.do9core.coroutineutils.view.onExclusiveClick
 import xyz.do9core.newsapplication.R
 
 @BindingAdapter("isVisible")
 fun View.bindIsVisible(visible: Boolean?) {
-    visibility = if (visible == null || !visible) {
-        View.GONE
-    } else {
-        View.VISIBLE
-    }
+    val visibility = if (visible == true) View.VISIBLE else View.GONE
+    setVisibility(visibility)
 }
 
 @BindingAdapter("isGone")
 fun View.isGone(gone: Boolean?) {
-    visibility = if (gone == null || gone) {
-        View.GONE
-    } else {
-        View.VISIBLE
-    }
+    val visibility = if (gone == true) View.GONE else View.VISIBLE
+    setVisibility(visibility)
 }
 
 @BindingAdapter("isInvisible")
 fun View.isInvisible(invisible: Boolean?) {
-    visibility = if (invisible == null || invisible) {
-        View.INVISIBLE
-    } else {
-        View.VISIBLE
-    }
+    val visibility = if (invisible == true) View.INVISIBLE else View.VISIBLE
+    setVisibility(visibility)
 }
 
 private const val DEFAULT_EXCLUSIVE_DURATION = 1000L
 
 @BindingAdapter(value = ["onExclusiveClick", "exclusiveDuration"], requireAll = false)
-@JvmOverloads
 fun View.bindOnExclusiveClick(
     onExclusiveClick: View.OnClickListener,
-    exclusiveDurationInMs: Long = DEFAULT_EXCLUSIVE_DURATION
-) = onExclusiveClick(exclusiveDurationInMs) { onExclusiveClick.onClick(this) }
+    exclusiveDurationInMs: Long?
+) = onExclusiveClick(exclusiveDurationInMs ?: DEFAULT_EXCLUSIVE_DURATION) {
+    onExclusiveClick.onClick(this)
+}
 
 @BindingAdapter("urlToImage")
 fun ImageView.bindUrl(urlToImage: String?) {

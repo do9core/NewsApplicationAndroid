@@ -5,14 +5,10 @@ import org.koin.dsl.module
 import xyz.do9core.newsapplication.data.model.Category
 import xyz.do9core.newsapplication.ui.favourite.FavouriteViewModel
 import xyz.do9core.newsapplication.ui.headline.HeadlineViewModel
-import xyz.do9core.newsapplication.ui.main.SharedViewModel
 import xyz.do9core.newsapplication.ui.search.SearchViewModel
-import xyz.do9core.newsapplication.ui.watchlater.WatchLaterViewModel
 
 val ViewModelModule = module {
-    viewModel { SharedViewModel() }
-    viewModel { WatchLaterViewModel(get()) }
     viewModel { FavouriteViewModel(get()) }
     viewModel { SearchViewModel() }
-    viewModel { (category: Category) -> HeadlineViewModel(category, get()) }
+    viewModel { (category: Category) -> HeadlineViewModel(category, get(), get()) }
 }

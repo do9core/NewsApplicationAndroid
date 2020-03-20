@@ -16,13 +16,3 @@ class Event<out T : Any>(private val param: T) {
         return null
     }
 }
-
-@MainThread
-fun MutableLiveData<Event<Unit>>.call() {
-    this.value = Event(Unit)
-}
-
-@MainThread
-fun <T : Any> MutableLiveData<Event<T>>.call(value: T) {
-    this.value = Event(value)
-}

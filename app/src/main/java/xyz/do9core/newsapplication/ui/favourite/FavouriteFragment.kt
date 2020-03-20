@@ -3,12 +3,14 @@ package xyz.do9core.newsapplication.ui.favourite
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import org.koin.androidx.scope.currentScope
+import com.google.android.material.snackbar.Snackbar
+import org.koin.androidx.scope.lifecycleScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import xyz.do9core.extensions.lifecycle.observe
-import xyz.do9core.extensions.lifecycle.observeEvent
+import xyz.do9core.extensions.fragment.viewObserve
+import xyz.do9core.extensions.fragment.viewObserveEvent
 import xyz.do9core.newsapplication.R
 import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.databinding.FragmentFavouriteBinding
@@ -19,7 +21,7 @@ import xyz.do9core.newsapplication.util.navigateUp
 class FavouriteFragment : BindingFragment<FragmentFavouriteBinding>() {
 
     private val viewModel by viewModel<FavouriteViewModel>()
-    private val adapter: ArticleAdapter by currentScope.inject { parametersOf(viewModel) }
+    private val adapter: ArticleAdapter by lifecycleScope.inject { parametersOf(viewModel) }
 
     override fun createViewBinding(inflater: LayoutInflater): FragmentFavouriteBinding =
         FragmentFavouriteBinding.inflate(inflater)
@@ -28,6 +30,10 @@ class FavouriteFragment : BindingFragment<FragmentFavouriteBinding>() {
         super.onViewCreated(view, savedInstanceState)
         binding.toolbar.setNavigationOnClickListener { navigateUp() }
         binding.favouriteList.adapter = adapter
+        ItemTouchHelper(SlideHelper { position ->
+            val article = adapter.currentList[position]
+            viewModel.removeArticle(article)
+        }).attachToRecyclerView(binding.favouriteList)
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.fav_clear -> {
@@ -46,8 +52,11 @@ class FavouriteFragment : BindingFragment<FragmentFavouriteBinding>() {
         }
 
         with(viewModel) {
-            observeEvent(showBrowserEvent) { showFavourite(it) }
-            observe(favArticles) { adapter.submitList(it) }
+            viewObserve(favArticles) { adapter.submitList(it) }
+            viewObserveEvent(showBrowserEvent) { showFavourite(it) }
+            viewObserveEvent(snackbarEvent) { resId ->
+                Snackbar.make(binding.coordinator, resId, Snackbar.LENGTH_SHORT).show()
+            }
         }
     }
 
