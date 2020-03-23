@@ -21,16 +21,19 @@ android {
             }
         }
     }
+
+    def TYPE_STRING = 'String'
+
     buildTypes {
         debug {
-            buildConfigField('String', 'API_KEY', '"b21b3035a5884eceba9d84597683b7b0"')
+            buildConfigField(TYPE_STRING, 'API_KEY', '"b21b3035a5884eceba9d84597683b7b0"')
             debuggable = true
             signingConfig signingConfigs.debug
         }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField('string', 'API_KEY', '"b21b3035a5884eceba9d84597683b7b0"')
+            buildConfigField(TYPE_STRING, 'API_KEY', '"b21b3035a5884eceba9d84597683b7b0"')
             debuggable = false
         }
     }
