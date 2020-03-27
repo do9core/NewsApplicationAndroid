@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/homeFragment"
+    tools:ignore="UnusedNavigation">
 
     <action
         android:id="@+id/showArticle"
-        app:destination="@id/articleFragment" />
+        app:destination="@id/articleFragment"
+        app:enterAnim="@anim/slide_in_bottom"
+        app:popEnterAnim="@anim/slide_in_bottom"
+        app:exitAnim="@anim/slide_out_bottom"
+        app:popExitAnim="@anim/slide_out_bottom" />
 
     <fragment
         android:id="@+id/homeFragment"
@@ -14,15 +20,27 @@
 
         <action
             android:id="@+id/showFavourites"
-            app:destination="@id/favouriteFragment" />
+            app:destination="@id/favouriteFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popExitAnim="@android:anim/fade_out" />
 
         <action
             android:id="@+id/showSearch"
-            app:destination="@id/searchFragment" />
+            app:destination="@id/searchFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popExitAnim="@android:anim/slide_out_right"/>
 
         <action
             android:id="@+id/showAppInfo"
-            app:destination="@id/appInfoFragment" />
+            app:destination="@id/appInfoFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
 
     <fragment
