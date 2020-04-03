@@ -32,13 +32,15 @@ class LiveEventBusOperationDsl internal constructor(
     /**
      * [SubjectLiveData.postSticky]
      * */
-    inline fun <reified T : LiveEventBus.Event> postSticky(event: T) = eventBus.postSticky(event, key)
+    inline fun <reified T : LiveEventBus.Event> postSticky(event: T) =
+        eventBus.postSticky(event, key)
 
     /**
      * [SubjectLiveData.postStickyNow]
      * */
     @MainThread
-    inline fun <reified T : LiveEventBus.Event> postStickyNow(event: T) = eventBus.postStickyNow(event, key)
+    inline fun <reified T : LiveEventBus.Event> postStickyNow(event: T) =
+        eventBus.postStickyNow(event, key)
 
     @MainThread
     inline fun <reified T : LiveEventBus.Event> register(

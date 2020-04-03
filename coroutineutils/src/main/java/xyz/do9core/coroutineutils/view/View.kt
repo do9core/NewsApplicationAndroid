@@ -5,7 +5,8 @@ import android.view.View
 import androidx.annotation.RequiresApi
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import java.time.Duration
 
 const val DEFAULT_EXCLUSIVE_DURATION = 1000L

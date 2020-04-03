@@ -37,14 +37,14 @@ class SearchViewModel(savedState: SavedStateHandle) : ViewModel() {
         if (expanded) R.drawable.ic_close else R.drawable.ic_menu
     }
 
-    val showNoResult = combineLatest(isLoading, searchResult, frontLayerExpanded) {
-            loading, result, expanded ->
-        when {
-            expanded.not() -> false
-            loading or result.isNullOrEmpty() -> true
-            else -> false
-        }
-    }.startWith(false)
+    val showNoResult =
+        combineLatest(isLoading, searchResult, frontLayerExpanded) { loading, result, expanded ->
+            when {
+                expanded.not() -> false
+                loading or result.isNullOrEmpty() -> true
+                else -> false
+            }
+        }.startWith(false)
 
     val countryIndex = savedState.getLiveData(KEY_COUNTRY_INDEX, -1)
     val country: LiveData<Country?> = countryIndex.map { index ->

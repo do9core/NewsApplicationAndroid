@@ -17,7 +17,7 @@ private object ExclusiveEventHandler {
 
         suspend fun eventLoop() {
             for (event in exclusiveChannel) {
-               event.invoke()
+                event.invoke()
                 delay(1000)
             }
         }

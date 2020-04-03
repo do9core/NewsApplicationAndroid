@@ -43,7 +43,7 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
                     items = Country.values()
                     selectionIndex = countryIndex.valueOrDefault(-1)
                     mapItem { country -> country.code.capitalize() }
-                    onConfirm { result ->countryIndex.value = result }
+                    onConfirm { result -> countryIndex.value = result }
                 }.show()
             }
             binding.categoryButton.setOnClickListener {

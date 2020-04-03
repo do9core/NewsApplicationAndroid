@@ -28,14 +28,17 @@ class FilterDialogController<T>(
     class Wrapper<T>(private val context: Context) {
 
         var title: String? = null
+
         @StringRes
         var titleRes: Int? = null
 
         var okText: String? = null
+
         @StringRes
         var okRes: Int? = null
 
         var cancelText: String? = null
+
         @StringRes
         var cancelRes: Int? = null
 
