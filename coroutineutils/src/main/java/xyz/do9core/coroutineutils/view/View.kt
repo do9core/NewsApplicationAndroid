@@ -5,9 +5,7 @@ import android.view.View
 import androidx.annotation.RequiresApi
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.sample
+import kotlinx.coroutines.flow.*
 import java.time.Duration
 
 const val DEFAULT_EXCLUSIVE_DURATION = 1000L
@@ -17,17 +15,17 @@ fun View.onExclusiveClick(
     onClick: () -> Unit
 ) {
     val channel = Channel<Unit>()
-    setOnClickListener { channel.offer(Unit) }
-    val exceptionHandler = CoroutineExceptionHandler { _, _ ->
+    val scope = MainScope() + CoroutineExceptionHandler { _, _ ->
         setOnClickListener(null)
         channel.close()
     }
-    SingleJobScope(errorHandler = exceptionHandler).launch {
+    scope.launch {
         for (event in channel) {
             onClick.invoke()
             delay(durationInMs)
         }
     }
+    setOnClickListener { channel.offer(Unit) }
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -51,12 +49,3 @@ fun View.clicks(): Flow<Unit> = flow {
         }
     }
 }
-
-@FlowPreview
-fun View.exclusiveClicks(durationInMs: Long = 1000L) =
-    clicks().sample(durationInMs)
-
-@RequiresApi(Build.VERSION_CODES.O)
-@FlowPreview
-fun View.exclusiveClicks(duration: Duration = Duration.ofMillis(1000L)) =
-    clicks().sample(duration.toMillis())

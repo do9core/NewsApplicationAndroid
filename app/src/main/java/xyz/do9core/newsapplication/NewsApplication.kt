@@ -7,7 +7,7 @@ import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 import xyz.do9core.newsapplication.di.*
 
-@Suppress("unused")
+@Suppress("unused") // Used by Android System
 class NewsApplication : Application() {
 
     override fun onCreate() {

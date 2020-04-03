@@ -1,10 +1,12 @@
 package xyz.do9core.newsapplication.ui.favourite
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
 import com.snakydesign.livedataextensions.emptyLiveData
 import com.snakydesign.livedataextensions.switchMap
 import kotlinx.coroutines.launch
-import xyz.do9core.extensions.lifecycle.Event
 import xyz.do9core.extensions.lifecycle.EventLiveData
 import xyz.do9core.extensions.lifecycle.call
 import xyz.do9core.newsapplication.R
@@ -24,13 +26,13 @@ class FavouriteViewModel(private val database: AppDatabase) : ViewModel() {
         currentSource
     }
 
-    val showBrowserEvent = MutableLiveData<Event<Article>>()
-    val snackbarEvent = MutableLiveData<Event<Int>>()
+    val showBrowserEvent = EventLiveData<Article>()
+    val snackbarEvent = EventLiveData<Int>()
     val articleClicked: ArticleClickedListener = { showBrowserEvent.call(it) }
 
     fun clearFavourites() {
         viewModelScope.launch {
-            database.articleDao().clearFavourite()
+            database.articleDao.clearFavourite()
             loadFavourites()
             snackbarEvent.call(R.string.app_clear_fav_snack)
         }
@@ -40,14 +42,14 @@ class FavouriteViewModel(private val database: AppDatabase) : ViewModel() {
 
     fun removeArticle(article: Article) {
         viewModelScope.launch {
-            database.articleDao().deleteFavourite(article.url)
+            database.articleDao.deleteFavourite(article.url)
             loadFavourites()
             snackbarEvent.call(R.string.app_remove_fav_snack)
         }
     }
 
     private fun getFavouritesLiveData() = liveData {
-        val favArticles = database.articleDao().getFavourites()
+        val favArticles = database.articleDao.getFavourites()
         val articles = favArticles.map { it.article }
         emit(articles)
     }

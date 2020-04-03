@@ -59,7 +59,7 @@ class HeadlineViewModel(
     private fun saveToFavourite(article: Article) {
         viewModelScope.launch {
             try {
-                database.articleDao().saveFavouriteArticle(article)
+                database.articleDao.saveFavouriteArticle(article)
                 LiveEventBus.get<SnackbarEvent>(MainFragment).postNow(
                     resSnackEvent(R.string.app_save_favourite_success)
                 )

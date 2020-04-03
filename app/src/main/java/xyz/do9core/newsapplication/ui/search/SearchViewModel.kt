@@ -12,7 +12,16 @@ import xyz.do9core.newsapplication.data.model.Article
 import xyz.do9core.newsapplication.data.model.Category
 import xyz.do9core.newsapplication.data.model.Country
 
-class SearchViewModel : ViewModel() {
+class SearchViewModel(savedState: SavedStateHandle) : ViewModel() {
+
+    companion object {
+        private const val KEY_PREFIX = "SearchViewModel"
+
+        const val KEY_QUERY_TEXT = "$KEY_PREFIX.QUERY_TEXT"
+        const val KEY_FRONT_LAYER_EXPANDED = "$KEY_PREFIX.FRONT_LAYER_EXPANDED"
+        const val KEY_COUNTRY_INDEX = "$KEY_PREFIX.COUNTRY_INDEX"
+        const val KEY_CATEGORY_INDEX = "$KEY_PREFIX.CATEGORY_INDEX"
+    }
 
     private val dataFactory = MutableLiveData<HeadlineSourceFactory>()
     private val dataSource = dataFactory.switchMap { it.dataSource }
@@ -20,10 +29,10 @@ class SearchViewModel : ViewModel() {
     val searchResult = dataFactory.switchMap { it.toLiveData(10) }
     val isLoading = networkState.map { it.isLoading }.startWith(false)
 
-    val queryText = MutableLiveData<String>()
+    val queryText = savedState.getLiveData<String>(KEY_QUERY_TEXT)
     val showArticleEvent = EventLiveData<Article>()
 
-    val frontLayerExpanded = MutableLiveData(false)
+    val frontLayerExpanded = savedState.getLiveData(KEY_FRONT_LAYER_EXPANDED, false)
     val navigationIcon = frontLayerExpanded.map { expanded ->
         if (expanded) R.drawable.ic_close else R.drawable.ic_menu
     }
@@ -31,18 +40,18 @@ class SearchViewModel : ViewModel() {
     val showNoResult = combineLatest(isLoading, searchResult, frontLayerExpanded) {
             loading, result, expanded ->
         when {
-            !expanded -> false
-            loading || result.isNullOrEmpty() -> true
+            expanded.not() -> false
+            loading or result.isNullOrEmpty() -> true
             else -> false
         }
     }.startWith(false)
 
-    val countryIndex = MutableLiveData(-1)
+    val countryIndex = savedState.getLiveData(KEY_COUNTRY_INDEX, -1)
     val country: LiveData<Country?> = countryIndex.map { index ->
         Country.values().getOrNull(index)
     }
 
-    val categoryIndex = MutableLiveData(-1)
+    val categoryIndex = savedState.getLiveData(KEY_CATEGORY_INDEX, -1)
     val category: LiveData<Category?> = categoryIndex.map { index ->
         Category.values().getOrNull(index)
     }

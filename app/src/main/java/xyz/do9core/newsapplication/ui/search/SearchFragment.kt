@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import com.google.android.material.chip.Chip
 import org.koin.androidx.scope.lifecycleScope
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.stateViewModel
 import org.koin.core.parameter.parametersOf
 import xyz.do9core.extensions.fragment.viewObserve
 import xyz.do9core.extensions.fragment.viewObserveEvent
@@ -21,7 +21,7 @@ import xyz.do9core.newsapplication.util.navigate
 
 class SearchFragment : BindingFragment<FragmentSearchBinding>() {
 
-    private val viewModel: SearchViewModel by viewModel()
+    private val viewModel: SearchViewModel by stateViewModel()
     private val adapter: ResultAdapter by lifecycleScope.inject { parametersOf(viewModel) }
 
     override fun createViewBinding(inflater: LayoutInflater): FragmentSearchBinding =

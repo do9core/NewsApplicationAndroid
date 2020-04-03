@@ -24,7 +24,7 @@ import xyz.do9core.newsapplication.data.model.*
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun articleDao(): ArticleDao
-    abstract fun countryDao(): CountryDao
-    abstract fun categoryDao(): CategoryDao
+    abstract val articleDao: ArticleDao
+    abstract val countryDao: CountryDao
+    abstract val categoryDao: CategoryDao
 }
